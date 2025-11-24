@@ -71,7 +71,7 @@ export default function Register() {
 
     if (FormValid) {
       try {
-        const res = await fetch("http://localhost:3000/user/create", {
+        const res = await fetch("http://localhost:3000/api/user/create", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, password, address, postalCode, country }),

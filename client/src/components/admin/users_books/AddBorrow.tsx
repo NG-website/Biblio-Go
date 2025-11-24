@@ -20,6 +20,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import theme from "../../../theme";
 import InputDate from "../../date/InputDate";
+import { useAuthContext } from "../../Context/AuthContext";
 
 interface AddBorrowProps {
   open: boolean;
@@ -27,6 +28,7 @@ interface AddBorrowProps {
 }
 
 function AddBorrow({ open, close }: AddBorrowProps) {
+  const {user}=useAuthContext()
   const [bookList, setBookList] = useState<any[]>([]);
   const [userList, setUserList] = useState<any[]>([]);
   const [bookSelected, setBookSelected] = useState<string>("");
@@ -127,7 +129,10 @@ function AddBorrow({ open, close }: AddBorrowProps) {
     fetch("http://localhost:3000/api/bookuser/create", {
       method: "POST",
       credentials: "include",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+         "Authorization": `Bearer ${user?.token}`
+       },
       body: JSON.stringify(data),
     })
       .then((res) => {
@@ -164,7 +169,12 @@ function AddBorrow({ open, close }: AddBorrowProps) {
         <IconButton
           aria-label="Fermer la fenêtre d'ajout d'emprunt"
           onClick={() => close(false)}
-          sx={{ position: "absolute", right: 8, top: 8 }}
+          sx={{
+             position: "absolute",
+              right: 8,
+              top: 8,
+              "&: hover *":{fill:theme.palette.text.primary}
+             }}
         >
           <CloseIcon />
         </IconButton>

@@ -9,10 +9,10 @@ const PaymentSuccess = () => {
   const {user} = useAuthContext()
   const userId = user? user?.userId : null
   useEffect(()=>{
-    fetch("http://localhost:3000/user/update",{
-      method:"POST",
+    fetch("http://localhost:3000/api/user/update",{
+      method:"PUT",
       headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({id : userId})
+      body:JSON.stringify({id : 1})
     })
     .then((res) =>{ 
       return res.json()

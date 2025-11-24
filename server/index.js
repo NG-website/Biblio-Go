@@ -23,6 +23,7 @@ import sendMail from "./utils/nodemailer.js";
 
 import Tesseract from 'tesseract.js'
 import fs from 'fs'
+import adminMiddleware from "./middleware/adminMiddleware.js";
 dotenv.config();
 //syncDB()
 const app = express();
@@ -33,7 +34,7 @@ app.use(cors({
 }));
 
 // ----------- STRIPE WEBHOOK (body brut obligatoire) -----------
-app.use("/subscription/webhook", express.raw({ type: "application/json" }));
+app.use("/api/subscription/webhook", express.raw({ type: "application/json" }));
 const stripe_ = new stripe(process.env.SECRET_KEY_STRIPE);
 
 app.use(session({
@@ -57,9 +58,9 @@ app.use(express.json());
 //multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-   console.log(req.path)
-  console.log("multerstorage",req.body)
-   console.log(file)
+  // console.log(req.path)
+  //console.log("multerstorage",req.body)
+ //  console.log(file)
     if (req.path === '/user') {
       cb(null, `uploads/user`);
     } else if (req.path === '/book') {
@@ -83,7 +84,7 @@ app.get("/", (req, res) => res.send("hello world"));
 
 // ----------- LOGIN -----------
 app.post("/login", queryLimiter, trylogin, authMiddleware, (req, res) => {
-  console.log(5)
+ // console.log(5)
   req.session.user = req.user;
   req.session.save(() => {
     res.json(req.user);
@@ -101,7 +102,7 @@ app.post("/logout", (req, res) => {
 app.post('/api/contact', (req, res)=>{
   const contentEmail = ([req.body.firstname,req.body.lastname, req.body.email, req.body.contentEmail ])
   sendMail("bibliogo@outlook.fr", "contact", contentEmail)
-  console.log(res)
+  //console.log(res)
 })
 // ----------- CHECK SESSION -----------
 app.get("/cookies", (req, res) => {
@@ -110,7 +111,7 @@ app.get("/cookies", (req, res) => {
 
 //---ocR--
 app.post('/api/ocr', async (req, res) => {
-  console.log("hello ocr",req.body)
+ // console.log("hello ocr",req.body)
     const { path } = req.body; 
     if (!path) return res.status(400).send('Aucun chemin fourni');
 
@@ -133,16 +134,16 @@ app.use("/api/bookuser", bookUserRouter);
 app.use("/api/author", authorRouter);
 app.use("/api/like", likeRouter);
 app.use("/api/subscription", paymentRouter);
-app.use("/api/admin", adminRouter);
+app.use("/api/admin", adminMiddleware, adminRouter);
 
 // ----------- UPLOAD IMAGES -----------
 app.use("/api/image", upload.single("image"), (req, res) => {
-    console.log("PATH",req.path)
-  console.log("req",req.file)
- console.log("req",req.body.name)
+  //  console.log("PATH",req.path)
+ // console.log("req",req.file)
+ //console.log("req",req.body.name)
  
     if (req.file && req.path === '/ocr'){
-      console.log("arriver")
+    //  console.log("arriver")
       res.json({ name: req.body.name, path: req.file.path })
     }else{
       res.status(200).json("ok")

@@ -26,7 +26,7 @@ function Subscription({
 }: SubscriptionProps) {
   const navigate = useNavigate()
   const { user } = useAuthContext()
-  const abonner = user ? user.abonement : null
+  const abonner = user ? user.abonnement : null
   const userId = user ? user.userId : null
   const [idProduct, setIdProduct] = useState();
   const [alerte, setAlerte] = useState(false)
@@ -34,7 +34,7 @@ function Subscription({
   useEffect(() => {
 
     try {
-      fetch("http://localhost:3000/subscription/search-product", {
+      fetch("http://localhost:3000/api/subscription/search-product", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productName: subtitle })
@@ -68,7 +68,7 @@ function Subscription({
 
     try {
       if (userId) {
-        fetch(`http://localhost:3000/user/id`, {
+        fetch(`http://localhost:3000/api/user/id`, {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({ id: userId })
@@ -81,7 +81,7 @@ function Subscription({
           .then((data) => {
             user.push({ name: data.userName, email: data.userEmail })
 
-            fetch("http://localhost:3000/subscription/search-customer", {
+            fetch("http://localhost:3000/api/subscription/search-customer", {
               method: "POST",
               headers: { "Content-type": "application/json" },
               body: JSON.stringify({ name: data.userName, email: data.userEmail })
@@ -92,7 +92,7 @@ function Subscription({
               .then((data) => {
                 // console.log(data)
                 if (data.data[0]) {
-                  fetch("http://localhost:3000/subscription/create-checkout-session", {
+                  fetch("http://localhost:3000/api/subscription/create-checkout-session", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ customerId: data.data[0].id, priceId: idProduct, userId: userId, abonementType: subtitle })
@@ -101,14 +101,14 @@ function Subscription({
                       if (res.ok) return res.json()
                     })
                     .then((data) => {
-                      // console.log(data)
-                      window.location.href = data
+                      console.log(data)
+                     // window.location.href = data
                     })
                     .catch((error) => { console.error("Erreur fetch create-checkout-session :", error) })
                 }
 
                 if (data.data.length === 0) {
-                  fetch(`http://localhost:3000/subscription/create-customer`, {
+                  fetch(`http://localhost:3000/api/subscription/create-customer`, {
                     method: "POST",
                     headers: { "Content-type": "application/json" },
                     body: JSON.stringify({ name: user[0].name, email: user[0].email })
@@ -119,7 +119,7 @@ function Subscription({
                     .then((data) => {
                       console.log(data)
                       if (data.id.length != 0) {
-                        fetch("http://localhost:3000/subscription/create-checkout-session", {
+                        fetch("http://localhost:3000/api/subscription/create-checkout-session", {
                           method: "POST",
                           headers: { "Content-Type": "application/json" },
                           body: JSON.stringify({ customerId: data.id, priceId: idProduct, userId: userId, abonementType: subtitle })

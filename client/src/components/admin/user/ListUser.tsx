@@ -10,7 +10,14 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 import Paper from '@mui/material/Paper';
 
-import { Alert, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, Divider, MenuItem, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Divider,
+  MenuItem,
+  TextField,
+} from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt';
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
@@ -18,10 +25,12 @@ import { DeleteForever } from "@mui/icons-material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AddUser from './AddUser';
 import theme from '../../../theme';
-import PopUPDelete from '../popUpDelete';
+import PopUPDelete from '../PopUpDelete';
+import { useAuthContext } from '../../Context/AuthContext';
 
 
 export default function ListUser() {
+  const {user}= useAuthContext()
   const [editId, setEditId] = React.useState(null);
   const [openUserAdd, setOpenUserAdd] = React.useState(false);
   const [confirmDelete, setConfirmDelete] = React.useState(null);
@@ -30,7 +39,7 @@ export default function ListUser() {
   const [users, setUsers] = React.useState([]);
   const [name, setName] = React.useState("");
   const [actif, setActif] = React.useState("");
-  const [abonementType, setAbonementType] = React.useState("");
+  const [abonnementType, setAbonnementType] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [address, setAddress] = React.useState("");
   const [postalCode, setPostalCode] = React.useState("");
@@ -39,7 +48,8 @@ export default function ListUser() {
 
   React.useEffect(() => {
     fetch("http://localhost:3000/api/user/all", {
-      credentials: "include"
+      credentials: "include",
+      headers:{ "Authorization": `Bearer ${user?.token}`}
     })
       .then((res) => {
         if (res.ok) {
@@ -60,12 +70,12 @@ export default function ListUser() {
     setEditId(user.id);
     setName(user.name);
     setActif(user.actif);
-    setAbonementType(user.abonementType);
+    setAbonnementType(user.abonnementType || " " );
     setEmail(user.email);
     setAddress(user.address);
     setPostalCode(user.postalCode);
     setCountry(user.country);
-    setPhone(user.phone);
+    setPhone(user.phone || " ");
   };
 
 
@@ -74,8 +84,8 @@ export default function ListUser() {
     const data = {
       name,
       actif,
-      abonementType,
-      abonement: new Date(),
+      abonnementType,
+      abonnement:abonnementType? new Date() : " ",
       email,
       address,
       postalCode,
@@ -83,10 +93,13 @@ export default function ListUser() {
       phone,
     };
 
-    fetch(`http://localhost:3000/api/user/update`, {
+    fetch(`http://localhost:3000/api/admin/user/update`, {
       method: "PUT",
       credentials: "include",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+         "Authorization": `Bearer ${user?.token}`
+       },
       body: JSON.stringify({ data, id: editId }),
     })
       .then((res) => res.ok && res.json())
@@ -111,7 +124,10 @@ export default function ListUser() {
     fetch(`http://localhost:3000/api/user/delete`, {
       method: "DELETE",
       credentials: "include",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+         "Content-Type": "application/json",
+         "Authorization": `Bearer ${user?.token}`
+         },
       body: JSON.stringify({ id: confirmDelete?.id }),
     })
       .then((res) => {
@@ -229,7 +245,7 @@ export default function ListUser() {
                         onChange={(e) => setActif(e.target.checked)}
                         icon={<DoNotDisturbAltIcon sx={{ fill: theme.palette.error.main }} />}
                         checkedIcon={<CheckCircleIcon sx={{ fill: theme.palette.success.main }} />}
-                        
+
                       />
                     ) : user.actif ? (
                       <CheckCircleIcon sx={{ fill: theme.palette.success.main }} aria-label="Actif" />
@@ -242,18 +258,18 @@ export default function ListUser() {
                     {isEditing ? (
                       <TextField
                         select
-                        value={abonementType}
-                        onChange={(e) => setAbonementType(e.target.value)}
+                        value={abonnementType}
+                        onChange={(e) => setAbonnementType(e.target.value)}
                         size="small"
                         sx={{ minWidth: 140 }}
                         aria-label="Type d'abonnement"
                       >
                         <Divider />
-                        <MenuItem value={null} sx={{ color: "gray" }}>Aucun</MenuItem>
+                        <MenuItem value={" "} sx={{ color: "gray" }}>Aucun</MenuItem>
                         <MenuItem value="Découverte">Découverte</MenuItem>
                         <MenuItem value="Passion">Passion</MenuItem>
                       </TextField>
-                    ) : user.abonementType ? (
+                    ) : user.abonnementType ? (
                       <Button
                         variant="contained"
                         size="small"
@@ -261,9 +277,9 @@ export default function ListUser() {
                         sx={{
                           bgcolor: "primary.main",
                         }}
-                        aria-label={`Abonnement ${user.abonementType}`}
+                        aria-label={`Abonnement ${user.abonnementType}`}
                       >
-                        {user.abonementType}
+                        {user.abonnementType}
                       </Button>
                     ) : (
                       <DoNotDisturbAltIcon sx={{ fill: theme.palette.error.main }}

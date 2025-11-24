@@ -9,6 +9,7 @@ import {
   Alert,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import theme from "../../theme";
 
 const emailValid = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,7 +38,7 @@ export default function ForgotPassword() {
     try {
       setLoading(true);
 
-      fetch("http://localhost:3000/user/forgot-password", {
+      fetch("http://localhost:3000/api/user/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -60,15 +61,6 @@ export default function ForgotPassword() {
     } 
   };
 
-  const inputStyle = {
-    "& label": { color: "#777" },
-    "& label.Mui-focused": { color: "orange" },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": { borderColor: "#ccc" },
-      "&:hover fieldset": { borderColor: "orange" },
-      "&.Mui-focused fieldset": { borderColor: "orange", borderWidth: 2 },
-    },
-  };
 
   return (
     <Box
@@ -98,11 +90,18 @@ export default function ForgotPassword() {
               Mot de passe oublié
             </Typography>
             <Typography variant="body2">
-              Entrez votre email pour recevoir un lien de réinitialisation
+              Entrez votre email pour recevoir un nouveau mot de passe
             </Typography>
           </Box>
 
-          {message && <Alert sx={{textAlign:"center"}} severity={message.includes("envoyé")? "success" : "error"}>{message}</Alert>}
+          {message && <Alert 
+          sx={{textAlign:"center", backgroundColor:theme.palette.background.default}} 
+          severity={message.includes("envoyé")? "success" : "error"}
+          >
+            {message.split(":")[0]}
+            {message.split(":")[1]}
+            </Alert>
+            }
 
           <Box component="form" onSubmit={handleForgot} noValidate>
             <Stack spacing={2}>
@@ -114,22 +113,14 @@ export default function ForgotPassword() {
                 required
                 fullWidth
                 autoFocus
-                sx={inputStyle}
+             
               />
 
               <Button
                 type="submit"
                 variant="contained"
                 fullWidth
-                sx={{
-                  py: 1.3,
-                  borderRadius: 2,
-                  textTransform: "none",
-                  bgcolor: "orange",
-                  "&:hover": { bgcolor: "#f57c00" },
-                  fontWeight: 600,
-                  fontSize: "0.95rem",
-                }}
+
                 disabled={loading}
               >
                 {loading ? "Envoi en cours..." : "Envoyer le lien"}
@@ -142,13 +133,12 @@ export default function ForgotPassword() {
               <Link
                 to="/login"
                 style={{
-                  color: "black",
+                  color: "text.primary",
                   fontWeight: 700,
                   textDecoration: "none",
                   transition: "color 0.2s ease",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "orange")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "black")}
+
               >
                 Retour à la connexion
               </Link>

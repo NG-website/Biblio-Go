@@ -13,6 +13,8 @@ import {
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 import CloseIcon from "@mui/icons-material/Close"
+import theme from "../../../theme"
+import { useAuthContext } from "../../Context/AuthContext"
 
 interface AddUserDialogProps {
   open: boolean
@@ -20,7 +22,7 @@ interface AddUserDialogProps {
 }
 
 export default function AddUserDialog({ open, close }: AddUserDialogProps) {
-
+  const { user } = useAuthContext()
   const [role, setRole] = useState(null)
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
@@ -63,16 +65,19 @@ export default function AddUserDialog({ open, close }: AddUserDialogProps) {
       })
     }
 
-    if (!name || !email || !address || !postalCode || !country || !password) {
+    if (!name || !email || !address || !postalCode || !country || !password || role === null) {
       setError("Veuillez remplir tous les champs")
       return
     }
 
     if (FormValid) {
       try {
-        const res = await fetch("http://localhost:3000/api/user/create", {
+        const res = await fetch("http://localhost:3000/api/admin/user/create", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${user?.token}`
+          },
           body: JSON.stringify({ name, email, password, address, postalCode, country, role }),
         })
 
@@ -84,7 +89,7 @@ export default function AddUserDialog({ open, close }: AddUserDialogProps) {
         const data = await res.json()
         if (data) {
           setSuccess(
-            "Compte créé avec succès ! Un e-mail de confirmation a été envoyé à votre adresse mail pour activer votre compte."
+            "Compte créé avec succès ! Un e-mail de confirmation a été envoyé à par mail pour activer le compte."
           )
           setName("")
           setEmail("")
@@ -98,16 +103,6 @@ export default function AddUserDialog({ open, close }: AddUserDialogProps) {
         setError("Une erreur est survenue. Réessayez plus tard.")
       }
     }
-  }
-
-  const inputStyle = {
-    "& label": { color: "#777" },
-    "& label.Mui-focused": { color: "orange" },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": { borderColor: "#ccc" },
-      "&:hover fieldset": { borderColor: "orange" },
-      "&.Mui-focused fieldset": { borderColor: "orange", borderWidth: 2 },
-    },
   }
 
   return (
@@ -134,6 +129,7 @@ export default function AddUserDialog({ open, close }: AddUserDialogProps) {
             position: "absolute",
             right: 8,
             top: 8,
+            "&: hover *": { fill: theme.palette.text.primary }
           }}
         >
           <CloseIcon />
@@ -152,27 +148,57 @@ export default function AddUserDialog({ open, close }: AddUserDialogProps) {
         >
           {error && <Alert
             severity="error"
-            sx={{ minWidth: "100%", backgroundColor: theme.palette.primary.main, justifyContent: "center" }}
+            sx={{ minWidth: "100%", backgroundColor: theme.palette.primary.main, textAlign: "center" }}
           >
             {error}
           </Alert>}
           {success && <Alert
             severity="success"
-            sx={{ minWidth: "100%", backgroundColor: theme.palette.primary.main, justifyContent: "center" }}
+            sx={{ minWidth: "100%", backgroundColor: theme.palette.primary.main, textAlign: "center" }}
           >
             {success}
           </Alert>}
 
           <Box display={"flex"} gap={2} justifyContent={"center"}>
-            <Button onClick={() => setRole(false)} color={role === false ? "primary" : "inherit"} variant="contained">User</Button>
-            <Button onClick={() => setRole(true)} color={role === true ? "primary" : "inherit"} variant="contained">Admin</Button>
+            <Button
+              onClick={() => setRole(false)}
+              variant={role === false ? "contained" : "outlined"}
+              sx={{ color: role === false ? "" : "text.primary" }}
+            >
+              User
+            </Button>
+            <Button
+              onClick={() => setRole(true)}
+              variant={role === true ? "contained" : "outlined"}
+              sx={{ color: role === true ? "" : "text.primary" }}
+            >
+              Admin
+            </Button>
           </Box>
 
           <Box component="form" onSubmit={handleRegister} noValidate>
             <Stack spacing={1.5}>
-              <TextField label="Nom" value={name} onChange={(e) => setName(e.target.value)} required fullWidth sx={inputStyle} />
-              <TextField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required fullWidth sx={inputStyle} />
-              <TextField label="Adresse" value={address} onChange={(e) => setAddress(e.target.value)} required fullWidth sx={inputStyle} />
+              <TextField
+                label="Nom"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                fullWidth
+              />
+              <TextField
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                fullWidth
+              />
+              <TextField
+                label="Adresse"
+                value={address} onChange={(e) => setAddress(e.target.value)}
+                required
+                fullWidth
+              />
 
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <TextField
@@ -180,7 +206,6 @@ export default function AddUserDialog({ open, close }: AddUserDialogProps) {
                   value={postalCode}
                   onChange={(e) => setPostalCode(e.target.value)}
                   required
-                  sx={inputStyle}
                   inputProps={{
                     maxLength: 5,
                     inputMode: "numeric",
@@ -193,7 +218,6 @@ export default function AddUserDialog({ open, close }: AddUserDialogProps) {
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
                   required
-                  sx={inputStyle}
                   style={{ width: "48%" }}
                 />
               </Box>
@@ -206,7 +230,6 @@ export default function AddUserDialog({ open, close }: AddUserDialogProps) {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   fullWidth
-                  sx={inputStyle}
                 />
                 <IconButton
                   sx={{ position: "absolute", top: 9, right: 10 }}

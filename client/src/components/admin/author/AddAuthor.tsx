@@ -13,6 +13,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import CloseIcon from "@mui/icons-material/Close";
 import theme from "../../../theme";
+import { useAuthContext } from "../../Context/AuthContext";
 
 interface AddAuthorProps {
   open: boolean;
@@ -20,24 +21,25 @@ interface AddAuthorProps {
 }
 
 function AddAuthor({ open, close }: AddAuthorProps) {
-
+  const {user} =useAuthContext()
+  
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [description, setDescription] = useState("");
-  const [alerte, setAlerte] = useState("");
+  const [message, setMessage] = useState("");
 
 
   const registerAuthor = () => {
     if (!firstname || !lastname || !description) {
-      return setAlerte("Merci de remplir tous les champs");
+      return setMessage("Merci de remplir tous les champs");
     }
 
     if (firstname.length < 2 || lastname.length < 2) {
-      return setAlerte("Le Nom et le Prénom doivent faire  au minumun 2 caracteres")
+      return setMessage("Le Nom et le Prénom doivent faire  au minumun 2 caracteres")
     }
 
     if (description.length < 20) {
-      return setAlerte("La description doit faire au minumun 20 caracteres")
+      return setMessage("La description doit faire au minumun 20 caracteres")
     }
 
     try {
@@ -49,22 +51,25 @@ function AddAuthor({ open, close }: AddAuthorProps) {
 
       fetch("http://localhost:3000/api/author/create", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${user?.token}`
+         },
         body: JSON.stringify({ data }),
       })
         .then((res) => {
           if (res.status === 400) {
-            setAlerte("Veuillez vérifier le formulaire, certains champs sont incorrects.");
+            setMessage("Veuillez vérifier le formulaire, certains champs sont incorrects.");
             return null
           }
 
           if (res.status === 409) {
-            setAlerte("Cet auteur existe déjà");
+            setMessage("Cet auteur existe déjà");
             return null;
           }
 
           if (!res.ok) {
-            setAlerte("Erreur serveur");
+            setMessage("Erreur serveur");
             return null;
           }
 
@@ -76,15 +81,15 @@ function AddAuthor({ open, close }: AddAuthorProps) {
             setFirstname("");
             setLastname("");
             setDescription("");
-            setAlerte(data);
+            setMessage(data);
             setTimeout(() => {
-              setAlerte("");
+              setMessage("");
               close(false);
             }, 3000)
           }
         })
     } catch (error) {
-      setAlerte("Erreur serveur")
+      setMessage("Erreur serveur")
     }
   }
 
@@ -108,6 +113,7 @@ function AddAuthor({ open, close }: AddAuthorProps) {
             position: "absolute",
             right: 8,
             top: 8,
+            "&: hover *":{fill:theme.palette.text.primary}
           }}
         >
           <CloseIcon />
@@ -136,7 +142,7 @@ function AddAuthor({ open, close }: AddAuthorProps) {
             value={lastname}
             onChange={(e) => {
               setLastname(e.target.value);
-              setAlerte("");
+              setMessage("");
             }}
             sx={{
               minWidth: { xs: "100%", md: "48%" },
@@ -154,7 +160,7 @@ function AddAuthor({ open, close }: AddAuthorProps) {
             value={firstname}
             onChange={(e) => {
               setFirstname(e.target.value);
-              setAlerte("");
+              setMessage("");
             }}
             sx={{
               minWidth: { xs: "100%", md: "48%" },
@@ -172,7 +178,7 @@ function AddAuthor({ open, close }: AddAuthorProps) {
             value={description}
             onChange={(e) => {
               setDescription(e.target.value);
-              setAlerte("");
+              setMessage("");
             }}
             fullWidth
             multiline
@@ -183,16 +189,16 @@ function AddAuthor({ open, close }: AddAuthorProps) {
             helperText={`${description.length}/1000`}
           />
 
-          {alerte && (
+          {message && (
             <Alert
-              severity={alerte.includes("enregistrer") ? "success" : "error"}
+              severity={message.includes("enregistrer") ? "success" : "error"}
               sx={{ minWidth: "100%", backgroundColor:theme.palette.primary.main, justifyContent:"center" }}
             >
-              {alerte}
+              {message}
             </Alert>
           )}
 
-          {alerte.includes("enregistrer") ? (
+          {message.includes("enregistrer") ? (
             <Button
               sx={{ maxWidth: { xs: "100%", md: "40%", backgroundColor:theme.palette.primary.main } }}
               variant="contained"
@@ -203,7 +209,7 @@ function AddAuthor({ open, close }: AddAuthorProps) {
                 sx={{ ml: 1 , fill:"white"}}
               />
             </Button>
-          ) : alerte !== "" ? (
+          ) : message !== "" ? (
             <Button
               sx={{ maxWidth: { xs: "100%", md: "40%" } }}
               variant="contained"

@@ -20,10 +20,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import GavelIcon from "@mui/icons-material/Gavel";
 import theme from "../theme";
+import { useAuthContext } from "./Context/AuthContext";
 
 function BurgerMenu() {
-  const admin = localStorage.getItem("role");
-  const isConnected = localStorage.getItem("Token");
+  const {user} = useAuthContext()
+  const admin = user?.role === true;
+  const isConnected = user?.id;
   const location = useLocation().pathname;
   const [active, setActive] = useState<string>(location);
   const [open, setOpen] = useState(false);
@@ -56,7 +58,7 @@ function BurgerMenu() {
     width: 60,
     height: 60,
     borderRadius:5,
-    bgcolor: "primary.main", // optionnel : fond pour mieux voir
+    bgcolor: "primary.main", 
     "&:hover": { 
       bgcolor: "secondary.main",
       fill:"white"
@@ -64,7 +66,10 @@ function BurgerMenu() {
   }}
   aria-label="Ouvrir le menu"
 >
-  <MenuIcon sx={{ fontSize: 40, fill:"secondary.main" ,     "&:hover": { 
+  <MenuIcon
+   sx={{ fontSize: 40,
+     fill:"secondary.main" ,
+     "&:hover": { 
       fill: theme.palette.primary.main
      },}} />
 </IconButton>
@@ -80,7 +85,8 @@ function BurgerMenu() {
           <Box textAlign="center" mb={2} mt={10}>
             <Button
               component={Link}
-              to={admin === "true" ? "/admin/dashboard" : "/"}
+              to= "/"
+              sx={{border:"none", "&:hover":{backgroundColor:"transparent"}}}
               onClick={() => setActive("/")}
             >
               <img
@@ -95,7 +101,7 @@ function BurgerMenu() {
             {/* Accueil */}
             <ListItemButton
               component={Link}
-              to={admin === "true" ? "/admin/dashboard" : "/"}
+              to= "/"
               onClick={() => setActive("/")}
               sx={buttonStyle(active === "/")}
             >
@@ -106,7 +112,7 @@ function BurgerMenu() {
             </ListItemButton>
 
             {/* User */}
-            {!admin || admin === "false" ? (
+            {!admin ? (
               <>
                 {isConnected && (
                   <ListItemButton
@@ -200,27 +206,39 @@ function BurgerMenu() {
               </>
             ) : (
               <>
-                {/* Admin */}
+        
                 <ListItemButton
                   component={Link}
-                  to="/back"
-                  onClick={() => setActive("/back")}
-                  sx={buttonStyle(active === "/back")}
+                  to="/admin/userbook/take"
+                  onClick={() => setActive("/admin/userbook/take")}
+                  sx={buttonStyle(active === "/admin/userbook/take")}
                 >
                   <ListItemIcon>
-                    <ContactMailIcon sx={{ color: active === "/back" ? theme.palette.secondary.main : theme.palette.text.primary }} />
+                    <ContactMailIcon sx={{ color: active === "/admin/userbook/take" ? theme.palette.secondary.main : theme.palette.text.primary }} />
                   </ListItemIcon>
-                  <ListItemText primary="Retour" />
+                  <ListItemText primary="Départs" />
+                </ListItemButton>
+
+                                <ListItemButton
+                  component={Link}
+                  to="/admin/userbook/deposit"
+                  onClick={() => setActive("/admin/userbook/deposit")}
+                  sx={buttonStyle(active === "/admin/userbook/deposit")}
+                >
+                  <ListItemIcon>
+                    <ContactMailIcon sx={{ fill: active === "/admin/userbook/deposit" ? theme.palette.secondary.main : theme.palette.text.primary }} />
+                  </ListItemIcon>
+                  <ListItemText primary="Retours" />
                 </ListItemButton>
 
                 <ListItemButton
                   component={Link}
                   to="/admin/book"
-                  onClick={() => setActive("/book")}
-                  sx={buttonStyle(active === "/book")}
+                  onClick={() => setActive("/admin/book")}
+                  sx={buttonStyle(active === "/admin/book")}
                 >
                   <ListItemIcon>
-                    <ContactMailIcon sx={{ color: active === "/book" ? "white" : "black" }} />
+                    <ContactMailIcon sx={{ fill: active === "/admin/book" ? theme.palette.secondary.main : theme.palette.text.primary }} />
                   </ListItemIcon>
                   <ListItemText primary="Book" />
                 </ListItemButton>
@@ -228,24 +246,24 @@ function BurgerMenu() {
                 <ListItemButton
                   component={Link}
                   to="/admin/user"
-                  onClick={() => setActive("/user")}
-                  sx={buttonStyle(active === "/user")}
+                  onClick={() => setActive("/admin/user")}
+                  sx={buttonStyle(active === "/admin/user")}
                 >
                   <ListItemIcon>
-                    <ContactMailIcon sx={{ color: active === "/user" ? "white" : "black" }} />
+                    <ContactMailIcon sx={{ fill: active === "/admin/user" ? theme.palette.secondary.main : theme.palette.text.primary }} />
                   </ListItemIcon>
                   <ListItemText primary="User" />
                 </ListItemButton>
 
                 <ListItemButton
                   component={Link}
-                  to="/admin/adminbook"
-                  onClick={() => setActive("/adminbook")}
-                  sx={buttonStyle(active === "/adminbook")}
+                  to="/admin/stripe"
+                  onClick={() => setActive("/admin/stripe")}
+                  sx={buttonStyle(active === "/admin/stripe")}
                 >
                   <ListItemIcon>
                     <ContactMailIcon
-                      sx={{ color: active === "/adminbook" ? "white" : "black" }}
+                      sx={{ fill: active === "/admin/stripe" ? theme.palette.secondary.main : theme.palette.text.primary }}
                     />
                   </ListItemIcon>
                   <ListItemText primary="Stripe" />

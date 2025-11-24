@@ -7,7 +7,7 @@ function CategoryDetails() {
     console.log(url)
     const [data, setData] = useState()
     useEffect(() => {
-        fetch(`http://localhost:3000/book/${url.cat}`)
+        fetch(`http://localhost:3000/api/book/${url.cat}`)
             .then((res) => {
                 if (!res.ok) {
                     console.log("then", res)

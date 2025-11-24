@@ -9,10 +9,10 @@ import {
   Chip,
   CircularProgress,
   InputAdornment,
-  IconButton,
   Grow,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import theme from "../../theme";
 
 export default function SearchBar() {
   const [data, setData] = useState([]);
@@ -36,7 +36,7 @@ export default function SearchBar() {
     }
 
     setLoading(true);
-    fetch("http://localhost:3000/book/autocompleted", {
+    fetch("http://localhost:3000/api/book/autocompleted", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: value }),
@@ -112,11 +112,11 @@ export default function SearchBar() {
         InputProps={{
           startAdornment: (
             <InputAdornment >
-                <SearchIcon sx={{ fill: "#eb7600ff" }} />
+                <SearchIcon sx={{ fill: theme.palette.primary.main }} />
               
             </InputAdornment>
           ),
-          endAdornment: loading && <CircularProgress size={18} sx={{ color: "#eb7600ff" }} />,
+          endAdornment: loading && <CircularProgress size={18} sx={{ color: "theme.primary" }} />,
         }}
         sx={{
           backgroundColor: "background.default",
@@ -124,13 +124,13 @@ export default function SearchBar() {
           "& .MuiOutlinedInput-root": {
             borderRadius: "50px",
             "& fieldset": {
-              borderColor: "#eb7600ff",
+              borderColor: theme.palette.primary.main,
             },
             "&:hover fieldset": {
-              borderColor: "#eb7600ff",
+              borderColor: theme.palette.primary.main,
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#eb7600ff",
+              borderColor: theme.palette.primary.main,
               borderWidth: 2,
             },
           },
@@ -168,7 +168,7 @@ export default function SearchBar() {
                 }}
               >
                 <ListItemText primary={d.name} />
-                <Chip label="Book" size="small" sx={{ bgcolor: "#eb7600ff", color: "white" }} />
+                <Chip label="Book" size="small" sx={{ bgcolor: theme.palette.primary.main}} />
               </ListItemButton>
             ))}
             {author.map((a, i) => (
@@ -185,7 +185,7 @@ export default function SearchBar() {
                 }}
               >
                 <ListItemText primary={a.firstname+" "+ a.lastname} />
-                <Chip label="Author" size="small" sx={{ bgcolor: "#ff9800", color: "white" }} />
+                <Chip label="Author" size="small" sx={{ bgcolor: theme.palette.primary.main }} />
               </ListItemButton>
             ))}
           </List>

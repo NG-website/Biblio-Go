@@ -17,21 +17,22 @@ import CheckIcon from '@mui/icons-material/Check';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { useAuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import theme from "../../theme";
 
 const UserProfile = () => {
   const [userData, setUserData] = useState<any>();
   const [imageUser, setImageUser] = useState(false);
   const [prevImage, setPrevImage] = useState("");
   const [updateDataUser, setUpdateDataUser] = useState(false);
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [file, setFile] = useState()
   const navigate = useNavigate()
-const {user} = useAuthContext()
-const userId = user? user?.userId : null;
-  
+  const { user } = useAuthContext()
+  const userId = user ? user?.userId : null;
+
   useEffect(() => {
-    
-   
+
+
 
     fetch("http://localhost:3000/api/user/id", {
       method: "POST",
@@ -40,7 +41,6 @@ const userId = user? user?.userId : null;
     })
       .then((res) => (!res.ok ? null : res.json()))
       .then((data) => {
-        // console.log(data)
         setUserData(data);
 
         fetch(`http://localhost:3000/api/uploads/user/${data.name + userId}.jpg`)
@@ -70,25 +70,22 @@ const userId = user? user?.userId : null;
   };
 
   const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.files[0])
-    setFile(event.target.files?.[0]) ;
-    // if (!file) return;
+    setFile(event.target.files?.[0]);
 
-    // Prévisualisation locale
     const previewUrl = URL.createObjectURL(event.target.files?.[0]);
     setPrevImage(previewUrl);
 
 
-   
+
 
   };
 
   const updateUser = () => {
-     const formData = new FormData();
+    const formData = new FormData();
     formData.append("name", userData.name + userId);
     formData.append("image", file);
     console.log(formData.get("name"))
-        fetch("http://localhost:3000/api/image/user", {
+    fetch("http://localhost:3000/api/image/user", {
       method: "POST",
       body: formData,
     })
@@ -96,7 +93,7 @@ const userId = user? user?.userId : null;
         if (!res.ok) throw new Error("Erreur lors de l'upload");
         return res.json();
       })
-      .then((data) => {console.log("Image uploadée", data);     setImageUser(true);})
+      .then((data) => { console.log("Image uploadée", data); setImageUser(true); })
       .catch((err) => console.error(err));
     fetch("http://localhost:3000/api/user/update", {
       method: "PUT",
@@ -108,13 +105,13 @@ const userId = user? user?.userId : null;
         if (data?.[0] === 1) {
           setUpdateDataUser(true);
           setEditing({ email: false, address: false, country: false, postalCode: false, phone: false, photo: false });
-          setError("modification enregister");
-          setTimeout(()=>{
-            setError("")
+          setMessage("modification enregister");
+          setTimeout(() => {
+            setMessage("")
             navigate('/')
-          },3000)
+          }, 3000)
         } else {
-          setError("les modification n ont pas etais  Ressayer plus tard");
+          setMessage("les modification n ont pas etais  Ressayer plus tard");
         }
       });
   };
@@ -128,15 +125,16 @@ const userId = user? user?.userId : null;
         alignItems: "center",
         p: 2,
         margin: "auto",
+
       }}
     >
-      <Card sx={{ width: "100%", p: 3, boxShadow: 3, borderRadius: 3, bgcolor: "white" }}>
+      <Card sx={{ width: "100%", p: 3, boxShadow: 3, borderRadius: 3, bgcolor: "background.default" }}>
         <CardContent>
           <Stack spacing={3} alignItems="center">
             <Box sx={{ position: "relative", display: "inline-block" }}>
               <Avatar
                 alt={userData?.name}
-                src={prevImage || (imageUser ? `http://localhost:3000/uploads/user/${userData.name + userId}.jpg` : "")}
+                src={prevImage || (imageUser ? `http://localhost:3000/api/uploads/user/${userData.name + userId}.jpg` : "")}
                 sx={{
                   width: 100,
                   height: 100,
@@ -153,13 +151,22 @@ const userId = user? user?.userId : null;
                   sx={{ position: "absolute", bottom: 0, right: 0, bgcolor: "white", boxShadow: 2 }}
                   onClick={() => document.getElementById("photo-upload")!.click()}
                 >
-                  {imageUser ? <Edit fontSize="small" onClick={(e) => { e.stopPropagation(); document.getElementById("photo-upload")!.click(); }} /> : <AddIcon />}
+                  {imageUser ?
+                    <Edit
+                      fontSize="small"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        document.getElementById("photo-upload")!.click();
+                      }} />
+                    :
+                    <AddIcon />
+                  }
                 </IconButton>
               )}
               <form>
                 <input
                   name="name"
-                  defaultValue={ userData && userData.name + userId}
+                  defaultValue={userData && userData.name + userId}
                   type="text"
                   style={{ display: "none" }}
                 />
@@ -174,9 +181,8 @@ const userId = user? user?.userId : null;
               </form>
             </Box>
 
-            <Typography variant="h5">{userData?.name}</Typography>
+            <Typography sx={{  color:"text.primary" }} variant="h2">{userData?.name}</Typography>
 
-            {/* Email */}
             <Box sx={{ width: "100%" }}>
               <Stack direction="row" alignItems="center" spacing={1}>
                 {editing.email ? (
@@ -186,39 +192,46 @@ const userId = user? user?.userId : null;
                     size="small"
                     fullWidth
                     value={userData?.email || ""}
-                    onChange={(e) => {handleChange("email", e.target.value)}}
+                    onChange={(e) => { handleChange("email", e.target.value) }}
                   />
                 ) : (
-                  <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                    <strong>Email :</strong> {userData?.email}
+                  <Typography  sx={{ flexGrow: 1,  color:"text.primary" }}>
+                    <strong style={{ color: theme.palette.text.primary }}>Email :</strong> {userData?.email}
                   </Typography>
                 )}
-                {!editing.email && <IconButton onClick={() => handleEdit("email")}><Edit /></IconButton>}
+                {!editing.email &&
+                <IconButton
+                 onClick={() => handleEdit("email")}
+                 >
+                  <Edit sx={{ fill: theme.palette.primary.main }}/>
+                  </IconButton>}
               </Stack>
             </Box>
 
-            {/* Adresse */}
             <Box sx={{ width: "100%" }}>
               <Stack direction="row" alignItems="center" spacing={1}>
                 {editing.address ? (
                   <TextField
                     label="Adresse"
-                    variant="outlined"
                     size="small"
                     fullWidth
                     value={userData?.address || ""}
                     onChange={(e) => handleChange("address", e.target.value)}
                   />
                 ) : (
-                  <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                    <strong>Adresse :</strong> {userData?.address}
+                  <Typography sx={{ flexGrow: 1,  color:"text.primary" }}>
+                    <strong style={{ color: theme.palette.text.primary }}>Adresse :</strong> {userData?.address}
                   </Typography>
                 )}
-                {!editing.address && <IconButton onClick={() => handleEdit("address")}><Edit /></IconButton>}
+                {!editing.address &&
+                 <IconButton 
+                 onClick={() => handleEdit("address")}
+                 >
+                  <Edit sx={{ fill: theme.palette.primary.main }}/>
+                  </IconButton>}
               </Stack>
             </Box>
 
-            {/* Ville et Code Postal */}
             <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
               <Stack direction="row" alignItems="center" spacing={1} sx={{ flex: 1, mr: 1 }}>
                 {editing.country ? (
@@ -231,11 +244,19 @@ const userId = user? user?.userId : null;
                     onChange={(e) => handleChange("country", e.target.value)}
                   />
                 ) : (
-                  <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                    <strong>Ville :</strong> {userData?.country}
+                  <Typography
+                    color="text.primary"
+                    sx={{ flexGrow: 1 }}
+                  >
+                    <strong style={{ color: theme.palette.text.primary }}>Ville :</strong> {userData?.country}
                   </Typography>
                 )}
-                {!editing.country && <IconButton onClick={() => handleEdit("country")}><Edit /></IconButton>}
+                {!editing.country &&
+                 <IconButton
+                  onClick={() => handleEdit("country")}
+                  >
+                    <Edit sx={{ fill: theme.palette.primary.main }} />
+                    </IconButton>}
               </Stack>
 
               <Stack direction="row" alignItems="center" spacing={1} sx={{ flex: 1, ml: 1 }}>
@@ -249,15 +270,21 @@ const userId = user? user?.userId : null;
                     onChange={(e) => handleChange("postalCode", e.target.value)}
                   />
                 ) : (
-                  <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                    <strong>Code postal :</strong> {userData?.postalCode}
+                  <Typography
+                    color="text.primary"
+                    sx={{ flexGrow: 1 }}>
+                    <strong style={{ color: theme.palette.text.primary }}>Code postal :</strong> {userData?.postalCode}
                   </Typography>
                 )}
-                {!editing.postalCode && <IconButton onClick={() => handleEdit("postalCode")}><Edit /></IconButton>}
+                {!editing.postalCode && 
+                <IconButton
+                 onClick={() => handleEdit("postalCode")}
+                 >
+                  <Edit sx={{ fill: theme.palette.primary.main }} />
+                  </IconButton>}
               </Stack>
             </Box>
 
-            {/* Téléphone */}
             <Box sx={{ width: "100%" }}>
               <Stack direction="row" alignItems="center" spacing={1}>
                 {editing.phone ? (
@@ -270,26 +297,42 @@ const userId = user? user?.userId : null;
                     onChange={(e) => handleChange("phone", e.target.value)}
                   />
                 ) : (
-                  <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                    <strong>Téléphone :</strong> {userData?.phone || "non rensignée"}
+                  <Typography
+                    color="text.primary"
+                    sx={{ flexGrow: 1 }}
+                  >
+                    <strong style={{ color: theme.palette.text.primary }}>Téléphone :</strong> {userData?.phone || "non rensignée"}
                   </Typography>
                 )}
-                {!editing.phone && <IconButton onClick={() => handleEdit("phone")}><Edit /></IconButton>}
+                {!editing.phone &&
+                  <IconButton
+                    onClick={() => handleEdit("phone")}>
+                    <Edit sx={{ fill: theme.palette.primary.main }} />
+                  </IconButton>}
               </Stack>
-              {error && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">Modification enregistrée avec succès</Alert>}
+
+              {message && <Alert
+                icon={<CheckIcon fontSize="inherit" />}
+                sx={{backgroundColor: "primary.main"}}
+                severity="success">Modification enregistrée avec succès
+                </Alert>
+              }
             </Box>
 
-            {/* Bouton Enregistrer */}
             {!updateDataUser ? (
-              <Button onClick={updateUser} variant="contained" color="primary" sx={{ mt: 2 }}>
+              <Button
+                onClick={updateUser}
+                variant="contained"
+                color="primary"
+                sx={{ mt: 2 }}>
                 Enregistrer les modifications
               </Button>
             ) : (
-              <Button 
-              onClick={()=>navigate('/') } 
-              variant="contained" 
-              sx={{ mt: 2 }}
-               endIcon={<KeyboardReturnIcon  />}>
+              <Button
+                onClick={() => navigate('/')}
+                variant="contained"
+                sx={{ mt: 2 }}
+                endIcon={<KeyboardReturnIcon />}>
                 Retour à la page d'accueil
               </Button>
             )}

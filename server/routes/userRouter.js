@@ -5,13 +5,15 @@ import adminMiddleware from '../middleware/adminMiddleware.js'
 
 const userRouter = Router()
 
-userRouter.get('/all', userController.All)
+//desactiver ! inutile?//
 userRouter.post('/id', userController.Id)
+
 userRouter.post('/create', userController.Create)
 userRouter.put('/update', userController.Update)
-userRouter.post('/search', userController.Search)
 userRouter.get('/comfirm-account', userController.ComfirmAccount)
 userRouter.put('/update-password', userController.UpdatePassword)
 userRouter.post('/forgot-password', userController.CreateNewPassword)
-userRouter.delete('/delete', userController.Delete)
+
+userRouter.get('/all',adminMiddleware, userController.All)
+userRouter.delete('/delete',adminMiddleware, userController.Delete)
 export default userRouter

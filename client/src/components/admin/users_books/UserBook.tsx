@@ -24,8 +24,10 @@ import AddBorrow from "./AddBorrow";
 import InputDate from "../../date/InputDate";
 import theme from "../../../theme";
 import PopUPDelete from "../popUpDelete";
+import { useAuthContext } from "../../Context/AuthContext";
 
 export default function UserBook({ filter }) {
+    const {user}=useAuthContext()
     const [bookUser, setBookUser] = React.useState([]);
     const [editId, setEditId] = React.useState(null);
     const [bookName, setBookName] = React.useState("");
@@ -41,7 +43,10 @@ export default function UserBook({ filter }) {
 
     React.useEffect(() => {
         setReload(false);
-        fetch("http://localhost:3000/api/bookuser/all")
+        fetch("http://localhost:3000/api/bookuser/all",{
+            credentials:"include",
+            headers:{ "Authorization": `Bearer ${user?.token}`}
+        })
             .then((res) => { return res.json() })
             .then((data) => {
                 console.log(data)
@@ -78,7 +83,10 @@ export default function UserBook({ filter }) {
         fetch(`http://localhost:3000/api/bookuser/update`, {
             method: "PUT",
             credentials: "include",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                 "Content-Type": "application/json",
+                 "Authorization": `Bearer ${user?.token}`
+                 },
             body: JSON.stringify({ data, id: { id: borrowId } }),
         })
             .then((res) => { return res.json() })
@@ -113,7 +121,10 @@ export default function UserBook({ filter }) {
         fetch(`http://localhost:3000/api/bookuser/update`, {
             method: "PUT",
             credentials: "include",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json" ,
+             "Authorization": `Bearer ${user?.token}`
+            },
             body: JSON.stringify({ data, id: { id: borrow.id } }),
         })
             .then((res) => res.ok && res.json())
@@ -133,7 +144,10 @@ export default function UserBook({ filter }) {
         fetch(`http://localhost:3000/api/bookuser/delete`, {
             method: "DELETE",
             credentials: "include",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                 "Content-Type": "application/json",
+                 "Authorization": `Bearer ${user?.token}`
+                 },
             body: JSON.stringify({ id: confirmDelete }),
         })
             .then((res) => {

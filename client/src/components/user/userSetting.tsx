@@ -16,15 +16,14 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAuthContext } from "../Context/AuthContext";
 
+
 const UserSettings = () => {
 
   const { user } = useAuthContext()
   const [theme, setTheme] = useState(false)
    const [reload, setReload] = useState(false)
-
   useEffect(() => {
     
-    console.log(localStorage)
     const light = (localStorage.getItem('Theme') === 'light')
     const dark = (localStorage.getItem('Theme') === 'dark')
     if(!light && !dark){
@@ -41,10 +40,6 @@ const UserSettings = () => {
   }, [reload])
 
 
-  const [settings, setSettings] = useState({
-    darkMode: false,
-    smsNotifications: false,
-  });
 
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
@@ -60,22 +55,15 @@ const UserSettings = () => {
 
   const [passwordMessage, setPasswordMessage] = useState("");
 
-  const handleChange = (field, value) => {
-    setSettings((prev) => ({ ...prev, [field]: value }));
-  };
 
-  const handlePasswordChange = (field, value) => {
+  const PasswordChange = (field, value) => {
     setPasswordData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const toggleShowPassword = (field) => {
+  const ShowPassword = (field) => {
     setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
-  const handleSaveSettings = () => {
-    console.log("Paramètres enregistrés :", settings);
-    window.location.href="/"
-  };
 
   const handleUpdatePassword = () => {
     const { currentPassword, newPassword, confirmPassword } = passwordData;
@@ -90,8 +78,8 @@ const UserSettings = () => {
       return;
     }
 
-    if (newPassword.length < 6) {
-      setPasswordMessage("Le mot de passe doit contenir au moins 6 caractères.");
+    if (newPassword.length <= 7) {
+      setPasswordMessage("Le mot de passe doit contenir au moins 7 caractères.");
       return;
     }
 
@@ -117,6 +105,7 @@ const UserSettings = () => {
           setPasswordMessage("Mot de passe mis à jour avec succès !");
           setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
           setShowPassword({ current: false, new: false, confirm: false })
+          setReload(true)
         }
       })
   };
@@ -137,66 +126,54 @@ const UserSettings = () => {
           p: 3,
           boxShadow: 3,
           borderRadius: 3,
-          bgcolor: "white",
+          bgcolor: "background.default",
         }}
       >
         <CardContent>
           <Stack spacing={3}>
-            <Typography variant="h5" textAlign="center">
+            <Typography
+            variant="h2" 
+            textAlign="center"
+            color="text.primary"
+            >
               Paramètres du compte
             </Typography>
 
             <Box>
-              <Typography variant="subtitle1" fontWeight={600}>
+              <Typography
+               variant="subtitle1"
+               color="text.primary"
+                fontWeight={600}>
                 Apparence
               </Typography>
               <FormControlLabel
+              label="Mode sombre"
+              sx={{"& .MuiFormControlLabel-label":{color:"text.primary"}}}
                 control={
                   <Switch
-                    //value={theme}
                     checked={theme}
-                    onChange={() => { setTheme(!theme); !theme ? (localStorage.setItem("Theme", `dark`)) : localStorage.setItem("Theme", `light`); setReload(!reload) }}
+                    onChange={() => { 
+                      setTheme(!theme);
+                       !theme ? (localStorage.setItem("Theme", `dark`)) 
+                       :
+                        localStorage.setItem("Theme", `light`);
+                         setReload(!reload)
+                         window.location.reload()
+                         }}
                   />
                 }
-                label="Mode sombre"
+                
               />
             </Box>
 
             <Divider />
 
             <Box>
-              <Typography variant="subtitle1" fontWeight={600}>
-                Notifications
-              </Typography>
-              <Stack>
-
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={true}
-                      disabled
-                    />}
-                  label="Notifications par e-mail (obligatoires)"
-                />
-
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={settings.smsNotifications}
-                      onChange={(e) =>
-                        handleChange("smsNotifications", e.target.checked)
-                      }
-                    />
-                  }
-                  label="Notifications par SMS"
-                />
-              </Stack>
-            </Box>
-
-            <Divider />
-
-            <Box>
-              <Typography variant="subtitle1" fontWeight={600}>
+              <Typography 
+              variant="subtitle1"
+               fontWeight={600}
+               color="text.primary"
+               >
                 Modifier mon mot de passe
               </Typography>
               <Stack spacing={2} mt={1}>
@@ -210,10 +187,10 @@ const UserSettings = () => {
                     size="small"
                     fullWidth
                     value={passwordData.currentPassword}
-                    onChange={(e) => handlePasswordChange("currentPassword", e.target.value)}
+                    onChange={(e) => PasswordChange("currentPassword", e.target.value)}
                   />
                   <IconButton
-                    onClick={() => toggleShowPassword("current")}
+                    onClick={() => ShowPassword("current")}
                     edge="end"
                     sx={{
                       position: "absolute",
@@ -235,10 +212,10 @@ const UserSettings = () => {
                     size="small"
                     fullWidth
                     value={passwordData.newPassword}
-                    onChange={(e) => handlePasswordChange("newPassword", e.target.value)}
+                    onChange={(e) => PasswordChange("newPassword", e.target.value)}
                   />
                   <IconButton
-                    onClick={() => toggleShowPassword("new")}
+                    onClick={() => ShowPassword("new")}
                     edge="end"
                     sx={{
                       position: "absolute",
@@ -260,10 +237,10 @@ const UserSettings = () => {
                     size="small"
                     fullWidth
                     value={passwordData.confirmPassword}
-                    onChange={(e) => handlePasswordChange("confirmPassword", e.target.value)}
+                    onChange={(e) => PasswordChange("confirmPassword", e.target.value)}
                   />
                   <IconButton
-                    onClick={() => toggleShowPassword("confirm")}
+                    onClick={() => ShowPassword("confirm")}
                     edge="end"
                     sx={{
                       position: "absolute",
@@ -283,7 +260,7 @@ const UserSettings = () => {
                         ? "success"
                         : "warning"
                     }
-                    sx={{ mt: 1 }}
+                    sx={{ mt: 1 , backgroundColor:"primary.main", justifyContent:"center"}}
                   >
                     {passwordMessage}
                   </Alert>
@@ -298,17 +275,6 @@ const UserSettings = () => {
                 </Button>
               </Stack>
             </Box>
-
-            <Divider />
-
-            <Button
-              variant="outlined"
-              color="primary"
-              sx={{ alignSelf: "center", mt: 1 }}
-              onClick={handleSaveSettings}
-            >
-              Enregistrer les paramètres
-            </Button>
           </Stack>
         </CardContent>
       </Card>
