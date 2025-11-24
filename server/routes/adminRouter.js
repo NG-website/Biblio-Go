@@ -5,7 +5,9 @@ import  dotenv  from 'dotenv'
 import stripe from 'stripe'
 dotenv.config()
 
-adminRouter.post('/dashboard', adminController.Dashboard)
+
+adminRouter.post('/user/create', adminController.CreateUser)
+adminRouter.put('/user/update', adminController.UpdateUser)
 // adminRouter.post('/bookuser/update', adminController.Update)
 adminRouter.post("/create-coupon", async (req, res) => {
   const stripe_ = new stripe(process.env.SECRET_KEY_STRIPE)

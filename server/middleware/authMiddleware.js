@@ -80,14 +80,14 @@ console.log(req.body)
             } else {
                 return res.status(400).json({ error: "Requête invalide." });
             }
-console.log(4)
+
             req.user = {
                 token: token,
                 userId: user.id,
                 userName: user.name,
                 userEmail: user.email,
-                abonement: user.abonement,
-                abonementType: user.abonementType,
+                abonnement: user.abonnement,
+                abonnementType: user.abonnementType,
                 role: user.role
             }
 

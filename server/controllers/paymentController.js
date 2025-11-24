@@ -66,7 +66,7 @@ const paymentControler = {
                 const today = new Date();
                 const oneYearLater = new Date(today);
                 const updateUser = await userModel.update(
-                    { abonement: oneYearLater.setDate(today.getDate() + 365), abonementType: event.data.object.metadata.abonementType },
+                    { abonnement: oneYearLater.setDate(today.getDate() + 365), abonnementType: event.data.object.metadata.abonementType },
                     { where: { id: event.data.object.metadata.userId } },
                 );
             }

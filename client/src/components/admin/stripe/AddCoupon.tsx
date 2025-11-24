@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import theme from "../../../theme";
+import { useAuthContext } from "../../Context/AuthContext";
 
 interface AddCouponProps {
   open: boolean;
@@ -19,30 +20,32 @@ interface AddCouponProps {
 }
 
 export default function AddCoupon({ open, close }: AddCouponProps) {
-  useEffect(()=>{
-
-  },[])
+  
+  const {user}=useAuthContext()
   const [name, setName] = useState("");
   const [percentOff, setPercentOff] = useState("");
   const [duration, setDuration] = useState("once");
   const [durationInMonths, setDurationInMonths] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
+  const [message, setMessage] = useState("");
 
 
   const handleCreateCoupon = async (e: React.FormEvent<HTMLFormElement>) => {
-  //  e.preventDefault();
-    setAlertMessage("");
+    e.preventDefault();
+    setMessage("");
 
 
     if (!name || !percentOff || !duration) {
-      setAlertMessage("Merci de remplir tous les champs obligatoires.");
+      setMessage("Merci de remplir tous les champs obligatoires.");
       return;
     }
 
     try {
-      const res = await fetch("http://localhost:3000/admin/create-coupon", {
+      const res = await fetch("http://localhost:3000/api/admin/create-coupon", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+         "Authorization": `Bearer ${user?.token}`
+         },
         body: JSON.stringify({
           name,
           percent_off: parseFloat(percentOff),
@@ -54,29 +57,29 @@ export default function AddCoupon({ open, close }: AddCouponProps) {
       });
 
       if (!res.ok) {
-        setAlertMessage("Erreur lors de la création du coupon.");
+        setMessage("Erreur lors de la création du coupon.");
         return;
       }
 
       const data = await res.json();
       if (data) {
-        setAlertMessage(`la creation du coupon ${data.name} est un succès`)
+        setMessage(`la creation du coupon ${data.name} est un succès`)
         setName("");
         setPercentOff("");
         setDuration("once");
         setDurationInMonths("");
         setTimeout(() => {
-          setAlertMessage("")
+          setMessage("")
           close(false)
-        }, 3000)
+        }, 9000)
       }
     } catch (err) {
-      setAlertMessage("Une erreur est survenue. Veuillez réessayer plus tard.");
+      setMessage("Une erreur est survenue. Veuillez réessayer plus tard.");
     }
   };
 
   return (
-        <Dialog open={open} sx={{
+    <Dialog open={open} sx={{
       "& .MuiDialog-paper": {
         width: { xs: "80%", md: "53%" },
         maxWidth: "none",
@@ -87,11 +90,11 @@ export default function AddCoupon({ open, close }: AddCouponProps) {
         Créer un coupon de réduction
         <IconButton
           onClick={() => close(false)}
-          sx={{ 
-            position: "absolute", 
-            right: 8, 
-            top: 8, 
-               "&:hover *": { fill: theme.palette.text.primary }
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            "&:hover *": { fill: theme.palette.text.primary }
           }}
         >
           <CloseIcon />
@@ -109,22 +112,23 @@ export default function AddCoupon({ open, close }: AddCouponProps) {
             mt: 2,
           }}
         >
-          {alertMessage &&
+          {message &&
             <Alert
-              severity={alertMessage.includes("succès") ? "success" : "error"}
+              severity={message.includes("succès") ? "success" : "error"}
+              sx={{ minWidth: "100%", bgcolor: "primary.main", justifyContent: "center" }}
             >
-              {alertMessage}
+              {message}
             </Alert>}
 
           <TextField
             label="Nom du coupon"
-             autoFocus
+            autoFocus
             value={name}
-            onClick={()=>console.log(1)}
-            onChange={(e) =>{console.log(2); setName(e.target.value)}}
+            onClick={() => console.log(1)}
+            onChange={(e) => { console.log(2); setName(e.target.value) }}
             required
             fullWidth
-          
+
           />
 
           <TextField
@@ -135,7 +139,7 @@ export default function AddCoupon({ open, close }: AddCouponProps) {
             required
             fullWidth
             inputProps={{ min: 1, max: 100 }}
-           
+
           />
 
           <TextField
@@ -144,7 +148,9 @@ export default function AddCoupon({ open, close }: AddCouponProps) {
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
             fullWidth
-         
+            SelectProps={{
+              MenuProps: { sx: { "& .MuiList-root": { color: "text.primary" } } }
+            }}
           >
             <MenuItem value="once">Une seule fois</MenuItem>
             <MenuItem value="repeating">Répétée</MenuItem>
@@ -158,7 +164,7 @@ export default function AddCoupon({ open, close }: AddCouponProps) {
               value={durationInMonths}
               onChange={(e) => setDurationInMonths(e.target.value)}
               fullWidth
-            
+
             />
           )}
 

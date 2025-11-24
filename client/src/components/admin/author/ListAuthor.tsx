@@ -10,11 +10,6 @@ import {
   Alert,
   Box,
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  Typography,
-  DialogActions,
   TextField,
 } from "@mui/material";
 
@@ -24,11 +19,13 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { DeleteForever } from "@mui/icons-material";
 import DoNotDisturbAltIcon from "@mui/icons-material/DoNotDisturbAlt";
-import AddAuthor from "./AddAuthor"; // optionnel
+import AddAuthor from "./AddAuthor"; 
 import theme from "../../../theme";
 import PopUPDelete from "../popUpDelete";
+import { useAuthContext } from "../../Context/AuthContext";
 
 export default function ListAuthor() {
+  const {user} = useAuthContext()
   const [authors, setAuthors] = React.useState([]);
   const [editId, setEditId] = React.useState(null);
   const [lastname, setLastname] = React.useState("");
@@ -65,7 +62,10 @@ export default function ListAuthor() {
     fetch(`http://localhost:3000/api/author/update`, {
       method: "PUT",
       credentials: "include",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+         "Authorization": `Bearer ${user?.token}`
+       },
       body: JSON.stringify({ data, id }),
     })
       .then((res) => (res.ok ? res.json() : null))
@@ -90,7 +90,10 @@ export default function ListAuthor() {
     fetch(`http://localhost:3000/api/author/delete`, {
       method: "DELETE",
       credentials:"include",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+         "Authorization": `Bearer ${user?.token}`
+       },
       body: JSON.stringify({ id: confirmDelete!.id }),
     })
       .then((res) => {

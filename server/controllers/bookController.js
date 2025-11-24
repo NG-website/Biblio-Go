@@ -13,20 +13,20 @@ const bookController = {
                     authorModel
                 ]
             })
-            console.log(all)
+          //  console.log(all)
             res.status(200).json(all)
         } catch (error) {
             return res.status(500).json(error)
         }
     },
-    async New(req, res) {
 
+    async New(req, res) {
         try {
             const all = await bookModel.findAll({
                 order: [
                     [sequelize.literal("ABS(TIMESTAMPDIFF(SECOND, `createdAt`, NOW()))"), "DESC"]
                 ],
-                limit: 20
+                limit: 30
             });
             res.status(200).json(all)
         } catch (error) {
@@ -39,7 +39,20 @@ const bookController = {
                 order: [
                     [`note`, "DESC"]
                 ],
-                limit: 20
+                limit: 30
+            });
+            res.status(200).json(all)
+        } catch (error) {
+            return res.status(500).json(error)
+        }
+    },
+        async Mode(req, res) {
+        try {
+            const all = await bookModel.findAll({
+                order: [
+                    [`borrow`, "DESC"]
+                ],
+                limit: 30
             });
             res.status(200).json(all)
         } catch (error) {
@@ -86,7 +99,7 @@ const bookController = {
         }
     },
     async Create(req, res) {
-        console.log(req.body)
+     //   console.log(req.body)
         try {
 
             const { name, authorId, stock, categoryId, note, description } = req.body
@@ -98,7 +111,7 @@ const bookController = {
         }
     },
     async Update(req, res) {
-        console.log(req.body)
+     //   console.log(req.body)
         try {
             //update le 10/11
             // const takeAt = req.body.takeAt
@@ -117,7 +130,7 @@ const bookController = {
     },
     async Delete(req, res) {
         try {
-            console.log(typeof req.body.id)
+         //   console.log(typeof req.body.id)
             const { id } = req.body
             const destroy = await bookModel.destroy({ where:{id:req.body.id} })
             res.json(destroy)

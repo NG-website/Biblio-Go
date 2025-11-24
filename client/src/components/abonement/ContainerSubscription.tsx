@@ -7,7 +7,7 @@ import { useAuthContext } from "../Context/AuthContext"
 function ContainerSubscription() {
   
   const { user } = useAuthContext()
-  const abonementType = user ? user.abonementType : null
+  const abonnementType = user ? user.abonnementType : null
   const [animation, setAnimation] = useState(false)
 
   const changeState = () => {
@@ -80,7 +80,7 @@ function ContainerSubscription() {
         }}
         aria-label="Section des abonnements disponibles"
       >
-        {abonementType === "Passion" ? null : <Subscription
+        {abonnementType === "Passion" ? null : <Subscription
           onClick={changeState}
           title={"Abonnement"}
           price={10}
@@ -90,7 +90,7 @@ function ContainerSubscription() {
           animation={!animation}
           aria-label="Abonnement Découverte, 10 euros par an"
         />}
-        {abonementType === "Découverte" ? null : <Subscription
+        {abonnementType === "Découverte" ? null : <Subscription
           onClick={changeState}
           title={"Abonnement"}
           price={20}

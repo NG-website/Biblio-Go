@@ -24,25 +24,23 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import AddBook from "./AddBook";
 import theme from "../../../theme";
 import PopUPDelete from "../popUpDelete";
+import { useAuthContext } from "../../Context/AuthContext";
 
 export default function ListBook() {
-
+    const { user } = useAuthContext()
     const [books, setBooks] = React.useState([]);
     const [editId, setEditId] = React.useState(null);
     const [file, setFile] = React.useState(null);
     const [name, setName] = React.useState("");
     const [stock, setStock] = React.useState("");
     const [note, setNote] = React.useState("");
-    // const [category, setCategory] = React.useState("");
     const [categoryId, setCategoryId] = React.useState("");
-    //const [author, setAuthor] = React.useState("");
     const [authorId, setAuthorId] = React.useState("");
     const [reload, setReload] = React.useState(false);
     const [alerte, setAlerte] = React.useState("");
     const [categoriesList, setCategoriesList] = React.useState([]);
     const [authorsList, setAuthorsList] = React.useState([]);
     const [confirmDelete, setConfirmDelete] = React.useState(null);
-    //const [descriptionAdd, setDescriptionAdd] = React.useState(false);
     const [openAddBook, setOpenAddBook] = React.useState(false);
 
     React.useEffect(() => {
@@ -66,8 +64,6 @@ export default function ListBook() {
         setName(book.name);
         setStock(book.stock);
         setNote(book.note);
-        // setCategory(book.Category.name);
-        // setAuthor(book.Author.firstname);
         setCategoryId(book.Category.id);
         setAuthorId(book.Author.id);
     };
@@ -79,7 +75,6 @@ export default function ListBook() {
     const pictureChange = (e) => {
         const selectedFile = e.target.files[0];
         if (selectedFile) {
-           // const picturePreview = URL.createObjectURL(selectedFile);
             setFile(selectedFile);
         }
     };
@@ -98,13 +93,20 @@ export default function ListBook() {
         if (file && name) {
             fetch(`http://localhost:3000/api/image/book`, {
                 method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user?.token}`
+                },
                 body: formData,
             });
         }
         fetch(`http://localhost:3000/api/book/update`, {
             method: "PUT",
             credentials: "include",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user?.token}`
+            },
             body: JSON.stringify({ data, id: { id: editId } }),
         })
             .then((res) => res.ok && res.json())
@@ -124,7 +126,10 @@ export default function ListBook() {
         fetch(`http://localhost:3000/api/book/delete`, {
             method: "DELETE",
             credentials: "include",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user?.token}`
+            },
             body: JSON.stringify({ id: confirmDelete!.id }),
         })
             .then((res) => {
@@ -168,7 +173,7 @@ export default function ListBook() {
                         color: "text.primary",
                         "&:hover": {
                             bgcolor: "secondary.main",
-                            color: "primary.main", 
+                            color: "primary.main",
                         },
                         "&:hover *": { fill: theme.palette.primary.main }
                     }}
@@ -328,9 +333,11 @@ export default function ListBook() {
                                                 required
                                                 SelectProps={{
                                                     MenuProps: {
-                                                        sx: { "& .MuiList-root": {
-                                                             color: "text.primary" 
-                                                            }},
+                                                        sx: {
+                                                            "& .MuiList-root": {
+                                                                color: "text.primary"
+                                                            }
+                                                        },
                                                         PaperProps: {
                                                             sx: { maxHeight: 200, maxWidth: 300 }
                                                         }

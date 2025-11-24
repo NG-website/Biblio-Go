@@ -9,8 +9,8 @@ import Layout from "../layout/Layout";
 // import BookDetails from "../book/BookDetails";
 // import AddUser from "../admin/user/AddUser";
 import ListUser from "../admin/user/ListUser";
-import UserDetails from "../admin/user/UserDetails";
-import SearchUser from "../admin/user/SearchUser";
+//import UserDetails from "../admin/user/UserDetails";
+//import SearchUser from "../admin/user/SearchUser";
 // import AddAuthor from "../admin/author/AddAuthor";
 import ListAuthor from "../admin/author/ListAuthor";
 //  import AuthorDetails from "../author/AuthorDetails";
@@ -40,8 +40,8 @@ const AdminRouter = () => {
         {/* <Route path="author/details/:id" element={<AuthorDetails />} /> */}
         <Route path="user" element={<ListUser />} />
         {/* <Route path="user/create" element={<AddUser />} /> */}
-        <Route path="user/search" element={<SearchUser />} />
-        <Route path="user/details/:id" element={<UserDetails />} />
+        {/* <Route path="user/search" element={<SearchUser />} />
+        <Route path="user/details/:id" element={<UserDetails />} /> */}
         <Route path="/stripe" element={<Stripe />} />
         {/* <Route path="book/:id" element={<BookDetails />} /> */}
         <Route path="userbook/take" element={<UserBook filter={'take'} />} />

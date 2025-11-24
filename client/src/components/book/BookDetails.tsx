@@ -28,7 +28,7 @@ function BookDetails() {
   const bookId = useParams().id
   const { user } = useAuthContext()
   const userId = user ? user.userId : null;
-  const abonement = user ? user.abonementType : null
+  const abonnement = user ? user.abonnementType : null
   const [openBorrow, setOpenBorrow] = useState<boolean>(false)
   const [takeAt, setTakeAt] = useState<Date | null>(null);
   const [depositAt, setDepositAt] = useState<Date | null>(null);
@@ -221,7 +221,7 @@ function BookDetails() {
         .catch(console.error);
     };
 
-    if (abonement === "Découverte") {
+    if (abonnement === "Découverte") {
       booking < 3 ?
         createBooking()
         :
@@ -229,7 +229,7 @@ function BookDetails() {
       setTimeout(() => {
         setMessage("")
       }, 3000);
-    } else if (abonement === "Passion") {
+    } else if (abonnement === "Passion") {
       booking < 9 ?
         createBooking()
         :
@@ -364,7 +364,7 @@ function BookDetails() {
           >
             Réserver votre livre en ligne
           </Button>
-        ) : userId && abonement === null ? (
+        ) : userId && abonnement === null ? (
           <Button
             onClick={() => navigate("/subscription")}
             variant="contained"
@@ -380,7 +380,7 @@ function BookDetails() {
           >
             Vous avez réservé ce livre
           </Button>)
-          : !openBorrow && userId && abonement && book.stock === 0 ? (
+          : !openBorrow && userId && abonnement && book.stock === 0 ? (
             <Button
               variant="contained"
               color="primary"
@@ -389,7 +389,7 @@ function BookDetails() {
               Actuellement indisponible avant le {soonAvailable(book.id)}
             </Button>
 
-          ) : !openBorrow && userId && abonement ? (
+          ) : !openBorrow && userId && abonnement ? (
             <Button
               onClick={() => setOpenBorrow(true)}
               variant="contained"

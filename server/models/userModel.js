@@ -8,14 +8,17 @@ const userModel = sequelize.define('User', {
   password: DataTypes.STRING,
   address: DataTypes.STRING,
   postalCode: DataTypes.STRING,
-  country:DataTypes.STRING,
+  country: DataTypes.STRING,
   phone: DataTypes.STRING,
   role: DataTypes.BOOLEAN,
-  abonement: DataTypes.DATE,
-  abonementType : DataTypes.STRING,
-  actif : DataTypes.BOOLEAN,
-  tokenValidation : DataTypes.STRING,
-  durationValidation: DataTypes.DATE,
+  abonnement: DataTypes.DATE,
+  abonnementType: {
+    type: DataTypes.ENUM('Passion', 'Découverte'),
+    allowNull: false,
+  },
+  actif: DataTypes.BOOLEAN,
+  actifToken: DataTypes.STRING,
+  expToken: DataTypes.DATE,
   tokenAdmin: DataTypes.STRING
 })
 export default userModel

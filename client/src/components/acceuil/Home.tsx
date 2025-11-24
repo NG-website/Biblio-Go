@@ -86,7 +86,7 @@ function Home() {
                 data={book?.sort((a, b) => (b.borrow) - (a.borrow)).slice(0, 10)}
                 title="Les Tendances"
                 subtitle="Les plus demander"
-                url="tendance"
+                url="mode"
             />
         </div>
     )

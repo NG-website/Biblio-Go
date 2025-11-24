@@ -4,7 +4,6 @@ import { createTheme } from "@mui/material/styles";
  const modeTheme = localStorage.getItem("Theme") || "light";
 
 
-
 const theme =  createTheme({
   palette: {
     mode: modeTheme === "light" ? "light" : "dark",

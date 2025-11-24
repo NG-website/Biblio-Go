@@ -18,6 +18,7 @@ import DangerousIcon from '@mui/icons-material/Dangerous';
 import CloseIcon from '@mui/icons-material/Close';
 
 import theme from "../../../theme";
+import { useAuthContext } from "../../Context/AuthContext";
 
 
 interface AddBookProps {
@@ -26,6 +27,7 @@ interface AddBookProps {
 }
 
 function AddBook({ open, close }: AddBookProps) {
+  const { user } = useAuthContext()
   const [preview, setPreview] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState("");
@@ -39,13 +41,18 @@ function AddBook({ open, close }: AddBookProps) {
   const [resultOcr, setResultOcr] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/author/all")
-      .then((res) => { return res.json() })
-      .then((data) => setAuthor(data));
+    try {
+      fetch("http://localhost:3000/api/author/all")
+        .then((res) => { return res.json() })
+        .then((data) => setAuthor(data));
 
-    fetch("http://localhost:3000/api/book/categories")
-      .then((res) => { return res.json() })
-      .then((data) => setCategories(data));
+      fetch("http://localhost:3000/api/book/categories")
+        .then((res) => { return res.json() })
+        .then((data) => setCategories(data));
+    } catch (error) {
+      console.log(error)
+    }
+
   }, []);
 
   const pictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,7 +85,10 @@ function AddBook({ open, close }: AddBookProps) {
           console.log(categorySelected)
           fetch("http://localhost:3000/api/book/create", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${user?.token}`
+            },
             body: JSON.stringify({
               name: name,
               authorId: authorSelected,
@@ -120,6 +130,7 @@ function AddBook({ open, close }: AddBookProps) {
     try {
       fetch(`http://localhost:3000/api/image/ocr`, {
         method: "POST",
+        headers: { "Authorization": `Bearer ${user?.token}` },
         body: formData,
       })
         .then((res) => {
@@ -134,7 +145,10 @@ function AddBook({ open, close }: AddBookProps) {
             fetch('http://localhost:3000/api/ocr', {
               method: 'POST',
               credentials: "include",
-              headers: { 'Content-Type': 'application/json' },
+              headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${user?.token}`
+              },
               body: JSON.stringify({ path: data.path.split(".")[0] + ".jpg" }),
             })
               .then((res) => {
@@ -233,7 +247,7 @@ function AddBook({ open, close }: AddBookProps) {
               sx={{ width: { xs: "100%", md: "40%" } }}
               SelectProps={{
                 MenuProps: {
-                  sx: { "& .MuiList-root": { color: "white" } },
+                  sx: { "& .MuiList-root": { color: "text.primary" } },
                   PaperProps: {
                     sx: { maxHeight: 200, maxWidth: 300 }
                   }
