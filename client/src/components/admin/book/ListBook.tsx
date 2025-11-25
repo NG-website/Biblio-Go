@@ -23,7 +23,7 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 
 import AddBook from "./AddBook";
 import theme from "../../../theme";
-import PopUPDelete from "../popUpDelete";
+import PopUPDelete from "../PopUpDelete";
 import { useAuthContext } from "../../Context/AuthContext";
 import { API_URL } from "../../../config";
 
