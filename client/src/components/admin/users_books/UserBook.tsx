@@ -25,6 +25,7 @@ import InputDate from "../../date/InputDate";
 import theme from "../../../theme";
 import PopUPDelete from "../popUpDelete";
 import { useAuthContext } from "../../Context/AuthContext";
+import { API_URL } from "../../../config";
 
 export default function UserBook({ filter }) {
     const {user}=useAuthContext()
@@ -43,7 +44,7 @@ export default function UserBook({ filter }) {
 
     React.useEffect(() => {
         setReload(false);
-        fetch("http://localhost:3000/api/bookuser/all",{
+        fetch(`${API_URL}api/bookuser/all`,{
             credentials:"include",
             headers:{ "Authorization": `Bearer ${user?.token}`}
         })
@@ -80,7 +81,7 @@ export default function UserBook({ filter }) {
             take_at: takeAt,
             deposit_at: depositAt,
         };
-        fetch(`http://localhost:3000/api/bookuser/update`, {
+        fetch(`${API_URL}api/bookuser/update`, {
             method: "PUT",
             credentials: "include",
             headers: {
@@ -118,7 +119,7 @@ export default function UserBook({ filter }) {
                 deposit: true
             };
         }
-        fetch(`http://localhost:3000/api/bookuser/update`, {
+        fetch(`${API_URL}api/bookuser/update`, {
             method: "PUT",
             credentials: "include",
             headers: { 
@@ -141,7 +142,7 @@ export default function UserBook({ filter }) {
     };
 
     const deleteForever = () => {
-        fetch(`http://localhost:3000/api/bookuser/delete`, {
+        fetch(`${API_URL}api/bookuser/delete`, {
             method: "DELETE",
             credentials: "include",
             headers: {
@@ -244,7 +245,7 @@ export default function UserBook({ filter }) {
                                         <Avatar
                                            alt={`image de ${borrow?.Book?.name}`}
                                             aria-label={`Photo du livre ${borrow?.Book?.name}`}
-                                            src={`http://localhost:3000/api/uploads/book/${borrow?.Book?.name}.jpg`}
+                                            src={`${API_URL}api/uploads/book/${borrow?.Book?.name}.jpg`}
                                         />
                                     </TableCell>
 

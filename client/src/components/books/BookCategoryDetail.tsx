@@ -3,6 +3,7 @@ import Book from "../acceuil/Book"
 import { useParams } from "react-router-dom"
 import theme from "../../theme"
 import { Box, Typography } from "@mui/material";
+import { API_URL } from "../../config";
 
 
 function CategoryDetails() {
@@ -10,7 +11,7 @@ function CategoryDetails() {
     console.log(url)
     const [data, setData] = useState()
     useEffect(() => {
-        fetch(`http://localhost:3000/api/book/${url.cat}`)
+        fetch(`${API_URL}api/book/${url.cat}`)
             .then((res) => {return res.json() })
             .then((data) => {setData(data) })
     }, [])

@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import CircularProgress from '@mui/material/CircularProgress';
+import { API_URL } from "../../config";
 
 export default function ContactForm() {
 
@@ -28,7 +29,7 @@ export default function ContactForm() {
 
     const data = { firstname, lastname, email, contentEmail }
     setLoading(true)
-    fetch("http://localhost:3000/api/user/contact", {
+    fetch(`${API_URL}api/user/contact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

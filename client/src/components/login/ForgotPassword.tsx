@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import theme from "../../theme";
+import { API_URL } from "../../config";
 
 const emailValid = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,7 +39,7 @@ export default function ForgotPassword() {
     try {
       setLoading(true);
 
-      fetch("http://localhost:3000/api/user/forgot-password", {
+      fetch(`${API_URL}api/user/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

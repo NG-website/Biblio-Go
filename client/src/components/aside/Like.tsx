@@ -10,6 +10,7 @@ import {
 import Book from "../acceuil/Book";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Context/AuthContext";
+import { API_URL } from "../../config";
 
 interface Author {
   id: number;
@@ -38,7 +39,7 @@ function Like() {
 
   useEffect(() => {
 
-    fetch(`http://localhost:3000/api/like/all`, {
+    fetch(`${API_URL}api/like/all`, {
       credentials: "include",
     })
       .then((res) => { return res.json() })
@@ -54,7 +55,7 @@ function Like() {
   const soonAvailable = (bookId) => {
 
     if (bookId) {
-      fetch("http://localhost:3000/api/bookuser/dispo", {
+      fetch(`${API_URL}api/bookuser/dispo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bookId: bookId })

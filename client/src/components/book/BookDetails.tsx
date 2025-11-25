@@ -21,6 +21,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import theme from "../../theme";
+import { API_URL } from "../../config";
 
 
 function BookDetails() {
@@ -43,7 +44,7 @@ function BookDetails() {
 
   useEffect(() => {
 
-    fetch("http://localhost:3000/api/book/id", {
+    fetch(`${API_URL}api/book/id`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -54,7 +55,7 @@ function BookDetails() {
       .catch(console.error);
 
     if (userId) {
-      fetch("http://localhost:3000/api/bookuser/id", {
+      fetch(`${API_URL}api/bookuser/id`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -68,7 +69,7 @@ function BookDetails() {
         })
         .catch(console.error);
 
-      fetch("http://localhost:3000/api/like/id", {
+      fetch(`${API_URL}api/like/id`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -98,7 +99,7 @@ function BookDetails() {
 
   const soonAvailable = (bookId) => {
 
-    fetch("http://localhost:3000/api/bookuser/dispo", {
+    fetch(`${API_URL}api/bookuser/dispo`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -168,7 +169,7 @@ function BookDetails() {
     }
 
     const createBooking = () => {
-      fetch("http://localhost:3000/api/bookuser/create", {
+      fetch(`${API_URL}api/bookuser/create`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-type": "application/json" },
@@ -189,7 +190,7 @@ function BookDetails() {
           }
           if (res.status === 201) {
 
-            fetch("http://localhost:3000/api/book/update", {
+            fetch(`${API_URL}api/book/update`, {
               method: "PUT",
               credentials: "include",
               headers: { "Content-type": "application/json" },
@@ -242,7 +243,7 @@ function BookDetails() {
   };
 
   const Like = () => {
-    fetch("http://localhost:3000/api/like/create", {
+    fetch(`${API_URL}api/like/create`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -258,7 +259,7 @@ function BookDetails() {
 
   const UnLike = () => {
     setLike(false);
-    fetch("http://localhost:3000/api/like/delete", {
+    fetch(`${API_URL}api/like/delete`, {
       method: "DELETE",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -301,7 +302,7 @@ function BookDetails() {
             width: "100%",
             height: "100%",
 
-            backgroundImage: `url("http://localhost:3000/api/uploads/book/${book.name}.jpg")`,
+            backgroundImage: `url("${API_URL}api/uploads/book/${book.name}.jpg")`,
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",

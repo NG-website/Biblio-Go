@@ -15,6 +15,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff"
 import CloseIcon from "@mui/icons-material/Close"
 import theme from "../../../theme"
 import { useAuthContext } from "../../Context/AuthContext"
+import { API_URL } from "../../../config"
 
 interface AddUserDialogProps {
   open: boolean
@@ -72,7 +73,7 @@ export default function AddUserDialog({ open, close }: AddUserDialogProps) {
 
     if (FormValid) {
       try {
-        const res = await fetch("http://localhost:3000/api/admin/user/create", {
+        const res = await fetch(`${API_URL}api/admin/user/create`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

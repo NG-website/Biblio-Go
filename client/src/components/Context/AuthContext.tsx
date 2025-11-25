@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, } from "react";
+import { API_URL } from "../../config";
 
 const AuthContext = createContext();
 
@@ -10,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState()
 
     useEffect(() => {
-        fetch("http://localhost:3000/cookies", {
+        fetch(`${API_URL}cookies`, {
 
             credentials: "include",
         })

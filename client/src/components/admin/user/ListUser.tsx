@@ -27,6 +27,7 @@ import AddUser from './AddUser';
 import theme from '../../../theme';
 import PopUPDelete from '../PopUpDelete';
 import { useAuthContext } from '../../Context/AuthContext';
+import { API_URL } from '../../../config';
 
 
 export default function ListUser() {
@@ -47,7 +48,7 @@ export default function ListUser() {
   const [phone, setPhone] = React.useState("");
 
   React.useEffect(() => {
-    fetch("http://localhost:3000/api/user/all", {
+    fetch(`${API_URL}api/user/all`, {
       credentials: "include",
       headers:{ "Authorization": `Bearer ${user?.token}`}
     })
@@ -93,7 +94,7 @@ export default function ListUser() {
       phone,
     };
 
-    fetch(`http://localhost:3000/api/admin/user/update`, {
+    fetch(`${API_URL}api/admin/user/update`, {
       method: "PUT",
       credentials: "include",
       headers: { 
@@ -121,7 +122,7 @@ export default function ListUser() {
   };
 
   const deleteForever = () => {
-    fetch(`http://localhost:3000/api/user/delete`, {
+    fetch(`${API_URL}api/user/delete`, {
       method: "DELETE",
       credentials: "include",
       headers: {

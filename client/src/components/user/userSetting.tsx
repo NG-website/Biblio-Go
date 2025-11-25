@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAuthContext } from "../Context/AuthContext";
+import { API_URL } from "../../config";
 
 
 const UserSettings = () => {
@@ -83,7 +84,7 @@ const UserSettings = () => {
       return;
     }
 
-    fetch("http://localhost:3000/api/user/update-password", {
+    fetch(`${API_URL}api/user/update-password`, {
       method: "PUT",
       credentials:"include",
       headers: {

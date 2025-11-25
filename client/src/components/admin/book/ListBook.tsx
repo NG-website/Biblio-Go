@@ -25,6 +25,7 @@ import AddBook from "./AddBook";
 import theme from "../../../theme";
 import PopUPDelete from "../popUpDelete";
 import { useAuthContext } from "../../Context/AuthContext";
+import { API_URL } from "../../../config";
 
 export default function ListBook() {
     const { user } = useAuthContext()
@@ -45,18 +46,18 @@ export default function ListBook() {
 
     React.useEffect(() => {
         setReload(false);
-        fetch("http://localhost:3000/api/book/all")
+        fetch(`${API_URL}api/book/all`)
             .then((res) => { return res.json() })
             .then((data) => { setBooks(data) })
             .catch((err) => console.error(err));
     }, [reload]);
 
     const startEdit = (book) => {
-        fetch("http://localhost:3000/api/book/categories")
+        fetch(`${API_URL}api/book/categories`)
             .then((res) => { return res.json() })
             .then((data) => setCategoriesList(data));
 
-        fetch("http://localhost:3000/api/author/all")
+        fetch(`${API_URL}api/author/all`)
             .then((res) => { return res.json() })
             .then((data) => { setAuthorsList(data) });
 
@@ -91,7 +92,7 @@ export default function ListBook() {
         formData.append("name", bookName);
         formData.append("image", file!);
         if (file && name) {
-            fetch(`http://localhost:3000/api/image/book`, {
+            fetch(`${API_URL}api/image/book`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -100,7 +101,7 @@ export default function ListBook() {
                 body: formData,
             });
         }
-        fetch(`http://localhost:3000/api/book/update`, {
+        fetch(`${API_URL}api/book/update`, {
             method: "PUT",
             credentials: "include",
             headers: {
@@ -123,7 +124,7 @@ export default function ListBook() {
     };
 
     const deleteForever = () => {
-        fetch(`http://localhost:3000/api/book/delete`, {
+        fetch(`${API_URL}api/book/delete`, {
             method: "DELETE",
             credentials: "include",
             headers: {
@@ -232,7 +233,7 @@ export default function ListBook() {
                                                     src={file ?
                                                         URL.createObjectURL(file)
                                                         :
-                                                        `http://localhost:3000/apiuploads/book/${book.name}.jpg`}
+                                                        `${API_URL}apiuploads/book/${book.name}.jpg`}
                                                 />
                                                 <Button
                                                     variant="contained"
@@ -249,7 +250,7 @@ export default function ListBook() {
                                                 </Button>
                                             </Box>
                                         ) : (
-                                            <Avatar alt={`image de ${book.name}`} src={`http://localhost:3000/api/uploads/book/${book.name}.jpg`} />
+                                            <Avatar alt={`image de ${book.name}`} src={`${API_URL}api/uploads/book/${book.name}.jpg`} />
                                         )}
                                     </TableCell>
 

@@ -19,6 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import theme from "../../../theme";
 import { useAuthContext } from "../../Context/AuthContext";
+import { API_URL } from "../../../config";
 
 
 interface AddBookProps {
@@ -42,11 +43,11 @@ function AddBook({ open, close }: AddBookProps) {
 
   useEffect(() => {
     try {
-      fetch("http://localhost:3000/api/author/all")
+      fetch(`${API_URL}api/author/all`)
         .then((res) => { return res.json() })
         .then((data) => setAuthor(data));
 
-      fetch("http://localhost:3000/api/book/categories")
+      fetch(`${API_URL}api/book/categories`)
         .then((res) => { return res.json() })
         .then((data) => setCategories(data));
     } catch (error) {
@@ -74,7 +75,7 @@ function AddBook({ open, close }: AddBookProps) {
       formData.append("name", name);
       if (file) formData.append("image", file);
 
-      fetch("http://localhost:3000/api/image/book", {
+      fetch(`${API_URL}api/image/book`, {
         method: "POST",
         body: formData
       })
@@ -83,7 +84,7 @@ function AddBook({ open, close }: AddBookProps) {
           console.log(data)
           console.log(authorSelected)
           console.log(categorySelected)
-          fetch("http://localhost:3000/api/book/create", {
+          fetch(`${API_URL}api/book/create`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -128,7 +129,7 @@ function AddBook({ open, close }: AddBookProps) {
     formData.append("image", e.target.files[0]);
 
     try {
-      fetch(`http://localhost:3000/api/image/ocr`, {
+      fetch(`${API_URL}api/image/ocr`, {
         method: "POST",
         headers: { "Authorization": `Bearer ${user?.token}` },
         body: formData,
@@ -142,7 +143,7 @@ function AddBook({ open, close }: AddBookProps) {
         })
         .then((data) => {
           if (data.path) {
-            fetch('http://localhost:3000/api/ocr', {
+            fetch(`${API_URL}api/ocr`, {
               method: 'POST',
               credentials: "include",
               headers: {

@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { API_URL } from "../../config";
 //import { useAuth } from "../Context/AuthContext";
 
 const emailValid = (email: string) => {
@@ -63,7 +64,7 @@ export default function Login() {
     }
 
     try {
-      fetch("http://localhost:3000/login", {
+      fetch(`${API_URL}login`, {
         method: "POST",
         credentials:"include",
         headers: { "Content-Type": "application/json" },

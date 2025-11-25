@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Book from "../acceuil/Book.js"
 import { Box, Divider, Stack, Typography } from "@mui/material"
+import { API_URL } from "../../config.js"
 
 function AuthorDetails() {
   const authorId = useParams()
@@ -9,7 +10,7 @@ function AuthorDetails() {
   const [authorBook, setAuthorBook] = useState([])
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/author/id`, {
+    fetch(`${API_URL}api/author/id`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -21,7 +22,7 @@ function AuthorDetails() {
       })
       .then((data) => { setAuthorDetails(data) })
 
-    fetch(`http://localhost:3000/api/book/author`, {
+    fetch(`${API_URL}api/book/author`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

@@ -4,7 +4,7 @@ import { Box, Typography, Stack, Divider, Alert, ListItem } from "@mui/material"
 import Button from '@mui/material/Button';
 import { useAuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-
+import { API_URL } from "../../config";
 interface SubscriptionProps {
   title: string;
   price: number;
@@ -34,7 +34,7 @@ function Subscription({
   useEffect(() => {
 
     try {
-      fetch("http://localhost:3000/api/subscription/search-product", {
+      fetch(`${API_URL}api/subscription/search-product`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productName: subtitle })
@@ -68,7 +68,7 @@ function Subscription({
 
     try {
       if (userId) {
-        fetch(`http://localhost:3000/api/user/id`, {
+        fetch(`${API_URL}api/user/id`, {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({ id: userId })
@@ -81,7 +81,7 @@ function Subscription({
           .then((data) => {
             user.push({ name: data.userName, email: data.userEmail })
 
-            fetch("http://localhost:3000/api/subscription/search-customer", {
+            fetch(`${API_URL}api/subscription/search-customer`, {
               method: "POST",
               headers: { "Content-type": "application/json" },
               body: JSON.stringify({ name: data.userName, email: data.userEmail })
@@ -92,7 +92,7 @@ function Subscription({
               .then((data) => {
                 // console.log(data)
                 if (data.data[0]) {
-                  fetch("http://localhost:3000/api/subscription/create-checkout-session", {
+                  fetch(`${API_URL}api/subscription/create-checkout-session`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ customerId: data.data[0].id, priceId: idProduct, userId: userId, abonementType: subtitle })
@@ -108,7 +108,7 @@ function Subscription({
                 }
 
                 if (data.data.length === 0) {
-                  fetch(`http://localhost:3000/api/subscription/create-customer`, {
+                  fetch(`${API_URL}api/subscription/create-customer`, {
                     method: "POST",
                     headers: { "Content-type": "application/json" },
                     body: JSON.stringify({ name: user[0].name, email: user[0].email })
@@ -119,7 +119,7 @@ function Subscription({
                     .then((data) => {
                       console.log(data)
                       if (data.id.length != 0) {
-                        fetch("http://localhost:3000/api/subscription/create-checkout-session", {
+                        fetch(`${API_URL}api/subscription/create-checkout-session`, {
                           method: "POST",
                           headers: { "Content-Type": "application/json" },
                           body: JSON.stringify({ customerId: data.id, priceId: idProduct, userId: userId, abonementType: subtitle })

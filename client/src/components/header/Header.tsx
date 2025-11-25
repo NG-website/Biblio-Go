@@ -20,6 +20,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuthContext } from "../Context/AuthContext";
 import theme from "../../theme";
+import { API_URL } from "../../config";
 
 function Header() {
   const { user, setUser } = useAuthContext()
@@ -32,7 +33,7 @@ function Header() {
   const toggleMenu = () => setOpenMenu((prev) => !prev);
 
   const logout = () => {
-    fetch("http://localhost:3000/logout", {
+    fetch(`${API_URL}logout`, {
       method: "POST",
       credentials: "include",
     })
