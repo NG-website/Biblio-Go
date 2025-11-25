@@ -27,7 +27,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: "https://biblio-go.onrender.com/",
+  origin: "biblio-go-front.vercel.app",
   credentials: true
 }));
 
