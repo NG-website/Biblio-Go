@@ -8,9 +8,9 @@ import AdminRouter from "./components/Router/AdminRouter"
 import { useAuthContext } from "./components/Context/AuthContext"
 
 const App: React.FC = () => {
-  const user = useAuthContext()
+  const {user} = useAuthContext()
  //console.log(user)
-  const admin = user?.user ? user?.user.role === true : false
+  const admin = user? user?.role === true : false
   //console.log(admin)
   return (
     <BrowserRouter>
