@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import theme from "../../theme";
+import { API_URL } from "../../config";
 
 interface BookProps {
   name: string;
@@ -35,7 +36,7 @@ function Book({ name, id, click, seeTitle = true }: BookProps) {
             backgroundColor: loading ? "grey" : "#fff",
             backgroundImage: loading
               ? "none"
-              : `url("http://localhost:3000/api/uploads/book/${name}.jpg")`,
+              : `url("${API_URL}api/uploads/book/${name}.jpg")`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",

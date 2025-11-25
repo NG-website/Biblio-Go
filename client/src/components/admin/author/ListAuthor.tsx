@@ -23,6 +23,7 @@ import AddAuthor from "./AddAuthor";
 import theme from "../../../theme";
 import PopUPDelete from "../popUpDelete";
 import { useAuthContext } from "../../Context/AuthContext";
+import { API_URL } from "../../../config";
 
 export default function ListAuthor() {
   const {user} = useAuthContext()
@@ -39,7 +40,7 @@ export default function ListAuthor() {
 
   React.useEffect(() => {
     setReload(false);
-    fetch("http://localhost:3000/api/author/all")
+    fetch(`${API_URL}api/author/all`)
       .then((res) => (res.ok ? res.json() : []))
       .then((data) => setAuthors(data))
       .catch((err) => console.error(err));
@@ -59,7 +60,7 @@ export default function ListAuthor() {
   const saveEdit = (id) => {
     const data = { lastname, firstname, description };
 
-    fetch(`http://localhost:3000/api/author/update`, {
+    fetch(`${API_URL}api/author/update`, {
       method: "PUT",
       credentials: "include",
       headers: { 
@@ -87,7 +88,7 @@ export default function ListAuthor() {
   };
 
   const deleteForever = () => {
-    fetch(`http://localhost:3000/api/author/delete`, {
+    fetch(`${API_URL}api/author/delete`, {
       method: "DELETE",
       credentials:"include",
       headers: { 

@@ -12,6 +12,7 @@ import {
 } from "@mui/material"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
+import { API_URL } from "../../config"
 
 export default function Register() {
   const navigate = useNavigate()
@@ -71,7 +72,7 @@ export default function Register() {
 
     if (FormValid) {
       try {
-        const res = await fetch("http://localhost:3000/api/user/create", {
+        const res = await fetch(`${API_URL}api/user/create`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, password, address, postalCode, country }),

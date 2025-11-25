@@ -5,6 +5,7 @@ import { Box, Button } from "@mui/material";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import theme from "../../../theme";
+import { API_URL } from "../../../config";
 
 function NavBar() {
   const { setFilter } = Filter();
@@ -25,7 +26,7 @@ function NavBar() {
 
   // Récupération des catégories
   useEffect(() => {
-    fetch("http://localhost:3000/api/book/categories")
+    fetch(`${API_URL}api/book/categories`)
       .then((res) => res.json())
       .then((data) => setCategories(data));
 

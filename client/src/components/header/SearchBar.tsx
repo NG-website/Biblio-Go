@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import theme from "../../theme";
+import { API_URL } from "../../config";
 
 export default function SearchBar() {
   const [data, setData] = useState([]);
@@ -36,7 +37,7 @@ export default function SearchBar() {
     }
 
     setLoading(true);
-    fetch("http://localhost:3000/api/book/autocompleted", {
+    fetch(`${API_URL}api/book/autocompleted`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: value }),

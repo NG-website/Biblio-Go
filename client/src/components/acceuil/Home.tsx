@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import BooksSection from "./BooksSection"
 import { Filter } from "../acceuil/NavFilter/Context"
 import { useAuthContext } from "../Context/AuthContext"
+import { API_URL } from "../../config"
 
 function Home() {
     const filter = Filter()?.filter
@@ -11,7 +12,7 @@ function Home() {
 
     useEffect(() => {
 
-        fetch("http://localhost:3000/api/book/all")
+        fetch(`${API_URL}api/book/all`)
             .then((res) => { return res.json() })
             .then((data) => {
                 if (!user) {
@@ -24,7 +25,7 @@ function Home() {
                 }
                 if (user) {
                     let booking = []
-                    fetch("http://localhost:3000/api/bookuser/id", {
+                    fetch(`${API_URL}api/bookuser/id`, {
                         method: "POST",
                         credentials: "include",
                         headers: { "Content-Type": "application/json" },

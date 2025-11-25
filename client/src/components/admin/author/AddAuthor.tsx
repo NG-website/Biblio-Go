@@ -14,6 +14,7 @@ import DangerousIcon from "@mui/icons-material/Dangerous";
 import CloseIcon from "@mui/icons-material/Close";
 import theme from "../../../theme";
 import { useAuthContext } from "../../Context/AuthContext";
+import { API_URL } from "../../../config";
 
 interface AddAuthorProps {
   open: boolean;
@@ -49,7 +50,7 @@ function AddAuthor({ open, close }: AddAuthorProps) {
         description
       }
 
-      fetch("http://localhost:3000/api/author/create", {
+      fetch(`${API_URL}api/author/create`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

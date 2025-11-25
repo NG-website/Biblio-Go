@@ -13,6 +13,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import theme from "../../../theme";
 import { useAuthContext } from "../../Context/AuthContext";
+import { API_URL } from "../../../config";
 
 interface AddCouponProps {
   open: boolean;
@@ -40,7 +41,7 @@ export default function AddCoupon({ open, close }: AddCouponProps) {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/admin/create-coupon", {
+      const res = await fetch(`${API_URL}api/admin/create-coupon`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

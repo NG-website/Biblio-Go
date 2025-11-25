@@ -21,6 +21,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import theme from "../../../theme";
 import InputDate from "../../date/InputDate";
 import { useAuthContext } from "../../Context/AuthContext";
+import { API_URL } from "../../../config";
 
 interface AddBorrowProps {
   open: boolean;
@@ -40,12 +41,12 @@ function AddBorrow({ open, close }: AddBorrowProps) {
 
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/book/all")
+    fetch(`${API_URL}api/book/all`)
       .then((res) => res.ok && res.json())
       .then((data) => setBookList(data))
       .catch(console.error);
 
-    fetch("http://localhost:3000/api/user/all")
+    fetch(`${API_URL}api/user/all`)
       .then((res) => res.ok && res.json())
       .then((data) => {
         console.log(data)
@@ -57,7 +58,7 @@ function AddBorrow({ open, close }: AddBorrowProps) {
 
   useEffect(() => {
     if (bookSelected) {
-      setPreview(`http://localhost:3000/api/uploads/book/${bookSelected.name}.jpg`);
+      setPreview(`${API_URL}api/uploads/book/${bookSelected.name}.jpg`);
     } else {
       setPreview("");
     }
@@ -72,7 +73,7 @@ function AddBorrow({ open, close }: AddBorrowProps) {
     }
 
 
-    fetch("http://localhost:3000/api/bookuser/id", {
+    fetch(`${API_URL}api/bookuser/id`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -126,7 +127,7 @@ function AddBorrow({ open, close }: AddBorrowProps) {
       deposit_at: depositAt,
     };
 
-    fetch("http://localhost:3000/api/bookuser/create", {
+    fetch(`${API_URL}api/bookuser/create`, {
       method: "POST",
       credentials: "include",
       headers: { 

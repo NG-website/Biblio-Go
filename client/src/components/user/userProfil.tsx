@@ -18,6 +18,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { useAuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import theme from "../../theme";
+import { API_URL } from "../../config";
 
 const UserProfile = () => {
   const [userData, setUserData] = useState<any>();
@@ -34,7 +35,7 @@ const UserProfile = () => {
 
 
 
-    fetch("http://localhost:3000/api/user/id", {
+    fetch(`${API_URL}api/user/id`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ id: userId }),
@@ -43,7 +44,7 @@ const UserProfile = () => {
       .then((data) => {
         setUserData(data);
 
-        fetch(`http://localhost:3000/api/uploads/user/${data.name + userId}.jpg`)
+        fetch(`${API_URL}api/uploads/user/${data.name + userId}.jpg`)
           .then((res) => {
             if (!res.ok) setImageUser(false);
             else setImageUser(true);
@@ -85,7 +86,7 @@ const UserProfile = () => {
     formData.append("name", userData.name + userId);
     formData.append("image", file);
     console.log(formData.get("name"))
-    fetch("http://localhost:3000/api/image/user", {
+    fetch(`${API_URL}api/image/user`, {
       method: "POST",
       body: formData,
     })
@@ -95,7 +96,7 @@ const UserProfile = () => {
       })
       .then((data) => { console.log("Image uploadée", data); setImageUser(true); })
       .catch((err) => console.error(err));
-    fetch("http://localhost:3000/api/user/update", {
+    fetch(`${API_URL}api/user/update`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: userData, id: userId }),
@@ -134,7 +135,7 @@ const UserProfile = () => {
             <Box sx={{ position: "relative", display: "inline-block" }}>
               <Avatar
                 alt={userData?.name}
-                src={prevImage || (imageUser ? `http://localhost:3000/api/uploads/user/${userData.name + userId}.jpg` : "")}
+                src={prevImage || (imageUser ? `${API_URL}api/uploads/user/${userData.name + userId}.jpg` : "")}
                 sx={{
                   width: 100,
                   height: 100,

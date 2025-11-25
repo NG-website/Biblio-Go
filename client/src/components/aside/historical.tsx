@@ -11,6 +11,7 @@ import {
 import Book from "../acceuil/Book";
 import { useAuthContext } from "../Context/AuthContext";
 import theme from "../../theme";
+import { API_URL } from "../../config";
 
 function Historical() {
   const { user } = useAuthContext()
@@ -23,7 +24,7 @@ function Historical() {
   const [reload, setReload] = useState(false);
   useEffect(() => {
     if (userId) {
-      fetch(`http://localhost:3000/api/bookuser/id`, {
+      fetch(`${API_URL}api/bookuser/id`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -78,7 +79,7 @@ function Historical() {
     const bookId = { bookId: e.currentTarget.dataset.id };
     const data = { deposit_at: newDepositAt, updateDeposit: true };
 
-    fetch(`http://localhost:3000/api/bookuser/update`, {
+    fetch(`${API_URL}api/bookuser/update`, {
       method: "PUT",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -104,7 +105,7 @@ function Historical() {
     console.log(livreSelected)
     console.log(historical[livreSelected!].deposit_at)
     console.log(e.currentTarget.parentElement.querySelector("input[type=date]")?.value <= historical[livreSelected!].deposit_at)
-    fetch("http://localhost:3000/api/bookuser/update",{
+    fetch(`${API_URL}api/bookuser/update",{
       method:"POST",
       credentials:"include",
       headers:{"Content_Type":"application/json"},

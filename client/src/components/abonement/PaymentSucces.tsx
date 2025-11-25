@@ -3,30 +3,33 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuthContext } from '../Context/AuthContext';
-
+import { API_URL } from "../../config";
+  
 const PaymentSuccess = () => {
   const navigate = useNavigate();
-  const {user} = useAuthContext()
-  const userId = user? user?.userId : null
-  useEffect(()=>{
-    fetch("http://localhost:3000/api/user/update",{
-      method:"PUT",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({id : 1})
+  const { user } = useAuthContext()
+  const userId = user ? user?.userId : null
+
+
+  useEffect(() => {
+    fetch(`${API_URL}api/user/update`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: 1 })
     })
-    .then((res) =>{ 
-      return res.json()
-    })
-    .then((data) => {
-      console.log(data)
-      if (data.abonement) {
-        localStorage.setItem("Abonement", data.abonement);
-        localStorage.setItem("AbonementType", data.abonementType);
-      }
-    })
-  },[])
+      .then((res) => {
+        return res.json()
+      })
+      .then((data) => {
+        console.log(data)
+        if (data.abonement) {
+          localStorage.setItem("Abonement", data.abonement);
+          localStorage.setItem("AbonementType", data.abonementType);
+        }
+      })
+  }, [])
   return (
-    <Container sx={{ width:"80%", margin:"auto"}}>
+    <Container sx={{ width: "80%", margin: "auto" }}>
       <Box
         display="flex"
         flexDirection="column"
