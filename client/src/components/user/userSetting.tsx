@@ -20,7 +20,7 @@ import { API_URL } from "../../config";
 
 const UserSettings = () => {
 
-  const { user } = useAuthContext()
+ // const { user } = useAuthContext()
   const [theme, setTheme] = useState(false)
    const [reload, setReload] = useState(false)
   useEffect(() => {
