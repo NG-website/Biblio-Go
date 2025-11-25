@@ -7,6 +7,11 @@ import contact from '../mail/contact.js'
 dotenv.config()
 
 const sendMail = async (emailUser, emailType, emailContent) => {
+
+  if(!emailUser || !emailType || !emailContent){
+    return false
+  }
+
   let attachments = []
   let html = ""
   let subject = ""
@@ -20,67 +25,61 @@ const sendMail = async (emailUser, emailType, emailContent) => {
     }
   })
 
-  if (emailType === "contact") {
-    const [userFirstname, userLastname, userEmail, userMessage] = emailContent;
-    console.log(emailContent)
-    try {
+  try {
 
+    if (emailType === "contact") {
+      const [userFirstname, userLastname, userEmail, userMessage] = emailContent;
       subject = "Contact Biblio'Go"
       html = contact(userFirstname, userLastname, userEmail, userMessage)
-
-
-    } catch (error) {
-      console.log(error);
     }
-  }
-
 
     if (emailType === "inscription") {
       const [userName, link] = emailContent;
-      try {
-        attachments.push(
-          {
-            filename: `logo.png`,
-            path: `./uploads/logo.png`,
-            cid: 'logo'
-          }
-        )
 
-        subject = "BiblioNico, comfirmation de votre compte"
-        html = comfirmation(userName, link)
-      } catch (error) {
-        console.log(error);
-      }
+      attachments.push({
+        filename: `logo.png`,
+        path: `./uploads/logo.png`,
+        cid: 'logo'
+      })
+
+      subject = "BiblioNico, confirmation de votre compte"
+      html = comfirmation(userName, link)
     }
 
     if (emailType === "reservation") {
       const [bookName, take_at, deposit_at] = emailContent
-      try {
-        const takeAt = formatDate(take_at).split(" ");
-        const depositAt = formatDate(deposit_at).split(" ")
 
-        attachments.push(
-          {
-            filename: `${bookName}.jpg`,
-            path: `./uploads/book/${bookName}.jpg`, // chemin local vers ton image
-            cid: 'bookImage' // identifiant utilisé dans le src
-          }
-        )
+      const takeAt = formatDate(take_at).split(" ");
+      const depositAt = formatDate(deposit_at).split(" ")
 
-        subject = "BiblioNico, comfirmation de reservation "
-        html = reservation(bookName, takeAt, depositAt)
-      } catch (error) {
-        console.log(error);
-      }
+      attachments.push({
+        filename: `${bookName}.jpg`,
+        path: `./uploads/book/${bookName}.jpg`,
+        cid: 'bookImage'
+      })
+
+      subject = "BiblioNico, confirmation de réservation"
+      html = reservation(bookName, takeAt, depositAt)
     }
 
-    const info = await transporter.sendMail({
+  const info =  await transporter.sendMail({
       from: 'bibliotheque de Nico',
       to: emailUser,
       subject,
       attachments,
       html,
-    });
+    })
+   
+    if (!info || !info.accepted || info.rejected.length !=0 ) {
+      return false
+    }
 
+    return true
+
+  } catch (error) {
+    console.error("Erreur d'envoi d'email :", error)
+    return false
   }
-  export default sendMail
+}
+
+export default sendMail

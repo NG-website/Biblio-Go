@@ -20,6 +20,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import theme from "../../theme";
 
 
 function BookDetails() {
@@ -315,13 +316,13 @@ function BookDetails() {
             <FavoriteIcon
               onClick={UnLike}
               aria-label="Retirer des favoris"
-              sx={{ cursor: "pointer" }}
+              sx={{ cursor: "pointer" , fill:theme.palette.primary.main}}
             />
           ) : userId && !like ? (
             <FavoriteBorderIcon
               onClick={Like}
               aria-label="Ajouter aux favoris"
-              sx={{ cursor: "pointer" }}
+              sx={{ cursor: "pointer" , fill:theme.palette.primary.main}}
             />
           ) : null}
 
@@ -330,6 +331,7 @@ function BookDetails() {
           variant="h2"
           textAlign="center"
           id="book-title"
+          color="text.primary"
         >
           {book.name}
         </Typography>
@@ -347,10 +349,11 @@ function BookDetails() {
           </Typography>
         </Link>
 
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", "& .MuiSvgIcon-root":{fill: theme.palette.primary.main}}}>
           <Rating
             value={book.note || 5}
             aria-label={`Note du livre ${book.note || 5}`}
+            
           />
         </Box>
 
@@ -394,7 +397,7 @@ function BookDetails() {
               onClick={() => setOpenBorrow(true)}
               variant="contained"
               color="primary"
-              endIcon={<AddIcon sx={{ fill: "white" }} />}
+              endIcon={<AddIcon  />}
               aria-label="Réserver ce livre"
             >
               Réserver ce livre
@@ -412,17 +415,22 @@ function BookDetails() {
               alignItems="center"
             >
               <Stack sx={{ width: "45%" }}>
-                <Typography>Date de retrait</Typography>
+                <Typography color="text.primary">Date de retrait</Typography>
                 <Calendar
                   aria-label="Sélectionner la date de retrait"
-                  onChange={(e) => { setMessage(""); setTakeAt(new Date(e.$y, e.$M, e.$D, new Date().getHours() + 2)) }} />
+                  onChange={(e) => { 
+                    setMessage(""); 
+                    setTakeAt(new Date(e.$y, e.$M, e.$D, new Date().getHours() + 2)) }} 
+                    />
               </Stack>
 
               <Stack sx={{ width: "45%" }}>
-                <Typography>Date de dépôt</Typography>
+                <Typography color="text.primary">Date de dépôt</Typography>
                 <Calendar
                   aria-label="Sélectionner la date de dépôt"
-                  onChange={(e) => { setMessage(""); setDepositAt(new Date(e.$y, e.$M, e.$D, new Date().getHours())) }}
+                  onChange={(e) => { 
+                    setMessage(""); 
+                    setDepositAt(new Date(e.$y, e.$M, e.$D, new Date().getHours())) }}
                 />
               </Stack>
             </Stack>
@@ -442,6 +450,7 @@ function BookDetails() {
                   <KeyboardArrowUpIcon
                     onClick={() => decrementHour(takeAt!, setTakeAt)}
                     aria-label="Décrémenter l'heure de retrait"
+                    sx={{fill:theme.palette.text.primary}}
                   />
                   <DigitalClockValue
                     date={takeAt!} setDate={setTakeAt}
@@ -450,6 +459,7 @@ function BookDetails() {
                   <KeyboardArrowDownIcon
                     onClick={() => incrementHour(takeAt!, setTakeAt)}
                     aria-label="Incrémenter l'heure de retrait"
+                    sx={{fill:theme.palette.text.primary}}
                   />
                 </Box>
                 {depositAt && (
@@ -464,6 +474,7 @@ function BookDetails() {
                     <KeyboardArrowUpIcon
                       onClick={() => decrementHour(depositAt!, setDepositAt)}
                       aria-label="Décrémenter l'heure de dépôt"
+                      sx={{fill:theme.palette.text.primary}}
                     />
                     <DigitalClockValue
                       date={depositAt!}
@@ -473,6 +484,7 @@ function BookDetails() {
                     <KeyboardArrowDownIcon
                       onClick={() => incrementHour(depositAt!, setDepositAt)}
                       aria-label="Incrémenter l'heure de dépôt"
+                      sx={{fill:theme.palette.text.primary}}
                     />
                   </Box>
                 )}
@@ -499,7 +511,7 @@ function BookDetails() {
                 onClick={(e) => registerBorrow(e)}
                 variant="contained"
                 color="primary"
-                endIcon={<AddIcon sx={{ fill: "white" }} />}
+                endIcon={<AddIcon />}
                 aria-label="Comfirmer la reservation de ce livre"
               >
                 Réserver ce livre
@@ -517,6 +529,7 @@ function BookDetails() {
           <Typography
             variant="h4"
             fontWeight={500}
+             color="text.primary"
           >
             Description
           </Typography>

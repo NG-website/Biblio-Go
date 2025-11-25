@@ -31,7 +31,7 @@ interface LikeBook {
 
 function Like() {
   const { user } = useAuthContext()
-  const userId = user ? user?.userId : null;
+  const userId = user? user?.userId : null;
   const [likeBooks, setLikeBooks] = useState<LikeBook[]>([]);
   const [back, setBack] = useState()
   const navigate = useNavigate()
@@ -93,7 +93,7 @@ function Like() {
       >
         {likeBooks.length === 0 ? (
           <Typography
-            color="text.secondary"
+            color="text.primary"
             textAlign="center">
             Aucun livre ajouté à vos envies
           </Typography>
@@ -144,7 +144,6 @@ function Like() {
                           textAlign={"center"}
                           onClick={(e) => { e.stopPropagation(); navigate(`/author/${d.Book.Author.id}`) }}
                           variant="body2"
-                          color="text.secondary"
                         >
                           Auteur : {d.Book.Author.firstname + " " + d.Book.Author.lastname}
                         </Typography>

@@ -34,7 +34,7 @@ function TitleSection({ title, subtitle, url }: TitleSectionProps) {
             </Typography>
 
             <Button
-                onClick={() => navigate(url)}
+                onClick={() => navigate(title)}
                 endIcon={<ArrowForwardIcon sx={{
 
                 }} />}

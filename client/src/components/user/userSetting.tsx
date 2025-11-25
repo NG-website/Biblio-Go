@@ -78,7 +78,7 @@ const UserSettings = () => {
       return;
     }
 
-    if (newPassword.length <= 7) {
+    if (newPassword.length < 7) {
       setPasswordMessage("Le mot de passe doit contenir au moins 7 caractères.");
       return;
     }

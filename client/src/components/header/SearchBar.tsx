@@ -52,14 +52,14 @@ export default function SearchBar() {
           setData([{ id: 0, name: "Aucun résultat" }]);
           setAuthor([{ id: 0, name: "Aucun résultat" }]);
         } else {
-          setData(db[0] );
-          setAuthor(db[1] );
+          setData(db[0]);
+          setAuthor(db[1]);
         }
 
-               if (db[0].length != 0 && db[1].length === 0) {
-                setAuthor([{ id: 0, name: "Aucun résultat" }])
+        if (db[0].length != 0 && db[1].length === 0) {
+          setAuthor([{ id: 0, name: "Aucun résultat" }])
           setData(db[0]);
-          
+
         }
 
         if (db[0].length === 0 && db[1].length != 0) {
@@ -98,9 +98,9 @@ export default function SearchBar() {
   };
 
   return (
-    <Box sx={{ position: "relative",maxWidth:400, width: "100%", mx: "auto" }}>
+    <Box sx={{ position: "relative", maxWidth: 400, width: "100%", mx: "auto" }}>
       <TextField
-      
+
         fullWidth
         variant="outlined"
         placeholder="Rechercher un livre ou un auteur"
@@ -112,11 +112,11 @@ export default function SearchBar() {
         InputProps={{
           startAdornment: (
             <InputAdornment >
-                <SearchIcon sx={{ fill: theme.palette.primary.main }} />
-              
+              <SearchIcon sx={{ fill: theme.palette.primary.main }} />
+
             </InputAdornment>
           ),
-          endAdornment: loading && <CircularProgress size={18} sx={{ color: "theme.primary" }} />,
+          endAdornment: loading && <CircularProgress size={18} sx={{ color: theme.palette.text.primary }} />,
         }}
         sx={{
           backgroundColor: "background.default",
@@ -162,29 +162,35 @@ export default function SearchBar() {
                 data-categories="book"
                 onMouseDown={valueChoice}
                 sx={{
+                  "& .MuiTypography-root": {
+                    color: "text.primary"
+                  },
                   "&:hover": {
                     backgroundColor: "rgba(255, 152, 0, 0.1)",
                   },
                 }}
               >
                 <ListItemText primary={d.name} />
-                <Chip label="Book" size="small" sx={{ bgcolor: theme.palette.primary.main}} />
+                <Chip label="Book" size="small" sx={{ bgcolor: theme.palette.primary.main }} />
               </ListItemButton>
             ))}
             {author.map((a, i) => (
               <ListItemButton
                 key={`author-${i}`}
                 data-id={a.id}
-                data-name={a.firstname }
+                data-name={a.firstname}
                 data-categories="author"
                 onMouseDown={valueChoice}
                 sx={{
                   "&:hover": {
                     backgroundColor: "rgba(255, 152, 0, 0.1)",
                   },
+                  "& .MuiTypography-root": {
+                    color: "text.primary"
+                  }
                 }}
               >
-                <ListItemText primary={a.firstname+" "+ a.lastname} />
+                <ListItemText primary={a.firstname + " " + a.lastname} />
                 <Chip label="Author" size="small" sx={{ bgcolor: theme.palette.primary.main }} />
               </ListItemButton>
             ))}

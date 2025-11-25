@@ -13,7 +13,7 @@ import { Box, Typography } from "@mui/material";
 function Info() {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "orange",
+      backgroundColor: theme.palette.primary.main,
       color: "black",
       padding: "20px",
       textAlign: "center",
