@@ -112,6 +112,7 @@ export default function Login() {
     "& label": { color: "#777" },
     "& label.Mui-focused": { color: "primary.main" },
     "& .MuiOutlinedInput-root": {
+      color:"black",
       "& fieldset": { borderColor: "#ccc" },
       "&:hover fieldset": { borderColor: "primary.main" },
       "&.Mui-focused fieldset": { borderColor: "primary.main", borderWidth: 2 },

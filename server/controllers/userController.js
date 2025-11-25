@@ -15,6 +15,59 @@ const userController = {
             return res.status(500).json(error)
         }
     },
+    async Contact(req, res) {
+        try {
+            const data = req.body
+            const contentEmail = ([
+                req.body.firstname,
+                req.body.lastname,
+                req.body.email,
+                req.body.contentEmail
+            ])
+
+            const schema = {
+                contentEmail: {
+                    type: "string",
+                    minLength: 2,
+                    maxLength: 500,
+                    regex: /^(?!.*<[^>]*>)(?!.*<\/?script\b)[\p{L}\p{N}\s\.,'"\-:;()?!]{1,500}$/u
+                },
+                email: {
+                    type: "string",
+                    minLength: 2,
+                    maxLength: 40,
+                    regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                },
+                firstname: {
+                    type: "string",
+                    minLength: 2,
+                    maxLength: 40,
+                    regex: /^[\p{L}]+(?:[ '\-][\p{L}]+)*$/u
+                },
+                lastname: {
+                    type: "string",
+                    minLength: 2,
+                    maxLength: 40,
+                    regex: /^[\p{L}]+(?:[ '\-][\p{L}]+)*$/u
+                }
+
+            }
+            const reqValide = reqMiddleware(data, schema)
+
+            if (!req.body.firstname || !req.body.lastname || !req.body.email || !req.body.contentEmail || !reqValide) {
+                return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
+            }
+            const send = await sendMail("bibliogo@outlook.fr", "contact", contentEmail)
+
+            if (!send) {
+                res.status(500).json("Email non envoyé")
+            }
+
+            res.status(200).json(true)
+        } catch (error) {
+            return res.status(500).json(error)
+        }
+    },
     async Id(req, res) {
         try {
             const { id } = req.body
@@ -80,7 +133,7 @@ const userController = {
             const reqValide = reqMiddleware(req.body, schema)
 
             if (!req.body.name || !req.body.email || !req.body.password || !req.body.address || !req.body.postalCode || !req.body.country || !reqValide) {
-                return res.status(400).json({ error: "Veuillez vérifier le formulaire, certains champs sont incorrects." });
+                return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
             }
 
             const exist = await userModel.findOne({ where: { email: req.body.email } });
@@ -139,7 +192,7 @@ const userController = {
             const reqValide = reqMiddleware(data, schema)
 
             if (!id || !reqValide) {
-                return res.status(400).json({ error: "Veuillez vérifier le formulaire, certains champs sont incorrects." });
+                return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
             }
 
             const user = await userModel.findOne({ where: { id: id } })
@@ -223,7 +276,7 @@ const userController = {
         const reqValide = reqMiddleware({ ...req.body.data, id: req.body.id.toString() }, schema)
 
         if (!req.body.data.name || !req.body.data.email || !req.body.data.address || !req.body.data.postalCode || !req.body.data.country || !reqValide) {
-            return res.status(400).json({ error: "Veuillez vérifier le formulaire, certains champs sont incorrects." });
+            return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
         }
 
         try {
@@ -240,40 +293,32 @@ const userController = {
         try {
             const id = req?.session?.user?.userId
             console.log(id)
-            console.log(typeof req.body.data.newPassword)
-            const data = {
-                currentPassword: String(req.body.data.currentPassword.trim()),
-                confirmPassword: String(req.body.data.confirmPassword.trim()),
-                newPassword: String(req.body.data.newPassword.trim())
-            };
-
 
             const schema = {
-                currentPassword: {
+                currentPassword:{
                     type: "string",
                     minLength: 8,
                     maxLength: 30,
                     regex: /^[A-Za-z0-9]+$/
                 },
-                confirmPassword: {
+                confirmPassword:{
                     type: "string",
-                    minLength: 8,
+                    minLength: 7,
                     maxLength: 30,
                     regex: /^[A-Za-z0-9]+$/
                 },
-
-
                 newPassword: {
                     type: "string",
-                    minLength: 8,
+                    minLength: 7,
                     maxLength: 30,
                     regex: /^[A-Za-z0-9]+$/
                 }
             };
-            console.log(11)
+
+
             const reqValide = reqMiddleware(req.body.data, schema)
-            console.log(2)
-            console.log(reqValide)
+ 
+            console.log("reqValide?", reqValide)
 
             // if (!data.newPassword || !data.currentPassword || !data.confirmPassword || !reqValide) {
             //     return res.status(400).json({ error: "Veuillez vérifier le formulaire, certains champs sont incorrects." });
@@ -319,7 +364,7 @@ const userController = {
             const reqValide = reqMiddleware(req?.body?.data, schema)
 
             if (!email || !reqValide) {
-                return res.status(400).json({ error: "Veuillez vérifier le formulaire, certains champs sont incorrects." });
+                return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
             }
             const userExist = await userModel.findAll({ where: { email } })
             console.log(userExist[0].id)
@@ -327,13 +372,13 @@ const userController = {
                 //sendMail with custom token 
                 const token = generateTokenRandom(16)
                 const hashToken = await bcrypt.hash(token, 10)
-                const updatePassword = await userModel.update({password:hashToken},{where: {id :userExist[0].id}} )
-                    
+                const updatePassword = await userModel.update({ password: hashToken }, { where: { id: userExist[0].id } })
+
                 console.log(updatePassword)
-                if(updatePassword){
-                  res.status(200).json(`Votre nouveau mot de passe  :${token}`)  
+                if (updatePassword) {
+                    res.status(200).json(`Votre nouveau mot de passe  :${token}`)
                 }
-                
+
             } else {
                 res.status(404).json("L’adresse email n'existe pas.")
             }

@@ -16,7 +16,7 @@ export default function ContactForm() {
   const [email, setEmail] = useState("")
   const [contentEmail, setContentEmail] = useState("")
   const [message, setMessage] = useState("");
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
 
   const sendMail = () => {
@@ -28,21 +28,35 @@ const [loading, setLoading] = useState(false);
 
     const data = { firstname, lastname, email, contentEmail }
     setLoading(true)
-    fetch("http://localhost:3000/api/contact", {
+    fetch("http://localhost:3000/api/user/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
-    });
+    })
+      .then((res) => { return res.json() })
+      .then((data) => {
+        console.log(data)
 
-    setFirstame("")
-    setLastame("")
-    setEmail("")
-    setContentEmail("")
-    setLoading(false)
-    setMessage("Votre message a été envoyé avec succès!");
-    setTimeout(() => {
-      setMessage("")
-    }, 3000)
+        if (data === true) {
+          setFirstame("")
+          setLastame("")
+          setEmail("")
+          setContentEmail("")
+          setLoading(false)
+          setMessage("Votre message a été envoyé avec succès!");
+          setTimeout(() => {
+            setMessage("")
+          }, 3000)
+        } else {
+          setMessage("Veuillez vérifier le formulaire, certains champs sont incorrects.")
+          setTimeout(() => {
+            setLoading(false)
+            setMessage("")
+          }, 3000)
+        }
+
+      })
+
 
   };
 
@@ -164,12 +178,12 @@ const [loading, setLoading] = useState(false);
         </Stack>
 
         <Button
-          onClick={loading? null :sendMail}
+          onClick={loading ? null : sendMail}
           variant="contained"
           sx={{ mt: 2, fontWeight: "bold", textTransform: "none" }}
           aria-label="Envoyer le formulaire de contact"
         >
-          {loading?  <CircularProgress /> :"Envoyer"}
+          {loading ? <CircularProgress /> : "Envoyer"}
         </Button>
       </Box>
     </Box>

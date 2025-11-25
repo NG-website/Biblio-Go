@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import Book from "../acceuil/Book";
 import { useAuthContext } from "../Context/AuthContext";
+import theme from "../../theme";
 
 function Historical() {
   const { user } = useAuthContext()
@@ -93,16 +94,22 @@ function Historical() {
   };
 
   const changeDateDeposit = (e) => {
-    console.log("la")
     setLivreSelected(Number(e.currentTarget.dataset.index));
     setMessage("");
   };
+
   const soonBorrow = (e) => {
     console.log("soonBorrow")
     console.log(e.currentTarget.parentElement.querySelector("input[type=date]")?.value)
     console.log(livreSelected)
     console.log(historical[livreSelected!].deposit_at)
     console.log(e.currentTarget.parentElement.querySelector("input[type=date]")?.value <= historical[livreSelected!].deposit_at)
+    fetch("http://localhost:3000/api/bookuser/update",{
+      method:"POST",
+      credentials:"include",
+      headers:{"Content_Type":"application/json"},
+      body:JSON.stringify("")
+    })
   }
   return (
     <Box
@@ -177,7 +184,11 @@ function Historical() {
                     <Typography
                       aria-label={`titre du livre ${d.Book.name}`}
                       textAlign={{ xs: "center", md: "left" }}
-                      variant="h3">{d.Book.name}
+                      variant="h3"
+                      color="text.primary"
+                      >
+                        {d.Book.name}
+                      
                     </Typography>
                     <Typography
                       aria-label={`nom de l'auteur ${d.Book.Author.firstname + " " + d.Book.Author.lastname}`}
@@ -199,28 +210,39 @@ function Historical() {
                   {isBack[i].isReturned ?
                     <Typography
                       variant="body2"
-
+                    color="text.primary"
                     >
                       Retrait fait le: {" "}
-                      <strong>
+                      <strong style={{color:theme.palette.text.primary}}>
                         {new Date(d.take_at).toLocaleDateString("fr-FR")}
                       </strong>
                     </Typography>
                     :
-                    <Typography variant="body2">
+                    <Typography 
+                    color="text.primary" 
+                    variant="body2"
+                    >
                       Retrait prévu :{" "}
-                      <strong>
+                      <strong style={{color:theme.palette.text.primary}}>
                         {new Date(d.take_at).toLocaleDateString("fr-FR")}
                       </strong>
                     </Typography>}
-                  {isBack[i].isReturned ? <Typography variant="body2">
+                  {isBack[i].isReturned ? 
+                  <Typography 
+                  color="text.primary"
+                  variant="body2">
                     Retour fait le : {" "}
-                    <strong>
+                    <strong style={{color:theme.palette.text.primary}}>
                       {new Date(d.deposit_at).toLocaleDateString("fr-FR")}
                     </strong>
-                  </Typography> : <Typography variant="body2">
+                  </Typography>
+                  : 
+                  <Typography
+                  color="text.primary"
+                   variant="body2"
+                   >
                     Retour prévu :{" "}
-                    <strong>
+                    <strong style={{color:theme.palette.text.primary}}>
                       {new Date(d.deposit_at).toLocaleDateString("fr-FR")}
                     </strong>
                   </Typography>}

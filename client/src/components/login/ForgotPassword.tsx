@@ -44,32 +44,32 @@ export default function ForgotPassword() {
         body: JSON.stringify({ email }),
       })
 
-      .then((res)=>{
-        if(!res.ok){
-          setMessage("Erreur coter serveur")
-        }
-        setLoading(false)
-        return res.json()
-      })
-      .then((data)=>{
-        setMessage(data)
-        setEmail("")
-      })
+        .then((res) => {
+          if (!res.ok) {
+            setMessage("Erreur coter serveur")
+          }
+          setLoading(false)
+          return res.json()
+        })
+        .then((data) => {
+          setMessage(data)
+          setEmail("")
+        })
 
-     } catch (err) {
+    } catch (err) {
       setMessage("Une erreur est survenue. Réessayez plus tard.");
-    } 
+    }
   };
 
 
   return (
     <Box
       sx={{
-        height:"100%",
+        height: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundImage:'url("/client/public/George-peabody-library.jpg")',
+        backgroundImage: 'url("/client/public/George-peabody-library.jpg")',
         px: 2,
       }}
     >
@@ -86,7 +86,7 @@ export default function ForgotPassword() {
       >
         <Stack spacing={2}>
           <Box textAlign="center">
-            <Typography variant="h5" fontWeight={700} color="orange">
+            <Typography variant="h2" fontWeight={700} color="primary.main">
               Mot de passe oublié
             </Typography>
             <Typography variant="body2">
@@ -94,14 +94,14 @@ export default function ForgotPassword() {
             </Typography>
           </Box>
 
-          {message && <Alert 
-          sx={{textAlign:"center", backgroundColor:theme.palette.background.default}} 
-          severity={message.includes("envoyé")? "success" : "error"}
+          {message && <Alert
+            sx={{ textAlign: "center", backgroundColor: theme.palette.background.default }}
+            severity={message.includes("envoyé") ? "success" : "error"}
           >
             {message.split(":")[0]}
             {message.split(":")[1]}
-            </Alert>
-            }
+          </Alert>
+          }
 
           <Box component="form" onSubmit={handleForgot} noValidate>
             <Stack spacing={2}>
@@ -113,7 +113,22 @@ export default function ForgotPassword() {
                 required
                 fullWidth
                 autoFocus
-             
+                sx={{
+                  "& .MuiInputBase-input": {
+                    color: "black"
+                  },
+                  "& .MuiFormLabel-root": {
+                    color: "black"
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    color: "black",
+                    "& fieldset": { borderColor: "#ccc" },
+                    "&:hover fieldset": { borderColor: "primary.main" },
+                    "&.Mui-focused fieldset": { borderColor: "primary.main", borderWidth: 2 },
+                  },
+                  "& label.Mui-focused": { color: "primary.main" },
+                }}
+
               />
 
               <Button

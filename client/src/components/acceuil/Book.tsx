@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import theme from "../../theme";
 
 interface BookProps {
   name: string;
@@ -8,10 +9,8 @@ interface BookProps {
 }
 
 function Book({ name, id, click, seeTitle = true }: BookProps) {
-  const loading = name === "loading";
 
-  // Tronquer le titre s'il est trop long
-//   const truncatedTitle = name.length > 20 ? name.slice(0, 15) + "…" : name;
+  const loading = name === "loading";
 
   return (
     <Link
@@ -24,7 +23,7 @@ function Book({ name, id, click, seeTitle = true }: BookProps) {
           marginTop: "20px",
           width: "110px",
           height: "150px",
-          perspective: "500px", // pour effet 3D
+          perspective: "500px", 
         }}
       >
         <div
@@ -56,7 +55,7 @@ function Book({ name, id, click, seeTitle = true }: BookProps) {
             el.style.boxShadow = "2px 4px 12px rgba(0,0,0,0.3)";
           }}
         >
-          {/* Tranche du livre */}
+
           {!loading && (
             <div
               style={{
@@ -80,13 +79,12 @@ function Book({ name, id, click, seeTitle = true }: BookProps) {
           style={{
             textAlign: "center",
             maxWidth: "110px",
-             //wordWrap: "break-word",
             overflow: "hidden",
              textOverflow: "ellipsis",
             whiteSpace: "nowrap",
             fontSize: "14px",
             marginTop: "5px",
-            color: "#333",
+            color:theme.palette.text.primary,
           }}
         >
           {loading ? "" : name}

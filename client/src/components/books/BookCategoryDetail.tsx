@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import Book from "../acceuil/Book"
 import { useParams } from "react-router-dom"
+import theme from "../../theme"
+import { Box, Typography } from "@mui/material";
+
 
 function CategoryDetails() {
     const url = useParams()
@@ -8,38 +11,37 @@ function CategoryDetails() {
     const [data, setData] = useState()
     useEffect(() => {
         fetch(`http://localhost:3000/api/book/${url.cat}`)
-            .then((res) => {
-                if (!res.ok) {
-                    console.log("then", res)
-                }
-                return res.json()
-            })
-            .then((data) => {
-                console.log(data)
-                setData(data)
-
-            })
+            .then((res) => {return res.json() })
+            .then((data) => {setData(data) })
     }, [])
     return (
-        <>
-        <h1
-        style={{
-            marginTop:"20px"
-        }}
-        >{url.cat}</h1>
-        <div
-        style={{
-            display:"flex",
-            gap:"20px",
-            flexWrap:"wrap",
-            padding:"20px",
-            justifyContent:"center"
-        }}
-        >
-            {data && data.map((d, i) => (
-                <Book id={d.id} seeTitle={true} click={true} key={i} name={d.name} />
-            ))}
-        </div>
+<>
+  <Typography 
+    variant="h2" 
+    sx={{ mt: 2, color: theme.palette.primary.main }}
+  >
+    {url.cat}
+  </Typography>
+
+  <Box
+    sx={{
+      display: "flex",
+      gap: 2,        
+      flexWrap: "wrap",
+      p: 2,           
+      justifyContent: "center",
+    }}
+  >
+    {data && data.map((d, i) => (
+      <Book 
+        id={d.id} 
+        seeTitle={true} 
+        click={true} 
+        key={i} 
+        name={d.name} 
+      />
+    ))}
+  </Box>
 </>
 
     )

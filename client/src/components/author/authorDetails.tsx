@@ -4,49 +4,37 @@ import Book from "../acceuil/Book.js"
 import { Box, Divider, Stack, Typography } from "@mui/material"
 
 function AuthorDetails() {
-    const authorId = useParams()
-    const [authorDetails, setAuthorDetails] = useState([])
-    const [authorBook, setAuthorBook] = useState([])
-    useEffect(() => {
-        fetch(`http://localhost:3000/author/id`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(authorId)
-        })
-            .then((res) => {
-                if (!res.ok) {
-                    console.log("then", res)
-                }
-                return res.json()
-            })
-            .then((data) => {
-                setAuthorDetails(data)
-            })
+  const authorId = useParams()
+  const [authorDetails, setAuthorDetails] = useState([])
+  const [authorBook, setAuthorBook] = useState([])
 
-        fetch(`http://localhost:3000/book/author`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(authorId)
-        })
-            .then((res) => {
-                if (!res.ok) {
-                    console.log("then", res)
-                }
-                return res.json()
-            })
-            .then((data) => {
-                console.log(data)
-                setAuthorBook(data)
-            })
-    }, [])
-    return (
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/author/id`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ id: parseInt(authorId.id) })
+    })
+      .then((res) => {
+        return res.json()
+      })
+      .then((data) => { setAuthorDetails(data) })
+
+    fetch(`http://localhost:3000/api/book/author`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(authorId)
+    })
+      .then((res) => { return res.json() })
+      .then((data) => { setAuthorBook(data) })
+  }, [authorId])
+  return (
     <Box
       sx={{
-        my:"auto",
+        my: "auto",
         p: { xs: 2, md: 4 },
         width: "90%",
         mx: "auto",
@@ -55,19 +43,17 @@ function AuthorDetails() {
         boxShadow: 2,
       }}
     >
-        
-      {/* Nom de l'auteur */}
+
       <Typography
-        variant="h3"
-        color="primary"
+        variant="h2"
+        color="text.primary"
         fontWeight="bold"
         gutterBottom
         textAlign="center"
       >
-        {authorDetails.name}
+        {authorDetails.firstname + " " + authorDetails.lastname}
       </Typography>
 
-      {/* Description */}
       {authorDetails.description && (
         <Typography
           variant="body1"
@@ -80,10 +66,9 @@ function AuthorDetails() {
 
       <Divider sx={{ mb: 3 }} />
 
-      {/* Bibliographie */}
       <Typography
-        variant="h5"
-        color="primary"
+        variant="h3"
+        color="text.primary"
         fontWeight="bold"
         sx={{ mb: 2 }}
       >
@@ -105,6 +90,6 @@ function AuthorDetails() {
       </Stack>
     </Box>
 
-    )
+  )
 }
 export default AuthorDetails

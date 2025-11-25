@@ -5,7 +5,8 @@ import adminMiddleware from '../middleware/adminMiddleware.js'
 
 const userRouter = Router()
 
-//desactiver ! inutile?//
+userRouter.post('/contact', userController.Contact)
+//midlewares?
 userRouter.post('/id', userController.Id)
 
 userRouter.post('/create', userController.Create)
