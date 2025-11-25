@@ -1,23 +1,32 @@
 import { useLocation } from "react-router-dom";
 import { Filter } from "./Context";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Box, Button } from "@mui/material";
-import { Padding } from "@mui/icons-material";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import theme from "../../../theme";
 
 function NavBar() {
   const { setFilter } = Filter();
-   
   const url = useLocation();
+
   const [display, setDisplay] = useState(false);
   const [categories, setCategories] = useState<[]>([]);
   const [filterSelected, setFilterSelected] = useState(-3);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hoverRef = useRef(false);
+  const manualScrollRef = useRef(false); // désactive auto-scroll si vrai
+
+  const speed = 0.75; // pixels par tick
+  const intervalMs = 16; // ~60fps
+  const [offset, setOffset] = useState(0);
+  const [totalWidth, setTotalWidth] = useState(0);
+
+  // Récupération des catégories
   useEffect(() => {
     fetch("http://localhost:3000/api/book/categories")
-      .then((res) => {
-        if (!res.ok) console.log(res);
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => setCategories(data));
 
     setDisplay(url.pathname === "/");
@@ -29,25 +38,64 @@ function NavBar() {
     setFilter(id === -3 ? "" : id);
   };
 
-   const buttonBaseStyle = {
-    // margin:0
-     fontSize:"clamp(10px, 1vw, 16px)",
-  //   listStyle: "none",
-  //   cursor: "pointer",
+  // Calcul largeur totale pour reset discret
+  useEffect(() => {
+    if (containerRef.current) {
+      setTotalWidth(containerRef.current.scrollWidth / 2); // première moitié
+    }
+  }, [categories]);
+
+  // Auto-scroll infini
+  useEffect(() => {
+    if (!categories.length || totalWidth === 0) return;
+
+    const interval = setInterval(() => {
+      if (hoverRef.current || manualScrollRef.current) return;
+
+      setOffset((prev) => {
+        let newOffset = prev + speed;
+        if (newOffset >= totalWidth) newOffset -= totalWidth; // reset discret
+        return newOffset;
+      });
+    }, intervalMs);
+
+    return () => clearInterval(interval);
+  }, [categories, totalWidth]);
+
+  // On inclut "Tous" dans la liste originale et on double pour le loop
+  const originalCategories = [{ id: -3, name: "Tous" }, ...categories];
+  const loopedCategories = [...originalCategories, ...originalCategories];
+  const totalLength = originalCategories.length;
+
+  const baseButton = {
+    fontSize: "clamp(10px, 1vw, 16px)",
     height: "90%",
-    minWidth : "110px",
-  //   alignContent: "center",
-  //   borderRadius: "5px",
-  //   paddingLeft: "10px",
-  //   paddingRight: "10px",
-  //   textTransform: "none",
-  //   borderColor: "transparent",
-  //   transition: "all 0.2s ease",
-     "&:hover": {
-      bgcolor: "primary",
-     color: "white",
-   },
-   };
+    minWidth: "110px",
+    "&:hover": {
+      bgcolor: "primary.main",
+      color: "white",
+    },
+    flexShrink: 0,
+  };
+
+  // Flèches pour scroll manuel
+  const scrollLeft = () => {
+    manualScrollRef.current = true;
+    setOffset((prev) => {
+      let newOffset = prev - 75;
+      if (newOffset < 0) newOffset += totalWidth;
+      return newOffset;
+    });
+  };
+
+  const scrollRight = () => {
+    manualScrollRef.current = true;
+    setOffset((prev) => {
+      let newOffset = prev + 75;
+      if (newOffset >= totalWidth) newOffset -= totalWidth;
+      return newOffset;
+    });
+  };
 
   return (
     <nav
@@ -57,48 +105,92 @@ function NavBar() {
         gridColumnStart: "2",
         gridColumnEnd: "4",
         display: display ? "block" : "none",
-        width:"100%",
-        overflowX:"auto",
-        
-        //scrollbarWidth:"none"
+        alignSelf: "center",
+        width: "100%",
+        overflow: "hidden",
+        position: "relative",
       }}
     >
-      <Box
+      <ArrowCircleLeftIcon
+        onClick={scrollLeft}
+        onMouseEnter={() => (hoverRef.current = true)}
+        onMouseLeave={() => (hoverRef.current = false)}
         sx={{
-          height: "80%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          textWrap:"nowrap",
-          gap:" 20px",
+          position: "absolute",
+          left: 10,
+          top: "50%",
+          transform: "translateY(-50%)",
+          fontSize: 40,
+          cursor: "pointer",
+          zIndex: 10,
+          fill: theme.palette.primary.main,
+          backgroundColor: theme.palette.secondary.main,
+          borderRadius: "50%",
+          "&:hover": {
+            backgroundColor: theme.palette.primary.main,
+            fill: theme.palette.secondary.main,
+          },
         }}
-      >
-        {/* Bouton "Tous" */}
-        <Button
-          id="-3"
-          onClick={handleClick}
-          sx={{
-             ...buttonBaseStyle,
-            bgcolor: filterSelected === -3 ? "primary" : "white",
-            color: filterSelected === -3 ? "black" : "black",
-          }}
-          variant={filterSelected === -3 ? "contained" : "outlined"}
-        >
-          Tous
-        </Button>
+      />
 
-        {/* Boutons dynamiques */}
-        {categories.map((category, i) => (
+      <ArrowCircleRightIcon
+        onClick={scrollRight}
+        onMouseEnter={() => (hoverRef.current = true)}
+        onMouseLeave={() => (hoverRef.current = false)}
+        sx={{
+          position: "absolute",
+          right: 10,
+          top: "50%",
+          transform: "translateY(-50%)",
+          fontSize: 40,
+          cursor: "pointer",
+          zIndex: 10,
+          fill: theme.palette.primary.main,
+          backgroundColor: theme.palette.secondary.main,
+          borderRadius: "50%",
+          "&:hover": {
+            backgroundColor: theme.palette.primary.main,
+            fill: theme.palette.secondary.main,
+          },
+        }}
+      />
+
+      {/* Scroll infini */}
+      <Box
+        ref={containerRef}
+        sx={{
+          display: "flex",
+          gap: "20px",
+          transform: `translateX(-${offset}px)`,
+          transition: "transform 0s linear",
+          height: "80%",
+          alignItems: "center",
+        }}
+        onMouseEnter={() => (hoverRef.current = true)}
+        onMouseLeave={() => (hoverRef.current = false)}
+      >
+        {loopedCategories.map((category: any, index) => (
           <Button
-            key={category.id}
+            key={`${category.id}-${index}`}
             id={category.id.toString()}
             onClick={handleClick}
             sx={{
-               ...buttonBaseStyle,
-              bgcolor: filterSelected === i ? "primary" : "secondary",
-              color: filterSelected === i ?   "secondary" :"text.primary",
+              textWrap: "nowrap",
+              ...baseButton,
+              bgcolor:
+                filterSelected === (category.id === -3 ? -3 : index % totalLength)
+                  ? "primary.main"
+                  : "",
+              color:
+                filterSelected === (category.id === -3 ? -3 : index % totalLength)
+                  ? "white"
+                  : "text.primary",
             }}
-            variant={filterSelected === i ? "contained" : "outlined"}
+            variant={
+              filterSelected === (category.id === -3 ? -3 : index % totalLength)
+                ? "contained"
+                : "outlined"
+            }
           >
             {category.name}
           </Button>
