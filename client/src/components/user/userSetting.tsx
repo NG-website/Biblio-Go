@@ -20,18 +20,18 @@ import { API_URL } from "../../config";
 const UserSettings = () => {
 
   const [theme, setTheme] = useState(false)
-   const [reload, setReload] = useState(false)
+  const [reload, setReload] = useState(false)
   useEffect(() => {
-    
+
     const light = (localStorage.getItem('Theme') === 'light')
     const dark = (localStorage.getItem('Theme') === 'dark')
-    if(!light && !dark){
+    if (!light && !dark) {
       localStorage.setItem("Theme", "light")
       setTheme(localStorage.getItem('Theme') === 'dark')
     }
-    if(light){
+    if (light) {
       setTheme(false)
-    }else{
+    } else {
       setTheme(true)
     }
 
@@ -55,14 +55,13 @@ const UserSettings = () => {
   const [passwordMessage, setPasswordMessage] = useState("");
 
 
-  const PasswordChange = (field, value) => {
+  const PasswordChange = (field: "currentPassword" | "newPassword" | "confirmPassword", value: string) => {
     setPasswordData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const ShowPassword = (field) => {
+  const ShowPassword = (field: "current" | "new" | "confirm") => {
     setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
   };
-
 
   const handleUpdatePassword = () => {
     const { currentPassword, newPassword, confirmPassword } = passwordData;
@@ -84,11 +83,11 @@ const UserSettings = () => {
 
     fetch(`${API_URL}api/user/update-password`, {
       method: "PUT",
-      credentials:"include",
+      credentials: "include",
       headers: {
         "Content-type": "application/json"
       },
-      body: JSON.stringify({  data: passwordData })
+      body: JSON.stringify({ data: passwordData })
     })
       .then((res) => {
         if (!res.ok) {
@@ -131,48 +130,48 @@ const UserSettings = () => {
         <CardContent>
           <Stack spacing={3}>
             <Typography
-            variant="h2" 
-            textAlign="center"
-            color="text.primary"
+              variant="h2"
+              textAlign="center"
+              color="text.primary"
             >
               Paramètres du compte
             </Typography>
 
             <Box>
               <Typography
-               variant="subtitle1"
-               color="text.primary"
+                variant="subtitle1"
+                color="text.primary"
                 fontWeight={600}>
                 Apparence
               </Typography>
               <FormControlLabel
-              label="Mode sombre"
-              sx={{"& .MuiFormControlLabel-label":{color:"text.primary"}}}
+                label="Mode sombre"
+                sx={{ "& .MuiFormControlLabel-label": { color: "text.primary" } }}
                 control={
                   <Switch
                     checked={theme}
-                    onChange={() => { 
+                    onChange={() => {
                       setTheme(!theme);
-                       !theme ? (localStorage.setItem("Theme", `dark`)) 
-                       :
+                      !theme ? (localStorage.setItem("Theme", `dark`))
+                        :
                         localStorage.setItem("Theme", `light`);
-                         setReload(!reload)
-                         window.location.reload()
-                         }}
+                      setReload(!reload)
+                      window.location.reload()
+                    }}
                   />
                 }
-                
+
               />
             </Box>
 
             <Divider />
 
             <Box>
-              <Typography 
-              variant="subtitle1"
-               fontWeight={600}
-               color="text.primary"
-               >
+              <Typography
+                variant="subtitle1"
+                fontWeight={600}
+                color="text.primary"
+              >
                 Modifier mon mot de passe
               </Typography>
               <Stack spacing={2} mt={1}>
@@ -259,7 +258,7 @@ const UserSettings = () => {
                         ? "success"
                         : "warning"
                     }
-                    sx={{ mt: 1 , backgroundColor:"primary.main", justifyContent:"center"}}
+                    sx={{ mt: 1, backgroundColor: "primary.main", justifyContent: "center" }}
                   >
                     {passwordMessage}
                   </Alert>

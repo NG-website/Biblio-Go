@@ -1,34 +1,54 @@
-import { createContext, useContext, useEffect, useState, } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { API_URL } from "../../config";
 
-const AuthContext = createContext();
+// Typage minimal de l'utilisateur
+interface UserType {
+id: string;
+name?: string;
+email?: string;
+}
+
+// Typage du contexte
+interface AuthContextType {
+user: UserType | null;
+setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
+}
+
+// Création du contexte avec une valeur par défaut
+const AuthContext = createContext<AuthContextType>({
+user: null,
+setUser: () => {},
+});
 
 export const useAuthContext = () => {
-    return useContext(AuthContext)
+return useContext(AuthContext);
 };
 
-export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState()
+interface AuthProviderProps {
+children: ReactNode;
+}
 
-    useEffect(() => {
-        fetch(`${API_URL}cookies`, {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+const [user, setUser] = useState<UserType | null>(null);
 
-            credentials: "include",
-        })
-            .then(res => {
-                return res.json()
-            })
-            .then(data => {
-                console.log(data)
-                if (data.user) {
-                    setUser(data.user)
-                }
-            })
-    }, [])
 
-    return (
-        <AuthContext.Provider value={{ user, setUser, }}>
-            {children}
-        </AuthContext.Provider>
-    );
+useEffect(() => {
+    fetch(`${API_URL}cookies`, {
+        credentials: "include",
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.user) {
+                setUser(data.user);
+            }
+        });
+}, []);
+
+return (
+    <AuthContext.Provider value={{ user, setUser }}>
+        {children}
+    </AuthContext.Provider>
+);
+
+
 };
