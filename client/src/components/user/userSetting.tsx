@@ -14,13 +14,11 @@ import {
   IconButton,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useAuthContext } from "../Context/AuthContext";
 import { API_URL } from "../../config";
 
 
 const UserSettings = () => {
 
- // const { user } = useAuthContext()
   const [theme, setTheme] = useState(false)
    const [reload, setReload] = useState(false)
   useEffect(() => {
