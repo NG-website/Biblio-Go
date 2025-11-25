@@ -21,7 +21,7 @@ import { DeleteForever } from "@mui/icons-material";
 import DoNotDisturbAltIcon from "@mui/icons-material/DoNotDisturbAlt";
 import AddAuthor from "./AddAuthor"; 
 import theme from "../../../theme";
-import PopUPDelete from "../popUpDelete";
+import PopUPDelete from "../PopUpDelete";
 import { useAuthContext } from "../../Context/AuthContext";
 import { API_URL } from "../../../config";
 
