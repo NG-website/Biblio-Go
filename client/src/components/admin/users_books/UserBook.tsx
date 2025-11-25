@@ -23,7 +23,7 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import AddBorrow from "./AddBorrow";
 import InputDate from "../../date/InputDate";
 import theme from "../../../theme";
-import PopUPDelete from "../popUpDelete";
+import PopUPDelete from "../PopUpDelete";
 import { useAuthContext } from "../../Context/AuthContext";
 import { API_URL } from "../../../config";
 
