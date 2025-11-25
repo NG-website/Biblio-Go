@@ -27,7 +27,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: "biblio-go-front.vercel.app",
+  origin: "https://biblio-go.vercel.app/",
   credentials: true
 }));
 
