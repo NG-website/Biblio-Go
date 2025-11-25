@@ -37,6 +37,7 @@ const UserProfile = () => {
 
     fetch(`${API_URL}api/user/id`, {
       method: "POST",
+      credentials:"include",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ id: userId }),
     })
@@ -44,7 +45,9 @@ const UserProfile = () => {
       .then((data) => {
         setUserData(data);
 
-        fetch(`${API_URL}api/uploads/user/${data.name + userId}.jpg`)
+        fetch(`${API_URL}api/uploads/user/${data.name + userId}.jpg`,{
+          credentials:"include",
+        })
           .then((res) => {
             if (!res.ok) setImageUser(false);
             else setImageUser(true);
@@ -88,6 +91,7 @@ const UserProfile = () => {
     console.log(formData.get("name"))
     fetch(`${API_URL}api/image/user`, {
       method: "POST",
+      credentials:"include",
       body: formData,
     })
       .then((res) => {
@@ -98,6 +102,7 @@ const UserProfile = () => {
       .catch((err) => console.error(err));
     fetch(`${API_URL}api/user/update`, {
       method: "PUT",
+      credentials:"include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: userData, id: userId }),
     })

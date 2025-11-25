@@ -26,7 +26,9 @@ function NavBar() {
 
   // Récupération des catégories
   useEffect(() => {
-    fetch(`${API_URL}api/book/categories`)
+    fetch(`${API_URL}api/book/categories`,{
+      credentials:"include",
+    })
       .then((res) => res.json())
       .then((data) => setCategories(data));
 

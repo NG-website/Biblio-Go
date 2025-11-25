@@ -14,6 +14,7 @@ const PaymentSuccess = () => {
   useEffect(() => {
     fetch(`${API_URL}api/user/update`, {
       method: "PUT",
+      credentials:"include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: 1 })
     })

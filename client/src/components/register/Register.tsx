@@ -74,6 +74,7 @@ export default function Register() {
       try {
         const res = await fetch(`${API_URL}api/user/create`, {
           method: "POST",
+          credentials:"include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, password, address, postalCode, country }),
         })

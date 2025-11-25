@@ -12,7 +12,9 @@ function Home() {
 
     useEffect(() => {
 
-        fetch(`${API_URL}api/book/all`)
+        fetch(`${API_URL}api/book/all`,{
+            credentials:"include",
+        })
             .then((res) => { return res.json() })
             .then((data) => {
                 if (!user) {

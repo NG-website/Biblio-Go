@@ -12,6 +12,7 @@ function AuthorDetails() {
   useEffect(() => {
     fetch(`${API_URL}api/author/id`, {
       method: "POST",
+      credentials:"include",
       headers: {
         "Content-Type": "application/json"
       },
@@ -24,6 +25,7 @@ function AuthorDetails() {
 
     fetch(`${API_URL}api/book/author`, {
       method: "POST",
+      credentials:"include",
       headers: {
         "Content-Type": "application/json"
       },

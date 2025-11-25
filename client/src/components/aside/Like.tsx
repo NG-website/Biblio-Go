@@ -38,7 +38,7 @@ function Like() {
   const navigate = useNavigate()
 
   useEffect(() => {
-
+//revoir pour like/iduser
     fetch(`${API_URL}api/like/all`, {
       credentials: "include",
     })
@@ -57,6 +57,7 @@ function Like() {
     if (bookId) {
       fetch(`${API_URL}api/bookuser/dispo`, {
         method: "POST",
+        credentials:"include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bookId: bookId })
       })

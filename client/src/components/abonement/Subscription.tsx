@@ -36,6 +36,7 @@ function Subscription({
     try {
       fetch(`${API_URL}api/subscription/search-product`, {
         method: "POST",
+        credentials:"include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productName: subtitle })
       })
@@ -70,6 +71,7 @@ function Subscription({
       if (userId) {
         fetch(`${API_URL}api/user/id`, {
           method: "POST",
+          credentials:"include",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({ id: userId })
         })
@@ -83,6 +85,7 @@ function Subscription({
 
             fetch(`${API_URL}api/subscription/search-customer`, {
               method: "POST",
+              credentials:"include",
               headers: { "Content-type": "application/json" },
               body: JSON.stringify({ name: data.userName, email: data.userEmail })
             })
@@ -94,6 +97,7 @@ function Subscription({
                 if (data.data[0]) {
                   fetch(`${API_URL}api/subscription/create-checkout-session`, {
                     method: "POST",
+                    credentials:"include",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ customerId: data.data[0].id, priceId: idProduct, userId: userId, abonementType: subtitle })
                   })
@@ -110,6 +114,7 @@ function Subscription({
                 if (data.data.length === 0) {
                   fetch(`${API_URL}api/subscription/create-customer`, {
                     method: "POST",
+                    credentials:"include",
                     headers: { "Content-type": "application/json" },
                     body: JSON.stringify({ name: user[0].name, email: user[0].email })
                   })
@@ -121,6 +126,7 @@ function Subscription({
                       if (data.id.length != 0) {
                         fetch(`${API_URL}api/subscription/create-checkout-session`, {
                           method: "POST",
+                          credentials:"include",
                           headers: { "Content-Type": "application/json" },
                           body: JSON.stringify({ customerId: data.id, priceId: idProduct, userId: userId, abonementType: subtitle })
                         })

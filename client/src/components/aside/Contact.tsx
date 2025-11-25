@@ -31,6 +31,7 @@ export default function ContactForm() {
     setLoading(true)
     fetch(`${API_URL}api/user/contact`, {
       method: "POST",
+      credentials:"include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })

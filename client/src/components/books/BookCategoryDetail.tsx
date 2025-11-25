@@ -11,7 +11,9 @@ function CategoryDetails() {
     console.log(url)
     const [data, setData] = useState()
     useEffect(() => {
-        fetch(`${API_URL}api/book/${url.cat}`)
+        fetch(`${API_URL}api/book/${url.cat}`,{
+          credentials:"include",
+        })
             .then((res) => {return res.json() })
             .then((data) => {setData(data) })
     }, [])

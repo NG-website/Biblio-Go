@@ -39,6 +39,7 @@ export default function SearchBar() {
     setLoading(true);
     fetch(`${API_URL}api/book/autocompleted`, {
       method: "POST",
+      credentials:"include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: value }),
     })
