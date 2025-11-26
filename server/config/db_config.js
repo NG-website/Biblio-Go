@@ -9,7 +9,8 @@ const sequelize = new Sequelize(
   process.env.PASSWORD_DB,
   {
     host: process.env.HOST_DB,
-    dialect: process.env.DIALECT_DB,
+    dialect: "mysql",
+   // dialect: process.env.DIALECT_DB,
   //   dialectOptions: {
   //   ssl: {
   //     require: true,

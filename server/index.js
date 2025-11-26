@@ -19,6 +19,7 @@ import queryLimiter from "./middleware/queryLimiter.js";
 import syncDB from "./utils/sequelizeSync.js"
 
 import sendMail from "./utils/nodemailer.js";
+import sequelize from "./config/db_config.js"
 import Tesseract from 'tesseract.js'
 import fs from 'fs'
 import adminMiddleware from "./middleware/adminMiddleware.js";
