@@ -24,6 +24,7 @@ const emailValid = (email: string) => {
 };
 
 export default function Login() {
+  const navigate =useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -76,7 +77,7 @@ export default function Login() {
              setMessage(data.error)
           }
           if (data.token) {
-             window.location.href = `${FRONT_URL}`;
+             navigate('/')
           }
 
         })
