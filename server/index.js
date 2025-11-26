@@ -26,28 +26,28 @@ dotenv.config();
 //syncDB()
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",       // dev
-  "https://biblio-go.vercel.app" // prod
-];
-
-app.use(cors({
-  origin: function(origin, callback){
-    if (!origin) return callback(null, true); // pour Postman ou requêtes serveur à serveur
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
-}));
-
+// const allowedOrigins = [
+//   "http://localhost:5173",       // dev
+//   "https://biblio-go.vercel.app" // prod
+// ];
 
 // app.use(cors({
-//   origin: "https://biblio-go.vercel.app",
+//   origin: function(origin, callback){
+//     if (!origin) return callback(null, true); // pour Postman ou requêtes serveur à serveur
+//     if (allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
 //   credentials: true
 // }));
+
+
+ app.use(cors({
+   origin: "https://biblio-go.vercel.app",
+   credentials: true
+ }));
 
 
 app.use("/api/subscription/webhook", express.raw({ type: "application/json" }));
@@ -59,10 +59,10 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // true en prod, false en dev
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    // secure: true,
-    // sameSite: "none",
+    //   secure: process.env.NODE_ENV === "production", // true en prod, false en dev
+    // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+     secure: true,
+     sameSite: "none",
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
 }));

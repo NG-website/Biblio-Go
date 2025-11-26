@@ -10,14 +10,14 @@ const sequelize = new Sequelize(
   {
     host: process.env.HOST_DB,
     dialect: process.env.DIALECT_DB,
-    dialectOptions: {
-    ssl: {
-      require: true,
-      ca: fs.readFileSync("certs/cert.pem"), // chemin relatif vers ton certificat
-      // rejectUnauthorized: false // optionnel si certificat auto-signé
-    }
-  },
-    logging:false
+  //   dialectOptions: {
+  //   ssl: {
+  //     require: true,
+  //     ca: fs.readFileSync("certs/cert.pem"), // chemin relatif vers ton certificat
+  //     // rejectUnauthorized: false // optionnel si certificat auto-signé
+  //   }
+  // },
+  //   logging:false
   }
 )
 
