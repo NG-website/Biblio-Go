@@ -75,6 +75,7 @@ export default function Login() {
         .then((res) => { return res.json() })
         .then((data) => {
           console.log(data)
+          setUser(data)
 //           if (data.error) {
 //             setMessage(data.error)
 //           }
