@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { API_URL } from "../../config";
+import { API_URL, FRONT_URL } from "../../config";
 
 
 const emailValid = (email: string) => {
@@ -76,7 +76,7 @@ export default function Login() {
              setMessage(data.error)
           }
           if (data.token) {
-             window.location.href = "https://biblio-go.vercel.app/";
+             window.location.href = `${FRONT_URL}`;
           }
 
         })

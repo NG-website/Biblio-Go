@@ -95,7 +95,7 @@ function Aside() {
           }}
         >
           <img
-            src="/public/logo.png"
+            src="/client/public/logo.png"
             alt="Logo de la bibliothèque"
             title="Accueil"
             style={{ height: 90, width: 90 }}
