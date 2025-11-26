@@ -152,6 +152,7 @@ const userController = {
                 address: req.body.address,
                 postalCode: req.body.postalCode,
                 country: req.body.country,
+                abonnementType: null,
                 actif: false,
                 actifToken: hashToken,
                 expToken: IncrementeDate(new Date()),

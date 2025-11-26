@@ -279,7 +279,7 @@ CREATE TABLE `users` (
   `role` tinyint(1) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `abonnementType` enum('Passion','Découverte') DEFAULT NULL,
+  `abonnementType` enum('Passion','Découverte' , '') DEFAULT NULL,
   `actif` tinyint(1) DEFAULT NULL,
   `actifToken` varchar(255) DEFAULT NULL,
   `expToken` datetime DEFAULT NULL,
