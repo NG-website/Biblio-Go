@@ -78,9 +78,9 @@ export default function Login() {
           if (data.error) {
             setMessage(data.error)
           }
-          if (data.token) {
+          if (data?.token) {
       
-
+console.log("partie dans cookies")
             fetch(`${API_URL}cookies`, {
               credentials: "include"
             })

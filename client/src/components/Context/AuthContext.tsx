@@ -33,6 +33,7 @@ const [user, setUser] = useState<UserType | null>(null);
 
 
 useEffect(() => {
+    console.log("AuthContext")
     fetch(`${API_URL}cookies`, {
         credentials: "include",
     })
