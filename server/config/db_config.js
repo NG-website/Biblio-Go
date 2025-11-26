@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
   process.env.PASSWORD_DB,
   {
     host: process.env.HOST_DB,
-    port: process.env.PORT,     //  <-- IMPORTANT
+    port: process.env.PORT,     
     dialect: "mysql",
     dialectOptions: {
       ssl: {
