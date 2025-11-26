@@ -91,7 +91,7 @@ export default function SearchBar() {
     document.body.style.opacity = "0";
 
     setTimeout(() => {
-      window.location.href = `${API_URL}/${url}`;
+      window.location.href = `${API_URL}${url}`;
     }, 800);
   };
 
