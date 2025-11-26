@@ -210,7 +210,7 @@ const userController = {
                     { where: { id: id } }
                 )
                 if (activeAccount[0] === 1) {
-                    res.redirect('http://localhost:5173/login')
+                    res.redirect(`${process.env.FRONT_URL}`)
                 } else {
                     res.json('ereur base de données update user')
                 }
