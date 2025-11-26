@@ -89,12 +89,18 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 app.get("/", async(req, res) => {
-  console.log(req)
-    try {
+  try {
     await sequelize.authenticate();
     res.json({ ok: true });
   } catch (err) {
-    res.status(500).json({ ok: false, error: err });
+    res.status(500).json({
+      ok: false,
+      name: err.name,
+      message: err.message,
+      stack: err.stack,
+      parent: err.parent || null,
+      original: err.original || null
+    });
   }
 });
 
