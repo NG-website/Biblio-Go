@@ -88,7 +88,15 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
-app.get("/", (req, res) => res.send("hello world"));
+app.get("/", async(req, res) => {
+  console.log(req)
+    try {
+    await sequelize.authenticate();
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err });
+  }
+});
 
 
 app.post("/login", queryLimiter, trylogin, authMiddleware, (req, res) => {
