@@ -76,7 +76,7 @@ export default function Login() {
              setMessage(data.error)
           }
           if (data.token) {
-             window.location.href = `${API_URL}`;
+             window.location.href = "https://biblio-go.vercel.app/";
           }
 
         })
