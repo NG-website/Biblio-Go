@@ -75,22 +75,22 @@ export default function Login() {
         .then((res) => { return res.json() })
         .then((data) => {
           console.log(data)
-          if (data.error) {
-            setMessage(data.error)
-          }
-          if (data?.token) {
+//           if (data.error) {
+//             setMessage(data.error)
+//           }
+//           if (data?.token) {
       
-console.log("partie dans cookies")
-            fetch(`${API_URL}cookies`, {
-              credentials: "include"
-            })
-            .then((res)=>{return res.json()})
-            .then((data)=>{
-              setUser(data)
-              navigate('/')
-            })
+// console.log("partie dans cookies")
+//             fetch(`${API_URL}cookies`, {
+//               credentials: "include"
+//             })
+//             .then((res)=>{return res.json()})
+//             .then((data)=>{
+//               setUser(data)
+//               navigate('/')
+//             })
 
-          }
+        //  }
 
         })
         .catch(() => {
