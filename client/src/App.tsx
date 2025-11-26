@@ -9,9 +9,9 @@ import { useAuthContext } from "./components/Context/AuthContext"
 
 const App: React.FC = () => {
   const {user} = useAuthContext()
- //console.log(user)
+ console.log(user)
   const admin = user? user?.role === true : false
-  //console.log(admin)
+  console.log(admin)
   return (
     <BrowserRouter>
 

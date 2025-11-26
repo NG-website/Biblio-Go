@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { API_URL} from "../../config";
+import { API_URL } from "../../config";
 
 
 const emailValid = (email: string) => {
@@ -24,7 +24,7 @@ const emailValid = (email: string) => {
 };
 
 export default function Login() {
-  const navigate =useNavigate()
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -66,18 +66,18 @@ export default function Login() {
     try {
       fetch(`${API_URL}login`, {
         method: "POST",
-        credentials:"include",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, remember }),
       })
-        .then((res) => {return res.json()})
+        .then((res) => { return res.json() })
         .then((data) => {
-
-          if(data.error){
-             setMessage(data.error)
+          console.log(data)
+          if (data.error) {
+            setMessage(data.error)
           }
           if (data.token) {
-             navigate('/')
+            //navigate('/')
           }
 
         })
@@ -97,7 +97,7 @@ export default function Login() {
     "& label": { color: "#777" },
     "& label.Mui-focused": { color: "primary.main" },
     "& .MuiOutlinedInput-root": {
-      color:"black",
+      color: "black",
       "& fieldset": { borderColor: "#ccc" },
       "&:hover fieldset": { borderColor: "primary.main" },
       "&.Mui-focused fieldset": { borderColor: "primary.main", borderWidth: 2 },
@@ -120,7 +120,7 @@ export default function Login() {
         elevation={4}
         sx={{
           width: "100%",
-          
+
           borderRadius: 3,
           p: { xs: 2, sm: 3 },
           backgroundColor: "rgba(255,255,255,0.8)",
@@ -143,7 +143,7 @@ export default function Login() {
                 label="Email"
                 type="email"
                 value={email}
-                onChange={(e) => {setEmail(e.target.value); setMessage("")}}
+                onChange={(e) => { setEmail(e.target.value); setMessage("") }}
                 required
                 fullWidth
                 autoFocus
@@ -155,7 +155,7 @@ export default function Login() {
                   label="Mot de passe"
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => {setPassword(e.target.value); setMessage("")}}
+                  onChange={(e) => { setPassword(e.target.value); setMessage("") }}
                   required
                   fullWidth
                   sx={inputStyle}
@@ -210,7 +210,7 @@ export default function Login() {
                     transition: "color 0.2s ease",
                     marginLeft: "10px",
                   }}
-           
+
                 >
                   Mot de passe oublié ?
                 </Link>

@@ -4,8 +4,7 @@ import {
   Card,
   CardContent,
   Typography,
-  Stack,
-
+  Stack
 } from "@mui/material";
 import Book from "../acceuil/Book";
 import { Link, useNavigate } from "react-router-dom";

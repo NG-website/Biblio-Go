@@ -11,7 +11,7 @@ function Home() {
     const userId = user ? user?.userId : null
 
     useEffect(() => {
-
+        console.log("home")
         fetch(`${API_URL}api/book/all`,{
             credentials:"include",
         })
