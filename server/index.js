@@ -27,24 +27,6 @@ dotenv.config();
 //syncDB()
 const app = express();
 
-// const allowedOrigins = [
-//   "http://localhost:5173",       // dev
-//   "https://biblio-go.vercel.app" // prod
-// ];
-
-// app.use(cors({
-//   origin: function(origin, callback){
-//     if (!origin) return callback(null, true); // pour Postman ou requêtes serveur à serveur
-//     if (allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-//   credentials: true
-// }));
-
-
  app.use(cors({
    origin: "https://biblio-go.vercel.app",
    credentials: true
@@ -60,8 +42,6 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    //   secure: process.env.NODE_ENV === "production", // true en prod, false en dev
-    // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
      secure: true,
      sameSite: "none",
     maxAge: 1000 * 60 * 60 * 24 * 7
@@ -89,21 +69,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
-app.get("/", async(req, res) => {
-  try {
-    await sequelize.authenticate();
-    res.json({ ok: true });
-  } catch (err) {
-    res.status(500).json({
-      ok: false,
-      name: err.name,
-      message: err.message,
-      stack: err.stack,
-      parent: err.parent || null,
-      original: err.original || null
-    });
-  }
-});
+app.get("/", (req, res) => {res.send("Hello world")});
 
 
 app.post("/login", queryLimiter, trylogin, authMiddleware, (req, res) => {

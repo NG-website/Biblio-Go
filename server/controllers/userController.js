@@ -132,9 +132,9 @@ const userController = {
 
             const reqValide = reqMiddleware(req.body, schema)
 
-            if (!req.body.name || !req.body.email || !req.body.password || !req.body.address || !req.body.postalCode || !req.body.country || !reqValide) {
-                return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
-            }
+            // if (!req.body.name || !req.body.email || !req.body.password || !req.body.address || !req.body.postalCode || !req.body.country || !reqValide) {
+            //     return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
+            // }
 
             const exist = await userModel.findOne({ where: { email: req.body.email } });
             if (exist) {

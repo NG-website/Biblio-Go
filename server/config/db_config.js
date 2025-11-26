@@ -20,10 +20,10 @@ const sequelize = new Sequelize(
   }
 )
 
-try {
-  await sequelize.authenticate();
-  console.log('Connection db ok');
-} catch (error) {
-  console.error('Erreur connection db', error);
-}
+// try {
+//   await sequelize.authenticate();
+//   console.log('Connection db ok');
+// } catch (error) {
+//   console.error('Erreur connection db', error);
+// }
 export default sequelize
