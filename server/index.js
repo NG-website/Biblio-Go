@@ -76,6 +76,7 @@ app.post("/login", queryLimiter, trylogin, authMiddleware, (req, res) => {
   console.log("la")
   req.session.user = req.user;
   req.session.save(() => {
+    console.log(req.user)
     res.json(req.user);
   });
 });
