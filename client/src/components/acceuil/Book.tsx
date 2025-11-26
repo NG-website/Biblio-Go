@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import theme from "../../theme";
-import { API_URL } from "../../config";
+import { API_URL, FRONT_URL } from "../../config";
 
 interface BookProps {
   name: string;
@@ -15,7 +15,7 @@ function Book({ name, id, click, seeTitle = true }: BookProps) {
 
   return (
     <Link
-      to={click ? `${API_URL}book/${id}` : "#"}
+      to={click ? `${FRONT_URL}book/${id}` : "#"}
       style={{ textDecoration: "none" }}
       aria-label={loading ? "Livre en chargement" : `Livre ${name}`}
     >

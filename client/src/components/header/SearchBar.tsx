@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import theme from "../../theme";
-import { API_URL } from "../../config";
+import { API_URL, FRONT_URL } from "../../config";
 
 export default function SearchBar() {
   const [data, setData] = useState([]);
@@ -91,7 +91,7 @@ export default function SearchBar() {
     document.body.style.opacity = "0";
 
     setTimeout(() => {
-      window.location.href = `${API_URL}${url}`;
+      window.location.href = `${FRONT_URL}${url}`;
     }, 800);
   };
 
