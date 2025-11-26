@@ -16,7 +16,7 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { API_URL } from "../../config";
-//import { useAuth } from "../Context/AuthContext";
+
 
 const emailValid = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,7 +24,6 @@ const emailValid = (email: string) => {
 };
 
 export default function Login() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -70,30 +69,14 @@ export default function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, remember }),
       })
-        .then((res) => {
-         // console.log(res)
-          
-          // if (!res.ok) {
-          //   const res_ = res.json()
-          //   console.log(res_)
-          //   setMessage(res_?.json()? res_.body.error : null);
-          //   setLoading(false);
-          //   return null;
-          // }
-          return res.json();
-        })
+        .then((res) => {return res.json()})
         .then((data) => {
-          console.log("data",data)
-          console.log("data",!data.error)
-           console.log("data",!data.token)
+
           if(data.error){
              setMessage(data.error)
           }
           if (data.token) {
-            console.log(data)
-            
-             console.log("Redirection en cours…");
-             window.location.href = "http://localhost:5173/";
+             window.location.href = `${API_URL}`;
           }
 
         })
