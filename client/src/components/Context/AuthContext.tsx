@@ -42,7 +42,7 @@ useEffect(() => {
                 setUser(data.user);
             }
         });
-}, []);
+}, [user]);
 
 return (
     <AuthContext.Provider value={{ user, setUser }}>

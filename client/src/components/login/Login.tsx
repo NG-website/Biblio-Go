@@ -16,6 +16,7 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { API_URL } from "../../config";
+import { useAuthContext } from "../Context/AuthContext";
 
 
 const emailValid = (email: string) => {
@@ -24,6 +25,7 @@ const emailValid = (email: string) => {
 };
 
 export default function Login() {
+  const {setUser} = useAuthContext()
   const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -77,7 +79,17 @@ export default function Login() {
             setMessage(data.error)
           }
           if (data.token) {
-            //navigate('/')
+      
+
+            fetch(`${API_URL}cookies`, {
+              credentials: "include"
+            })
+            .then((res)=>{return res.json()})
+            .then((data)=>{
+              setUser(data)
+              navigate('/')
+            })
+
           }
 
         })
