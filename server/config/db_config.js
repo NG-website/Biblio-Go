@@ -9,16 +9,14 @@ const sequelize = new Sequelize(
   process.env.PASSWORD_DB,
   {
     host: process.env.HOST_DB,
+    port: process.env.PORT,     //  <-- IMPORTANT
     dialect: "mysql",
-   // dialect: process.env.DIALECT_DB,
-  //   dialectOptions: {
-  //   ssl: {
-  //     require: true,
-  //     ca: fs.readFileSync("certs/cert.pem"), // chemin relatif vers ton certificat
-  //     // rejectUnauthorized: false // optionnel si certificat auto-signé
-  //   }
-  // },
-  //   logging:false
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
   }
 )
 
