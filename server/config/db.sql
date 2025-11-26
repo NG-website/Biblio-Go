@@ -268,7 +268,7 @@ INSERT INTO `likes` (`userId`, `bookId`, `createdAt`, `updatedAt`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -279,7 +279,7 @@ CREATE TABLE `users` (
   `role` tinyint(1) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `abonnementType` enum('Passion','Découverte') NOT NULL,
+  `abonnementType` enum('Passion','Découverte') DEFAULT NULL,
   `actif` tinyint(1) DEFAULT NULL,
   `actifToken` varchar(255) DEFAULT NULL,
   `expToken` datetime DEFAULT NULL,
@@ -287,30 +287,12 @@ CREATE TABLE `users` (
   `abonnement` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `users`
---
-
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `address`, `postalCode`, `country`, `phone`, `role`, `createdAt`, `updatedAt`, `abonnementType`, `actif`, `actifToken`, `expToken`, `tokenAdmin`, `abonnement`) VALUES
 (1, 'user1', 'user1@gmail.com', '$2b$10$tQP4gO1vxkTCAR3T/L1m.usH31H9bSNWUEMWeUNZrn99/QaNIDaSK', 'adresse user1', '16000', 'Angouleme', '0600000000', 0, '2025-09-26 14:54:30', '2025-09-26 14:54:30', NULL, 1, NULL, NULL, NULL, NULL),
 (2, 'user', 'user2@gmail.com', '$2b$10$7e9cyDdeca6JSM/gmC1RZeBhcmfmrZm3Gl12yK7.dYfXGF80gl3FK', 'adresse user2', '16000', 'Angouleme', '0600000001', 0, '2025-09-26 14:54:36', '2025-11-24 21:16:36', NULL, 1, NULL, NULL, NULL, '2026-11-24 19:31:22'),
-(3, 'admin', 'admin1@gmail.com', '$2b$10$U4GKvtXOHhr9Jz6VsoYPFeqKcUb/dKz0cLEQB421WPJn0uNlXT0jG', 'adresse amin', '16000', 'Angouleme', '0600000002', 1, '2025-09-26 14:54:49', '2025-11-24 23:51:17', NULL, 1, NULL, NULL, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRlIjoiMjAyNS0xMS0yNFQyMzo1MToxNy41NjdaIiwiaXAiOlt7ImlwIjoiOjoxIiwiZW1haWwiOiJhZG1pbjFAZ21haWwuY29tIiwiYXR0ZW1wdENvdW50IjowLCJiYW4iOmZhbHNlfV0sInVzZXJJZCI6MywiaWF0IjoxNzY0MDI4Mjc3LCJleHAiOjE3NjQwNzE0Nzd9.I8sOOUS8g', '2025-11-24 18:42:33'),
-(4, 'test', 'test@gmail.com', '$2b$10$4rrtqfEidUErRBz5zgwjreObYtx83KguS0Xq8lhgCV.0V6UshvtXe', 'test', '16000', 'angouleme', '052505', 1, '2025-11-24 12:42:38', '2025-11-24 18:40:52', '', 0, '&bWmeoje[dmkW([s', '2025-11-24 14:42:38', NULL, '2025-11-24 18:40:52'),
-(5, 'test', 'test@gmail.com', '$2b$10$AzucmTNmP1QInRnIXh7Pfu6O9HnzrghITr0IPp4ZFIOXFBV3cG3lW', 'test', '16000', 'angouleme', 'u', 0, '2025-11-24 12:47:02', '2025-11-24 18:59:42', '', 0, '#lekhY<T[|I[uRG.', '2025-11-24 14:47:02', NULL, '0000-00-00 00:00:00'),
-(6, 'Conan Doyle', 'a@a.fr', '$2b$10$iEQWY9PnoQpabc2bk01rzeuR9qqjWNH.gKhr9st4a.1eR87mZNgZ6', 'angouleme', '16000', 'angoumek', 'u', 0, '2025-11-24 13:12:55', '2025-11-24 22:09:02', '', 0, '|5KM14Nyc/|;pLGa', '2025-11-24 15:12:55', NULL, '2025-11-24 18:43:31'),
-(7, 'Conan Doyle', 'a@a.fr', '$2b$10$Cr72kBK4K2ZmvUxhCDhgG.Wh7BAOHNUkI25WPBlVLx53eRhY4zio.', 'angouleme', '16000', 'angoumek', ' ', 0, '2025-11-24 13:13:45', '2025-11-24 18:59:45', '', 0, '~@.@LF6.Vq^5g<yy', '2025-11-24 15:13:45', NULL, '0000-00-00 00:00:00'),
-(8, 'admin1', 'user2@gmail.com', '$2b$10$Hpx55hgjSNhFzzJZGPJSnedT4BtLiWHKTMjikTl4JL3JZYO2P/Or6', 'a', '16000', 'Arthur', NULL, 0, '2025-11-24 13:24:46', '2025-11-24 13:24:46', '', 0, 'Pt3h/];`Z_c*$3_Y', '2025-11-24 15:24:46', NULL, NULL),
-(9, 'aaa', 'a@a.fr', '$2b$10$KZBG7h4F3g0ZoEpARGGnqO12Ma4lfApWC88lGMYgGDv8WSQwPXn/e', 'Arthur', '16000', 'angouleme', ' ', 0, '2025-11-24 13:41:30', '2025-11-24 19:06:35', '', 0, '2qrOUgftKD(rw@DQ', '2025-11-24 15:41:30', NULL, '2025-11-24 19:06:35'),
-(10, 'qee', 'usert@gmail.com', '$2b$10$n4O5gPhYCl5R9fHow/ybeO9DrlBfqYEA0bPs0WaDBQduUiWg5qTq2', '30 rue du', '16000', 'angouleme', '00', 0, '2025-11-24 14:29:51', '2025-11-24 18:44:42', '', 0, '0X?$4M#)b=]-MzG=', '2025-11-24 16:29:51', NULL, '2025-11-24 18:44:42'),
-(14, 'ruedu', 'logo@hr.fr', '$2b$10$g.P8/xw2Ei9xtMVyHzBgv.mUJ5dj61PIlTcYGKYXKUS1gOzMozIte', 'angouleme hnn', '16000', 'tyrtynhn', '0', 0, '2025-11-24 14:52:59', '2025-11-24 18:46:50', 'Découverte', 0, '$2b$10$BFArmzLsxKrbl9EWPzgXUekGS0wM9QKYuQreQ36lebCU6BISW7Lmq', '2025-11-24 16:52:59', NULL, '2025-11-24 18:46:50');
+(3, 'admin', 'admin1@gmail.com', '$2b$10$U4GKvtXOHhr9Jz6VsoYPFeqKcUb/dKz0cLEQB421WPJn0uNlXT0jG', 'adresse amin', '16000', 'Angouleme', '0600000002', 1, '2025-09-26 14:54:49', '2025-11-24 23:51:17', NULL, 1, NULL, NULL, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRlIjoiMjAyNS0xMS0yNFQyMzo1MToxNy41NjdaIiwiaXAiOlt7ImlwIjoiOjoxIiwiZW1haWwiOiJhZG1pbjFAZ21haWwuY29tIiwiYXR0ZW1wdENvdW50IjowLCJiYW4iOmZhbHNlfV0sInVzZXJJZCI6MywiaWF0IjoxNzY0MDI4Mjc3LCJleHAiOjE3NjQwNzE0Nzd9.I8sOOUS8g', '2025-11-24 18:42:33');
 
---
--- Index pour les tables déchargées
---
 
---
--- Index pour la table `authors`
---
 ALTER TABLE `authors`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `lastname` (`lastname`),

@@ -90,7 +90,7 @@ app.post("/logout", (req, res) => {
 
 
 app.get("/cookies", (req, res) => {
-  console.log(req.session)
+  console.log("REQ SESSION .............................")
   res.json({ user: req.session.user || null });
 });
 
