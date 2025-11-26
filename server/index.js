@@ -73,6 +73,7 @@ app.get("/", (req, res) => {res.send("Hello world")});
 
 
 app.post("/login", queryLimiter, trylogin, authMiddleware, (req, res) => {
+  console.log("la")
   req.session.user = req.user;
   req.session.save(() => {
     res.json(req.user);
