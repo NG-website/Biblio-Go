@@ -6,8 +6,10 @@ import { API_URL } from "../../config.js"
 
 function AuthorDetails() {
   const authorId = useParams()
+  console.log(authorId)
   const [authorDetails, setAuthorDetails] = useState([])
   const [authorBook, setAuthorBook] = useState([])
+
 
   useEffect(() => {
     fetch(`${API_URL}api/author/id`, {

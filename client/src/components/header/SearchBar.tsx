@@ -14,6 +14,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import theme from "../../theme";
 import { API_URL, FRONT_URL } from "../../config";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchBar() {
   const [data, setData] = useState([]);
@@ -23,6 +24,7 @@ export default function SearchBar() {
   const [valueInput, setValueInput] = useState("");
   const [prop, setProp] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
 
   const SearchDataAutoCompleted = (e) => {
     const value = e.target.value;
@@ -90,9 +92,10 @@ export default function SearchBar() {
     document.body.style.background = "linear-gradient(rgb(0, 0, 0),#06060697)";
     document.body.style.opacity = "0";
 
-    setTimeout(() => {
-      window.location.href = `${FRONT_URL}${url}`;
-    }, 800);
+   // setTimeout(() => {
+      navigate(`${url}`)
+     // window.location.href = `${FRONT_URL}${url}`;
+    //}, 800);
   };
 
   const clearChoice = () => {

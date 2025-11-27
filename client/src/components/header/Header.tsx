@@ -89,9 +89,6 @@ function Header() {
             onClick={toggleMenu}
             size="small"
             aria-label="Ouvrir le menu utilisateur"
-            // aria-haspopup="true"
-            // aria-expanded={openMenu}
-            // aria-controls="menu-utilisateur"
           >
             <Avatar
               sx={{
