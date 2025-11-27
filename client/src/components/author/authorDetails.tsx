@@ -6,7 +6,7 @@ import { API_URL } from "../../config.js"
 
 function AuthorDetails() {
   const authorId = useParams()
-  console.log(authorId)
+  console.log("author",authorId)
   const [authorDetails, setAuthorDetails] = useState([])
   const [authorBook, setAuthorBook] = useState([])
 
