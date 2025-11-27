@@ -94,7 +94,7 @@ export default function SearchBar() {
 
    // setTimeout(() => {
    console.log(url)
-      navigate(`${url}`)
+      navigate(category)
      // window.location.href = `${FRONT_URL}${url}`;
     //}, 800);
   };
