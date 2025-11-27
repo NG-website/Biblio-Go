@@ -54,7 +54,7 @@ function AuthorDetails() {
         gutterBottom
         textAlign="center"
       >
-        {authorDetails.firstname + " " + authorDetails.lastname}
+       rferfref
       </Typography>
 
       {authorDetails.description && (
@@ -63,7 +63,7 @@ function AuthorDetails() {
           color="text.secondary"
           sx={{ mb: 3, textAlign: "center", lineHeight: 1.6 }}
         >
-          {authorDetails.description}
+        efefzefez
         </Typography>
       )}
 
@@ -85,10 +85,10 @@ function AuthorDetails() {
         gap={2}
         mx={"auto"}
       >
-        {authorBook &&
+        {/* {authorBook &&
           authorBook.map((data, index) => (
             <Book click={true} key={index} id={data.id} name={data.name} />
-          ))}
+          ))} */}
       </Stack>
     </Box>
   )
