@@ -93,6 +93,7 @@ export default function SearchBar() {
     document.body.style.opacity = "0";
 
    // setTimeout(() => {
+   console.log(url)
       navigate(`${url}`)
      // window.location.href = `${FRONT_URL}${url}`;
     //}, 800);
