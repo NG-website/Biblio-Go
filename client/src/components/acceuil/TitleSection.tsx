@@ -35,9 +35,7 @@ function TitleSection({ title, subtitle, url }: TitleSectionProps) {
 
             <Button
                 onClick={() => navigate(title)}
-                endIcon={<ArrowForwardIcon sx={{
-
-                }} />}
+                endIcon={<ArrowForwardIcon />}
                 sx={{
                     maxWidth: "150px",
                     color: "text.primary",

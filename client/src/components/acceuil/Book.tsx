@@ -15,7 +15,7 @@ function Book({ name, id, click, seeTitle = true }: BookProps) {
 
   return (
     <Link
-      to={click ? `${FRONT_URL}book/${id}` : "#"}
+      to={click ? `book/${id}` : "#"}
       style={{ textDecoration: "none" }}
       aria-label={loading ? "Livre en chargement" : `Livre ${name}`}
     >
