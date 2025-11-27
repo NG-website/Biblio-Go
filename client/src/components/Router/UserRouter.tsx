@@ -31,7 +31,7 @@ const UserRouter = () => {
         <Route path="login" element={<Login />} />
         <Route path="forgot" element={<ForgotPassword />} />
         <Route path="book/:id" element={<BookDetails />} />
-        <Route path="author/:id" element={<AuthorDetails />} />
+        <Route path="author" element={<AuthorDetails />} />
         <Route path="info" element={<Info />} />
         <Route path="subscription" element={<ContainerSubscription />} />
         <Route path="contact" element={<Contact />} />
