@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import theme from "../../theme";
-import { API_URL, FRONT_URL } from "../../config";
+import { API_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
 
 export default function SearchBar() {
@@ -88,13 +88,13 @@ export default function SearchBar() {
     setChoiceUser(true);
     setChoiceValueInput(name);
 
-    const url = `${category}/:${id}`;
+    const url = `${category}${id}`;
     document.body.style.background = "linear-gradient(rgb(0, 0, 0),#06060697)";
     document.body.style.opacity = "0";
 
    // setTimeout(() => {
    console.log("url", url)
-      navigate(url)
+      navigate(category)
      // window.location.href = `${FRONT_URL}${url}`;
     //}, 800);
   };
