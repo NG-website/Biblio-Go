@@ -14,7 +14,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import theme from "../../theme";
 import { API_URL } from "../../config";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SearchBar() {
   const [data, setData] = useState([]);
@@ -179,6 +179,7 @@ export default function SearchBar() {
               </ListItemButton>
             ))}
             {author.map((a, i) => (
+              <Link to={`author/${a.id}`}>
               <ListItemButton
                 key={`author-${i}`}
                 data-id={a.id}
@@ -197,6 +198,7 @@ export default function SearchBar() {
                 <ListItemText primary={a.firstname + " " + a.lastname} />
                 <Chip label="Author" size="small" sx={{ bgcolor: theme.palette.primary.main }} />
               </ListItemButton>
+              </Link>
             ))}
           </List>
         </Paper>
