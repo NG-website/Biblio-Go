@@ -137,7 +137,9 @@ function Subscription({
                           })
                           .then((data) => {
                             console.log(data)
-                            window.location.href = data
+                           // window.location.href = data
+                           navigate(data)
+
                           }
                           )
                           .catch((error) => { console.error("Erreur fetch create-checkout-session après création client :", error) })
