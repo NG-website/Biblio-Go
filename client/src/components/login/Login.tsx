@@ -88,7 +88,7 @@ export default function Login() {
 //             .then((res)=>{return res.json()})
 //             .then((data)=>{
 //               setUser(data)
-//               navigate('/')
+             navigate('/')
 //             })
 
         //  }

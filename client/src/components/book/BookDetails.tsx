@@ -120,8 +120,6 @@ function BookDetails() {
         }
       })
     return new Date(back!).toLocaleDateString("fr")
-
-
   }
 
   const registerBorrow = (e: React.FormEvent) => {
@@ -301,7 +299,6 @@ function BookDetails() {
           sx={{
             width: "100%",
             height: "100%",
-
             backgroundImage: `url("${API_URL}api/uploads/book/${book.name}.jpg")`,
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
