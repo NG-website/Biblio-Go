@@ -105,8 +105,8 @@ function Subscription({
                       if (res.ok) return res.json()
                     })
                     .then((data) => {
-                      console.log(data)
-                     // window.location.href = data
+                     // console.log(data)
+                     window.location.href = data
                     })
                     .catch((error) => { console.error("Erreur fetch create-checkout-session :", error) })
                 }
@@ -137,8 +137,8 @@ function Subscription({
                           })
                           .then((data) => {
                             console.log(data)
-                           // window.location.href = data
-                           navigate(data)
+                            window.location.href = data
+                           //navigate(data)
 
                           }
                           )
