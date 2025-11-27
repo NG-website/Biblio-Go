@@ -18,16 +18,15 @@ function ContainerBook({ data = [] }: ContainerBookProps) {
   const [offset, setOffset] = useState(0);
   const isHoverRef = useRef(false);
 
-  const speed = 0.75; // pixels par tick
-  const intervalMs = 16; // ~60fps
-
-  // Calcul de la largeur totale du container
+  const speed = 0.75; 
+  const intervalMs = 16; 
+ 
   const [totalWidth, setTotalWidth] = useState(0);
 
   const scrollRight = () => {
     setOffset((prev) => {
       let newOffset = prev + 75;
-      if (newOffset >= totalWidth) newOffset -= totalWidth; // recycle
+      if (newOffset >= totalWidth) newOffset -= totalWidth;
       return newOffset;
     });
   };
@@ -35,14 +34,14 @@ function ContainerBook({ data = [] }: ContainerBookProps) {
   const scrollLeft = () => {
     setOffset((prev) => {
       let newOffset = prev - 75;
-      if (newOffset < 0) newOffset += totalWidth; // recycle
+      if (newOffset < 0) newOffset += totalWidth; 
       return newOffset;
     });
   };
 
   useEffect(() => {
     if (!containerRef.current) return;
-    setTotalWidth(containerRef.current.scrollWidth / 2); // première moitié
+    setTotalWidth(containerRef.current.scrollWidth / 2); 
   }, [data]);
 
   useEffect(() => {
@@ -54,7 +53,7 @@ function ContainerBook({ data = [] }: ContainerBookProps) {
       setOffset((prev) => {
         let newOffset = prev + speed;
         if (newOffset >= totalWidth) {
-          newOffset -= totalWidth; // loop infini
+          newOffset -= totalWidth;
         }
         return newOffset;
       });
@@ -71,7 +70,6 @@ function ContainerBook({ data = [] }: ContainerBookProps) {
       onMouseEnter={() => (isHoverRef.current = true)}
       onMouseLeave={() => (isHoverRef.current = false)}
     >
-
       <div
         ref={containerRef}
         style={{

@@ -11,7 +11,6 @@ function Home() {
     const userId = user ? user?.userId : null
 
     useEffect(() => {
-        console.log("home")
         fetch(`${API_URL}api/book/all`,{
             credentials:"include",
         })
@@ -36,7 +35,6 @@ function Home() {
                         .then((res) => { return res.json() })
                         .then((bookUser) => {
                             if (bookUser[0]) {
-                                console.log(bookUser)
                                 bookUser.forEach(element => {
                                     booking.push(element.bookId)
                                 });

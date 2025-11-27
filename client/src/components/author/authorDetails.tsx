@@ -10,7 +10,6 @@ function AuthorDetails() {
   const [authorDetails, setAuthorDetails] = useState([])
   const [authorBook, setAuthorBook] = useState([])
 
-
   useEffect(() => {
     fetch(`${API_URL}api/author/id`, {
       method: "POST",
@@ -48,7 +47,6 @@ function AuthorDetails() {
         boxShadow: 2,
       }}
     >
-
       <Typography
         variant="h2"
         color="text.primary"
@@ -82,7 +80,6 @@ function AuthorDetails() {
 
       <Stack
         direction={{ xs: "column", sm: "row" }}
-
         flexWrap="wrap"
         justifyContent="center"
         gap={2}
@@ -94,7 +91,6 @@ function AuthorDetails() {
           ))}
       </Stack>
     </Box>
-
   )
 }
 export default AuthorDetails

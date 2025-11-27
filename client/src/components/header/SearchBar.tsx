@@ -88,13 +88,13 @@ export default function SearchBar() {
     setChoiceUser(true);
     setChoiceValueInput(name);
 
-    const url = `${category}/${id}`;
+    const url = `${category}/:${id}`;
     document.body.style.background = "linear-gradient(rgb(0, 0, 0),#06060697)";
     document.body.style.opacity = "0";
 
    // setTimeout(() => {
-   console.log(url)
-      navigate(category)
+   console.log("url", url)
+      navigate(url)
      // window.location.href = `${FRONT_URL}${url}`;
     //}, 800);
   };
@@ -106,7 +106,6 @@ export default function SearchBar() {
   return (
     <Box sx={{ position: "relative", maxWidth: 400, width: "100%", mx: "auto" }}>
       <TextField
-
         fullWidth
         variant="outlined"
         placeholder="Rechercher un livre ou un auteur"
@@ -119,7 +118,6 @@ export default function SearchBar() {
           startAdornment: (
             <InputAdornment >
               <SearchIcon sx={{ fill: theme.palette.primary.main }} />
-
             </InputAdornment>
           ),
           endAdornment: loading && <CircularProgress size={18} sx={{ color: theme.palette.text.primary }} />,
