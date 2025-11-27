@@ -88,13 +88,13 @@ export default function SearchBar() {
     setChoiceUser(true);
     setChoiceValueInput(name);
 
-    const url = `${category}${id}`;
+    const url = `/${category}/${id}`;
     document.body.style.background = "linear-gradient(rgb(0, 0, 0),#06060697)";
     document.body.style.opacity = "0";
 
    // setTimeout(() => {
    console.log("url", url)
-      navigate(category)
+      navigate(url)
      // window.location.href = `${FRONT_URL}${url}`;
     //}, 800);
   };
