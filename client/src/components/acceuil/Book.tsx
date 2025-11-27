@@ -12,7 +12,7 @@ interface BookProps {
 function Book({ name, id, click, seeTitle = true }: BookProps) {
 
   const loading = name === "loading";
-
+  console.log(id)
   return (
     <Link
       to={click ? `book/${id}` : "#"}
