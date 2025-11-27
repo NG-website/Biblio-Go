@@ -28,6 +28,7 @@ function Historical() {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
+        
       })
         .then((res) => res.json())
         .then((data) => {

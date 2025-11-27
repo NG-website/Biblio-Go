@@ -48,12 +48,10 @@ function Like() {
 
       })
       .catch((err) => console.error("Erreur récupération historique :", err));
-
   }, []);
 
 
   const soonAvailable = (bookId) => {
-
     if (bookId) {
       fetch(`${API_URL}api/bookuser/dispo`, {
         method: "POST",
@@ -67,7 +65,6 @@ function Like() {
           const incrementeDate = new Date(nextBack)
           const resultBack = incrementeDate.setDate(incrementeDate.getDate() + 1)
           setBack(resultBack)
-
         })
       return new Date(back!).toLocaleDateString("fr")
     }

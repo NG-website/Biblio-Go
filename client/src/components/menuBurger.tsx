@@ -90,7 +90,7 @@ function BurgerMenu() {
               onClick={() => setActive("/")}
             >
               <img
-                src="/public/logo.png"
+                src="/logo.png"
                 alt="Logo"
                 style={{ height: 80, width: 80 }}
               />
