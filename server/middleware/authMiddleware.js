@@ -50,20 +50,20 @@ console.log(req.body)
 
         if (userValid) {
            
-            if (user.role == true) {
-                console.log("user.role === admin ...............")
-                const tokenAdmin = jwt.sign(
-                    { date: new Date().toJSON(), ip: ip, userId: user.id },
-                    process.env.SECRET_KEY_JWT,
-                    { expiresIn: "12h" }
-                )
-                console.log("token admin ",tokenAdmin)
-                const addAdminToken = await userModel.update(
-                    { tokenAdmin: tokenAdmin },
-                    { where: { id: user.id } }
-                );
-                console.log("update admin ",addAdminToken)
-            }
+            // if (user.role == true) {
+            //     console.log("user.role === admin ...............")
+            //     const tokenAdmin = jwt.sign(
+            //         { date: new Date().toJSON(), ip: ip, userId: user.id },
+            //         process.env.SECRET_KEY_JWT,
+            //         { expiresIn: "12h" }
+            //     )
+            //     console.log("token admin ",tokenAdmin)
+            //     const addAdminToken = await userModel.update(
+            //         { tokenAdmin: tokenAdmin },
+            //         { where: { id: user.id } }
+            //     );
+            //     console.log("update admin ",addAdminToken)
+            // }
 
 
             let token;
