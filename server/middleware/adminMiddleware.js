@@ -6,8 +6,8 @@ dotenv.config()
 
 const adminMiddleware = async(req, res, next) => {
 
-//     const token = req.headers["authorization"]?.split(" ")[1];
-//    // console.log(token)
+    const token = req.headers["authorization"]?.split(" ")[1];
+    console.log(token)
 
 //     const decode = jwt.decode(token)
 //    // console.log( decode)
