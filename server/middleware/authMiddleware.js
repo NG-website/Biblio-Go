@@ -57,6 +57,7 @@ console.log(req.body)
                     process.env.SECRET_KEY_JWT,
                     { expiresIn: "12h" }
                 )
+                console.log("token admin ",tokenAdmin)
                 const addAdminToken = await userModel.update(
                     { tokenAdmin: tokenAdmin },
                     { where: { id: user.id } }
