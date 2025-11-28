@@ -79,7 +79,7 @@ console.log(req.body)
                     process.env.SECRET_KEY_JWT,
                     { expiresIn: '24h' }
                 );
-                resetAttempt(verifLogin.attemptCount = 0)
+               // resetAttempt(verifLogin.attemptCount = 0)
             } else {
                 return res.status(400).json({ error: "Requête invalide." });
             }

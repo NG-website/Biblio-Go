@@ -72,10 +72,11 @@ const upload = multer({ storage })
 app.get("/", (req, res) => {res.send("Hello world")});
 
 
-app.post("/login", (req, res) => {
+app.post("/login", queryLimiter, trylogin, authMiddleware, (req, res) => {
   console.log("...............login sortie middle")
   req.session.user = req.user;
   req.session.save(() => {
+    console.log(req.user)
     res.json(req.user);
   });
 });
