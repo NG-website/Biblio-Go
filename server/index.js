@@ -73,10 +73,9 @@ app.get("/", (req, res) => {res.send("Hello world")});
 
 
 app.post("/login", queryLimiter, trylogin, authMiddleware, (req, res) => {
-  console.log("la")
+  console.log("...............login sortie middle")
   req.session.user = req.user;
   req.session.save(() => {
-    console.log(req.user)
     res.json(req.user);
   });
 });
@@ -92,6 +91,7 @@ app.post("/logout", (req, res) => {
 
 app.get("/cookies", (req, res) => {
   console.log("REQ SESSION .............................")
+  console.log(".........",req.session.user)
   res.json({ user: req.session.user || null });
 });
 
