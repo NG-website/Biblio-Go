@@ -40,6 +40,7 @@ console.log(req.body)
             return res.status(401).json({ error: "Merci de validez votre compte par email" });
         }
         const userValid = await bcrypt.compare(password, user.password)
+        console.log(userValid)
         if (!userValid) {
             setTimeout(() => {
                 return res.status(401).json({ error: "Identifiants incorrects" });
@@ -55,10 +56,11 @@ console.log(req.body)
                     process.env.SECRET_KEY_JWT,
                     { expiresIn: "12h" }
                 )
-                await userModel.update(
+                const addAdminToken = await userModel.update(
                     { tokenAdmin: tokenAdmin },
                     { where: { id: user.id } }
                 );
+                console.log(addAdminToken)
             }
 
 
@@ -90,7 +92,7 @@ console.log(req.body)
                 abonnementType: user.abonnementType,
                 role: user.role
             }
-
+            console.log(req.user)
 
             next()
         }
