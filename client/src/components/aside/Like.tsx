@@ -9,7 +9,7 @@ import {
 import Book from "../acceuil/Book";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Context/AuthContext";
-import { API_URL, FRONT_URL } from "../../config";
+import { FRONT_URL } from "../../config";
 
 interface Author {
   id: number;
@@ -43,10 +43,7 @@ function Like() {
       credentials: "include",
     })
       .then((res) => { return res.json() })
-      .then((data) => {
-        setLikeBooks(data)
-
-      })
+      .then((data) => {setLikeBooks(data)})
       .catch((err) => console.error("Erreur récupération historique :", err));
   }, []);
 
