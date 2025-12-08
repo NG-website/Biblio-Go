@@ -54,19 +54,19 @@ const paymentControler = {
     },
 
     async CheckPayment(req, res) {
-
         const sig = req.headers["stripe-signature"];
         const endpointSecret = process.env.WEBHOOK_ENDPOINT_STRIPE;
-
         let event;
         try {
             event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-
             if (event.type === "checkout.session.completed") {
                 const today = new Date();
                 const oneYearLater = new Date(today);
                 const updateUser = await userModel.update(
-                    { abonnement: oneYearLater.setDate(today.getDate() + 365), abonnementType: event.data.object.metadata.abonementType },
+                    {
+                        abonnement: oneYearLater.setDate(today.getDate() + 365),
+                        abonnementType: event.data.object.metadata.abonementType
+                    },
                     { where: { id: event.data.object.metadata.userId } },
                 );
             }

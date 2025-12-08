@@ -11,9 +11,7 @@ function Home() {
     const userId = user ? user?.userId : null
 
     useEffect(() => {
-        fetch(`${API_URL}api/book/all`,{
-            credentials:"include",
-        })
+        fetch(`${API_URL}api/book/all`,{credentials:"include",})
             .then((res) => { return res.json() })
             .then((data) => {
                 if (!user) {
@@ -25,7 +23,7 @@ function Home() {
                     }
                 }
                 if (user) {
-                    let booking = []
+                    const booking = []
                     fetch(`${API_URL}api/bookuser/id`, {
                         method: "POST",
                         credentials: "include",

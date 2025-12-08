@@ -1,8 +1,6 @@
 import { Sequelize } from 'sequelize'
 import dotenv from 'dotenv'
-import fs from 'fs'
 dotenv.config()
-
 const sequelize = new Sequelize(
   process.env.NAME_DB,
   process.env.NAME_USER,
@@ -19,11 +17,4 @@ const sequelize = new Sequelize(
     }
   }
 )
-
-// try {
-//   await sequelize.authenticate();
-//   console.log('Connection db ok');
-// } catch (error) {
-//   console.error('Erreur connection db', error);
-// }
 export default sequelize

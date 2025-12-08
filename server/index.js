@@ -52,15 +52,10 @@ app.use(express.json());
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    if (req.path === '/user') {
-      cb(null, `uploads/user`);
-    } else if (req.path === '/book') {
-      cb(null, `uploads/book`);
-    } else if (req.path === '/ocr') {
-      cb(null, `uploads/temp`);
-    } else {
-      return false
-    }
+    if (req.path === '/user') {cb(null, `uploads/user`);
+    } else if (req.path === '/book') {cb(null, `uploads/book`);
+    } else if (req.path === '/ocr') {cb(null, `uploads/temp`);
+    } else { return false }
   },
   filename: (req, file, cb) => {
     const name = req.body.name + ".jpg"
@@ -98,15 +93,11 @@ app.get("/cookies", (req, res) => {
 
 
 app.post('/api/ocr', async (req, res) => {
-
   const { path } = req.body;
   if (!path) return res.status(400).send('Aucun chemin fourni');
-
   try {
     const { data: { text } } = await Tesseract.recognize(path, 'fra');
-
     fs.unlinkSync(path);
-
     res.json({ text });
   } catch (err) {
     res.status(500).json({ error: 'Erreur OCR' });
@@ -128,7 +119,6 @@ app.use("/api/image", upload.single("image"), (req, res) => {
   } else {
     res.status(200).json("ok")
   }
-
   if (!req.file) {
     res.status(400).send('Aucun fichier reçu')
   }

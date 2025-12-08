@@ -13,7 +13,6 @@ const bookController = {
                     authorModel
                 ]
             })
-          //  console.log(all)
             res.status(200).json(all)
         } catch (error) {
             return res.status(500).json(error)

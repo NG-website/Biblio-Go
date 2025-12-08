@@ -50,8 +50,8 @@ const paymentModel = {
                 mode: 'subscription',
                 allow_promotion_codes: true,
                 automatic_tax: { enabled: false },
-                success_url: 'http://localhost:5173/subscription/success',
-                cancel_url: 'http://localhost:5173/subscription/cancel',
+                success_url: `${FRONT_URL}/api/subscription/success`,
+                cancel_url: `${FRONT_URL}/api/subscription/cancel`,
                 metadata: {
                     userId: userId,
                     abonementType: abonementType

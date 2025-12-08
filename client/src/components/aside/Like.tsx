@@ -31,7 +31,7 @@ interface LikeBook {
 
 function Like() {
   const { user } = useAuthContext()
-  const userId = user? user?.userId : null;
+  const userId = user?.userId : null;
   console.log(userId)
   const [likeBooks, setLikeBooks] = useState<LikeBook[]>([]);
   const [back, setBack] = useState()
@@ -39,7 +39,7 @@ function Like() {
 
   useEffect(() => {
 //revoir pour like/iduser
-    fetch(`${API_URL}api/like/all`, {
+    fetch(`${API_URL}/api/like/all`, {
       credentials: "include",
     })
       .then((res) => { return res.json() })
@@ -53,7 +53,7 @@ function Like() {
 
   const soonAvailable = (bookId) => {
     if (bookId) {
-      fetch(`${API_URL}api/bookuser/dispo`, {
+      fetch(`${API_URL}/api/bookuser/dispo`, {
         method: "POST",
         credentials:"include",
         headers: { "Content-Type": "application/json" },

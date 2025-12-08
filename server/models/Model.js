@@ -23,10 +23,15 @@ bookModel.belongsToMany(userModel, {
   foreignKey: "bookId",
 });
 
-// Un auteur peut avoir plusieurs livres
-authorModel.hasMany(bookModel, { foreignKey: 'authorId' });
-// Un livre appartient à un auteur
-bookModel.belongsTo(authorModel, { foreignKey: 'authorId' });
+
+authorModel.hasMany(
+  bookModel,
+   { foreignKey: 'authorId' }
+  );
+bookModel.belongsTo(
+  authorModel, 
+  { foreignKey: 'authorId' }
+);
 
 categoriesModel.hasMany(bookModel, { foreignKey: 'categoryId' });
 bookModel.belongsTo(categoriesModel, { foreignKey: 'categoryId' });

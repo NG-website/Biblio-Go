@@ -74,7 +74,7 @@ const adminController = {
             const create = await userModel.create(data)
 
             if (create.id) {
-                const link = `http://localhost:3000/user/comfirm-account?token=${encodeURIComponent(token)}${create.id}`
+                const link = `${FRONT_URL}/api/user/comfirm-account?token=${encodeURIComponent(token)}${create.id}`
                 await sendMail(data.email, "inscription", [data.name, link])
                 res.status(200).json("ok")
             }
