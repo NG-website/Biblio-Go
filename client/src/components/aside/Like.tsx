@@ -50,7 +50,7 @@ function Like() {
 
   const soonAvailable = (bookId) => {
     if (bookId) {
-      fetch(`${FRONT_URL}api/bookuser/dispo`, {
+      fetch(`${API_URL}api/bookuser/dispo`, {
         method: "POST",
         credentials:"include",
         headers: { "Content-Type": "application/json" },
