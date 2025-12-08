@@ -14,6 +14,7 @@ const likeController = {
             const userId = req?.session?.user?.userId
             console.log("userId",userId)
             console.log("session",req.session)
+             console.log("user?",req?.session?.user)
             const bookLike = await LikeModel.findAll({
                 where: {  userId:userId },
                 include: [{
