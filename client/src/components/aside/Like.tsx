@@ -31,8 +31,8 @@ interface LikeBook {
 
 function Like() {
   const { user } = useAuthContext()
-  const userId = user?.userId : null;
-  console.log(userId)
+  const userId = user?user?.userId : null;
+  //console.log(userId)
   const [likeBooks, setLikeBooks] = useState<LikeBook[]>([]);
   const [back, setBack] = useState()
   const navigate = useNavigate()
