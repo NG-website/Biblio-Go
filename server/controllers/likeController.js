@@ -12,7 +12,8 @@ const likeController = {
     async All(req, res) {
         try {
             const userId = req?.session?.user?.userId
-            console.log(userId)
+            console.log("userId",userId)
+            console.log("session",req.session)
             const bookLike = await LikeModel.findAll({
                 where: {  userId:userId },
                 include: [{
