@@ -61,7 +61,6 @@ const bookController = {
     async Categories(req, res) {
         try {
             const all = await categoriesModel.findAll({})
-            console.log(all)
             res.status(200).json(all)
         } catch (error) {
             return res.status(500).json(error)
