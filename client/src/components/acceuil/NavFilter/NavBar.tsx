@@ -33,7 +33,7 @@ function NavBar() {
       .then((data) => setCategories(data));
 
     setDisplay(url.pathname === "/");
-  }, [url]);
+  }, [display]);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const id = parseInt(e.currentTarget.id);
