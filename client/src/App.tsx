@@ -9,28 +9,23 @@ import { useAuthContext } from "./components/Context/AuthContext"
 
 const App: React.FC = () => {
   const {user} = useAuthContext()
- //console.log(user)
   const admin = user? user?.role === true : false
-  //console.log(admin)
+
   return (
     <BrowserRouter>
-
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
         </Route>
-
         {admin ?
           <Route path="/admin/*" element={<AdminRouter />} />
           :
           <Route path="/admin/*" element={<NotFound />} />
         }
-
         <Route path="/*" element={<UserRouter />} />
       </Routes>
     </BrowserRouter>
 
   )
 }
-
 export default App
