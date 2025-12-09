@@ -28,10 +28,14 @@ dotenv.config();
 const app = express();
 
  app.use(cors({
-   origin: "https://biblio-go.vercel.app",
+   origin: "http://localhost:5173",
    credentials: true
  }));
 
+//  app.use(cors({
+//    origin: "https://biblio-go.vercel.app",
+//    credentials: true
+//  }));
 
 app.use("/api/subscription/webhook", express.raw({ type: "application/json" }));
 const stripe_ = new stripe(process.env.SECRET_KEY_STRIPE);
@@ -41,10 +45,12 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    //httpOnly: true,
-     secure: true,
-     sameSite: "none",
-   // maxAge: 1000 * 60 * 60 * 24 * 7
+    httpOnly: true,
+     secure: false,
+     //secure:true,
+     //sameSite: "none",
+      sameSite: "lax", 
+     maxAge: 1000 * 60 * 60 * 24 * 7
   }
 }));
 
@@ -86,8 +92,6 @@ app.post("/logout", (req, res) => {
 
 
 app.get("/cookies", (req, res) => {
-  console.log("REQ SESSION .............................")
-  console.log(".........",req.session.user)
   res.json({ user: req.session.user || null });
 });
 

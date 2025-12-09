@@ -7,14 +7,14 @@ const sequelize = new Sequelize(
   process.env.PASSWORD_DB,
   {
     host: process.env.HOST_DB,
-    port: process.env.PORT,     
+    port: process.env.PORT_DB,     
     dialect: "mysql",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    }
+    //dialectOptions: {
+      // ssl: {
+      //   require: true,
+      //   rejectUnauthorized: false
+      // }
+    //}
   }
 )
 export default sequelize
