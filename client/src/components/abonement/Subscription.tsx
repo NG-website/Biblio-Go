@@ -26,8 +26,8 @@ function Subscription({
 }: SubscriptionProps) {
   const navigate = useNavigate()
   const { user } = useAuthContext()
-  const abonner = user ? user.abonnement : null
-  const userId = user ? user.userId : null
+  const abonner = user ? user?.abonnement : null
+  const userId = user ? user?.userId : null
   const [idProduct, setIdProduct] = useState();
   const [alerte, setAlerte] = useState(false)
 

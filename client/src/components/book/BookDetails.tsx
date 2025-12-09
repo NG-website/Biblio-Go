@@ -27,7 +27,7 @@ import { API_URL } from "../../config";
 function BookDetails() {
   const navigate = useNavigate();
 
-  const bookId = useParams().id
+  
   const { user } = useAuthContext()
   const userId = user ? user.userId : null;
   const abonnement = user ? user.abonnementType : null
@@ -40,10 +40,12 @@ function BookDetails() {
   const [like, setLike] = useState(false);
   const [message, setMessage] = useState("");
   const [alreadyBorrow, setAlreadyBorrow] = useState(false);
+  const param = useParams()
+  const [bookId, setBookId] = useState(param.id);
 
 
   useEffect(() => {
-
+    setBookId(param.id)
     fetch(`${API_URL}api/book/id`, {
       method: "POST",
       credentials: "include",
@@ -83,7 +85,7 @@ function BookDetails() {
         })
         .catch(console.error);
     }
-  }, [booking, userId]);
+  }, [booking, userId, bookId]);
 
   const incrementHour = (date: Date, setDate: (d: Date) => void) => {
     const newDate = new Date(date);

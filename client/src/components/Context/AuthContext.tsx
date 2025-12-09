@@ -1,7 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { API_URL } from "../../config";
-
-// Typage minimal de l'utilisateur
 interface UserType {
     id: string;
     name?: string;
@@ -31,28 +29,20 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [user, setUser] = useState<UserType | null>(null);
 
-
     useEffect(() => {
-        console.log("AuthContext", user)
-        if (user !== null) {
             fetch(`${API_URL}cookies`, {
                 credentials: "include",
             })
                 .then(res => res.json())
                 .then(data => {
                     if (data.user) {
-                        setUser(data.user);
-                    }
+                        setUser(data.user)
+}
                 });
-        }
-
-    }, [user]);
-
+    }, []);
     return (
         <AuthContext.Provider value={{ user, setUser }}>
             {children}
         </AuthContext.Provider>
     );
-
-
 };

@@ -32,7 +32,7 @@ interface LikeBook {
 function Like() {
   const { user } = useAuthContext()
   const userId = user?user?.userId : null;
-  //console.log(userId)
+  console.log(userId)
   const [likeBooks, setLikeBooks] = useState<LikeBook[]>([]);
   const [back, setBack] = useState()
   const navigate = useNavigate()
@@ -40,7 +40,7 @@ function Like() {
   useEffect(() => {
 //revoir pour like/iduser
     fetch(`${API_URL}api/like/all`, {
-      credentials: "include",
+      credentials:"include"
     })
       .then((res) => { return res.json() })
       .then((data) => {setLikeBooks(data)})
@@ -94,7 +94,7 @@ function Like() {
             Aucun livre ajouté à vos envies
           </Typography>
         ) : (
-          likeBooks.map((d, i) => (
+          likeBooks && likeBooks.map((d, i) => (
             <Card
               aria-label="Voir les détails du livre"
               onClick={() => navigate(`/book/${d.Book?.id}`)}

@@ -58,7 +58,7 @@ function Home() {
                         .catch(console.error)
                 }
             })
-    }, [filter, user])
+    }, [filter, userId])
 
     return (
         <div

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   TextField,
@@ -89,12 +89,13 @@ export default function SearchBar() {
     setChoiceValueInput(name);
 
     const url = `${category}/${id}`;
-    document.body.style.background = "linear-gradient(rgb(0, 0, 0),#06060697)";
-    document.body.style.opacity = "0";
+   // document.body.style.background = "linear-gradient(rgb(0, 0, 0),#06060697)";
+   // document.body.style.opacity = "0";
 
    // setTimeout(() => {
    console.log("url", url)
-      navigate(`/author/${id}`)
+   
+      navigate(url)
      // window.location.href = `${FRONT_URL}${url}`;
     //}, 800);
   };
@@ -179,7 +180,6 @@ export default function SearchBar() {
               </ListItemButton>
             ))}
             {author.map((a, i) => (
-              <Link to={`author/${a.id}`}>
               <ListItemButton
                 key={`author-${i}`}
                 data-id={a.id}
@@ -198,7 +198,6 @@ export default function SearchBar() {
                 <ListItemText primary={a.firstname + " " + a.lastname} />
                 <Chip label="Author" size="small" sx={{ bgcolor: theme.palette.primary.main }} />
               </ListItemButton>
-              </Link>
             ))}
           </List>
         </Paper>
