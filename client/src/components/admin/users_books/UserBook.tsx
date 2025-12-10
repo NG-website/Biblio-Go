@@ -28,7 +28,7 @@ import { useAuthContext } from "../../Context/AuthContext";
 import { API_URL } from "../../../config";
 
 export default function UserBook({ filter }) {
-    const {user}=useAuthContext()
+    const { user } = useAuthContext()
     const [bookUser, setBookUser] = React.useState([]);
     const [editId, setEditId] = React.useState(null);
     const [bookName, setBookName] = React.useState("");
@@ -44,9 +44,9 @@ export default function UserBook({ filter }) {
 
     React.useEffect(() => {
         setReload(false);
-        fetch(`${API_URL}api/bookuser/all`,{
-            credentials:"include",
-            headers:{ "Authorization": `Bearer ${user?.token}`}
+        fetch(`${API_URL}api/bookuser/all`, {
+            credentials: "include",
+            headers: { "Authorization": `Bearer ${user?.token}` }
         })
             .then((res) => { return res.json() })
             .then((data) => {
@@ -85,9 +85,9 @@ export default function UserBook({ filter }) {
             method: "PUT",
             credentials: "include",
             headers: {
-                 "Content-Type": "application/json",
-                 "Authorization": `Bearer ${user?.token}`
-                 },
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user?.token}`
+            },
             body: JSON.stringify({ data, id: { id: borrowId } }),
         })
             .then((res) => { return res.json() })
@@ -122,9 +122,9 @@ export default function UserBook({ filter }) {
         fetch(`${API_URL}api/bookuser/update`, {
             method: "PUT",
             credentials: "include",
-            headers: { 
-                "Content-Type": "application/json" ,
-             "Authorization": `Bearer ${user?.token}`
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user?.token}`
             },
             body: JSON.stringify({ data, id: { id: borrow.id } }),
         })
@@ -146,9 +146,9 @@ export default function UserBook({ filter }) {
             method: "DELETE",
             credentials: "include",
             headers: {
-                 "Content-Type": "application/json",
-                 "Authorization": `Bearer ${user?.token}`
-                 },
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user?.token}`
+            },
             body: JSON.stringify({ id: confirmDelete }),
         })
             .then((res) => {
@@ -180,9 +180,9 @@ export default function UserBook({ filter }) {
                 minHeight={{ xs: "140.15px", md: "84.16px" }}
             >
                 {filter === 'take' ?
-                <h2 aria-label="Section des départs">Les Départs</h2>
-                :
-                <h2 aria-label="Section des retours">Les Retours</h2>}
+                    <h2 aria-label="Section des départs">Les Départs</h2>
+                    :
+                    <h2 aria-label="Section des retours">Les Retours</h2>}
 
                 {filter === 'take' ?
                     <Button
@@ -204,24 +204,27 @@ export default function UserBook({ filter }) {
                 {openAddBorrow && <AddBorrow open={openAddBorrow} close={setOpenAddBorrow} />}
             </Box>
 
-          <PopUPDelete confirmDelete={confirmDelete? confirmDelete : null} setConfirmDelete={setConfirmDelete} deleteForever={deleteForever}/>
+            <PopUPDelete confirmDelete={confirmDelete ? confirmDelete : null} setConfirmDelete={setConfirmDelete} deleteForever={deleteForever} />
 
             {message && (
-                <Alert severity={message.includes("Attention") ? "error" : "success"} 
-                sx={{ position: "absolute",
-                     top: "25%", 
-                     left: "25%", 
-                     width: "50%",
-                      height: "50%",
-                       alignItems: "center",
+                <Alert severity={message.includes("Attention") ? "error" : "success"}
+                    sx={{
+                        position: "absolute",
+                        top: "25%",
+                        left: "25%",
+                        width: "50%",
+                        height: "50%",
+                        alignItems: "center",
                         justifyContent: "center",
-                        bgcolor:"primary.main"
-                     }}>{message}</Alert>
+                        bgcolor: "primary.main",
+                        zIndex: 20,
+                        border: theme.palette.background.default
+                    }}>{message}</Alert>
             )}
 
             <TableContainer component={Paper}>
                 <Table aria-label="Tableau des emprunts">
-                    <TableHead sx={{ position: "sticky", top: 0, zIndex: 2, bgcolor:"background.default" }}>
+                    <TableHead sx={{ position: "sticky", top: 0, zIndex: 2, bgcolor: "background.default" }}>
                         <TableRow>
                             <TableCell>Photo</TableCell>
                             <TableCell sx={{ minWidth: "240px" }} align="center">Nom</TableCell>
@@ -236,14 +239,14 @@ export default function UserBook({ filter }) {
                             const isEditing = editId === borrow.id;
                             const late = new Date() > new Date(borrow[filter + "_at"])
                             return (
-                                <TableRow 
-                                sx={{width: { xs: "70%", md: "100%" }}}
-                                key={borrow.id}
-                                aria-label={`Ligne emprunt ${borrow?.Book?.name}`}
-                              >
+                                <TableRow
+                                    sx={{ width: { xs: "70%", md: "100%" } }}
+                                    key={borrow.id}
+                                    aria-label={`Ligne emprunt ${borrow?.Book?.name}`}
+                                >
                                     <TableCell>
                                         <Avatar
-                                           alt={`image de ${borrow?.Book?.name}`}
+                                            alt={`image de ${borrow?.Book?.name}`}
                                             aria-label={`Photo du livre ${borrow?.Book?.name}`}
                                             src={`${API_URL}api/uploads/book/${borrow?.Book?.name}.jpg`}
                                         />
@@ -252,7 +255,7 @@ export default function UserBook({ filter }) {
                                     <TableCell sx={{ textAlign: "center" }}>
                                         {borrow?.Book?.name}
                                         <hr style={{ margin: "10px" }} />
-                                        {borrow.User.name}
+                                        {borrow?.User?.name}
                                     </TableCell>
 
                                     <TableCell sx={{ maxWidth: "200px" }} align="center">
@@ -263,8 +266,8 @@ export default function UserBook({ filter }) {
                                                 new Date(borrow.take_at).toLocaleDateString()
                                                 + " à " +
                                                 new Date(borrow.take_at).toLocaleTimeString("fr-FR", {
-                                                hour: "2-digit",
-                                                minute: "2-digit", 
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
                                                 })
                                             )}
                                     </TableCell>
@@ -279,7 +282,7 @@ export default function UserBook({ filter }) {
                                             " à " +
                                             new Date(borrow.deposit_at).toLocaleTimeString("fr-FR", {
                                                 hour: "2-digit",
-                                                minute: "2-digit", 
+                                                minute: "2-digit",
                                             })
                                         )}
                                     </TableCell>

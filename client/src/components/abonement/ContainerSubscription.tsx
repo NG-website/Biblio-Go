@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Subscription from "./Subscription"
 import { Box, Typography } from "@mui/material"
 import { useAuthContext } from "../Context/AuthContext"
@@ -6,10 +6,14 @@ import theme from "../../theme"
 
 
 function ContainerSubscription() {
-  
-  const { user } = useAuthContext()
-  const abonnementType = user ? user.abonnementType : null
+    const { user } = useAuthContext()
+  console.log(user)
+  const abonnementType = user ? user?.abonnementType : null
   const [animation, setAnimation] = useState(false)
+  useEffect(()=>{
+
+  },[abonnementType])
+
 
   const changeState = () => {
     setAnimation(!animation)
@@ -98,7 +102,7 @@ function ContainerSubscription() {
           price={20}
           duration={"/an"}
           subtitle={"Passion"}
-          descriptions={["Réservation en ligne de vos livres préférés", "Jusqu’à 3 livres empruntés en simultané", "Emprunt de 30 jours, renouvelable une fois"]}
+          descriptions={["Réservation en ligne de vos livres préférés", "Jusqu’à 9 livres empruntés en simultané", "Emprunt de 30 jours, renouvelable une fois"]}
           animation={animation}
           aria-label="Abonnement Passion, 20 euros par an"
         />}

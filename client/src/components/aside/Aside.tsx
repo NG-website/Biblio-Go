@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
+
 import HomeIcon from "@mui/icons-material/Home";
 import HistoryIcon from "@mui/icons-material/History";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
@@ -8,10 +9,10 @@ import InfoIcon from "@mui/icons-material/Info";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import GavelIcon from "@mui/icons-material/Gavel";
-import MenuBookIcon from "@mui/icons-material/MenuBook"; // pour livres
-import GroupIcon from "@mui/icons-material/Group"; // pour utilisateurs
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn"; // pour paiements
-import PersonIcon from "@mui/icons-material/Person"; // pour auteur
+import MenuBookIcon from "@mui/icons-material/MenuBook"; 
+import GroupIcon from "@mui/icons-material/Group"; 
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn"; 
+import PersonIcon from "@mui/icons-material/Person"; 
 import { useAuthContext } from "../Context/AuthContext";
 
 function Aside() {
@@ -255,7 +256,7 @@ function Aside() {
         )}
       </Box>
 
-      {isAdmin === "true" ? null : (
+      {/* {isAdmin === "true" ? null : ( */}
         <Button
           component={Link}
           to="/footer"
@@ -265,7 +266,7 @@ function Aside() {
         >
           <GavelIcon sx={{ fill: active === '/footer' ? "white" : "black" }} aria-hidden="true" /> Ressources légales
         </Button>
-      )}
+      {/* )} */}
     </aside>
   );
 }

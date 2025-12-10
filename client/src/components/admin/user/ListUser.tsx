@@ -31,7 +31,7 @@ import { API_URL } from '../../../config';
 
 
 export default function ListUser() {
-  const {user}= useAuthContext()
+  const { user } = useAuthContext()
   const [editId, setEditId] = React.useState(null);
   const [openUserAdd, setOpenUserAdd] = React.useState(false);
   const [confirmDelete, setConfirmDelete] = React.useState(null);
@@ -50,7 +50,7 @@ export default function ListUser() {
   React.useEffect(() => {
     fetch(`${API_URL}api/user/all`, {
       credentials: "include",
-      headers:{ "Authorization": `Bearer ${user?.token}`}
+      headers: { "Authorization": `Bearer ${user?.token}` }
     })
       .then((res) => {
         if (res.ok) {
@@ -71,7 +71,7 @@ export default function ListUser() {
     setEditId(user.id);
     setName(user.name);
     setActif(user.actif);
-    setAbonnementType(user.abonnementType || " " );
+    setAbonnementType(user.abonnementType || " ");
     setEmail(user.email);
     setAddress(user.address);
     setPostalCode(user.postalCode);
@@ -86,7 +86,7 @@ export default function ListUser() {
       name,
       actif,
       abonnementType,
-      abonnement:abonnementType? new Date() : " ",
+      abonnement: abonnementType ? new Date() : " ",
       email,
       address,
       postalCode,
@@ -97,10 +97,10 @@ export default function ListUser() {
     fetch(`${API_URL}api/admin/user/update`, {
       method: "PUT",
       credentials: "include",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
-         "Authorization": `Bearer ${user?.token}`
-       },
+        "Authorization": `Bearer ${user?.token}`
+      },
       body: JSON.stringify({ data, id: editId }),
     })
       .then((res) => res.ok && res.json())
@@ -126,9 +126,9 @@ export default function ListUser() {
       method: "DELETE",
       credentials: "include",
       headers: {
-         "Content-Type": "application/json",
-         "Authorization": `Bearer ${user?.token}`
-         },
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${user?.token}`
+      },
       body: JSON.stringify({ id: confirmDelete?.id }),
     })
       .then((res) => {
@@ -160,7 +160,10 @@ export default function ListUser() {
             width: "50%",
             alignItems: "center",
             justifyContent: "center",
-            bgcolor: theme.palette.primary.main
+            bgcolor: theme.palette.primary.main,
+            zIndex: 20,
+            border:"2px solid",
+            borderColor: theme.palette.background.default
           }}
         >
           {alerte}

@@ -21,7 +21,7 @@ function Footer() {
             bgcolor: 'white',
             transition: 'all 0.3s',
             '&:hover': {
-                bgcolor: 'orange',
+                bgcolor: 'primary.main',
                 py:1,
             },
         },
@@ -34,7 +34,7 @@ function Footer() {
         '&.Mui-expanded': {
             '& .MuiTypography-root': { color: 'black' },
             '& .MuiSvgIcon-root': { fill: 'white' },
-            '& .MuiAccordionSummary-root': { bgcolor: 'orange', py:0 }
+            '& .MuiAccordionSummary-root': { bgcolor: 'primary.main', py:0 }
         }
     };
 

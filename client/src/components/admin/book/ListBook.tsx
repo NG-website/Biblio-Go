@@ -199,7 +199,9 @@ export default function ListBook() {
                         width: "50%",
                         alignItems: "center",
                         justifyContent: "center",
-                        bgcolor: theme.palette.primary.main
+                        bgcolor: theme.palette.primary.main,
+                        zIndex:20, 
+                        border:theme.palette.background.default
                     }}
                 >
                     {alerte}

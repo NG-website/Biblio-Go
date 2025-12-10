@@ -10,6 +10,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
@@ -22,10 +23,14 @@ import GavelIcon from "@mui/icons-material/Gavel";
 import theme from "../theme";
 import { useAuthContext } from "./Context/AuthContext";
 
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import GroupIcon from "@mui/icons-material/Group";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import PersonIcon from "@mui/icons-material/Person";
 function BurgerMenu() {
-  const {user} = useAuthContext()
-  const admin = user?.role === true;
-  const isConnected = user?.id;
+  const { user } = useAuthContext()
+  const isAdmin = user?.role === true;
+  const isUser = user?.userId;
   const location = useLocation().pathname;
   const [active, setActive] = useState<string>(location);
   const [open, setOpen] = useState(false);
@@ -34,243 +39,272 @@ function BurgerMenu() {
     setOpen(state);
   };
 
+  const buttonActive = (path: string) => {
+    setActive(path);
+  };
+
   const buttonStyle = (isActive: boolean) => ({
-    color: isActive ? "secondary.main" : "black",
-    backgroundColor: isActive ? "primary.main" : "secondary.main",
-    marginBottom:"20px",
-    "&:hover": {
-      backgroundColor: "primary.main",
-      color: "secondary.main",
-    },
+    width: "83%",
+    height: "40px",
+    marginBottom: "10px",
     borderRadius: "10px",
+    justifyContent: "flex-start",
     textTransform: "none",
+    color: "text.primary",
+    backgroundColor: isActive ? "primary.main" : "secondary.main",
+    transition: "all 0.2s ease",
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    fontSize: "clamp(10px, 1vw, 16px)",
   });
 
   return (
     <>
-<IconButton
-  onClick={toggleDrawer(true)}
-  sx={{
-    position: "fixed",
-    top: 25,
-    left: 25,
-    zIndex: 1300,
-    width: 60,
-    height: 60,
-    borderRadius:5,
-    bgcolor: "primary.main", 
-    "&:hover": { 
-      bgcolor: "secondary.main",
-      fill:"white"
-     },
-  }}
-  aria-label="Ouvrir le menu"
->
-  <MenuIcon
-   sx={{ fontSize: 40,
-     fill:"secondary.main" ,
-     "&:hover": { 
-      fill: theme.palette.primary.main
-     },}} />
-</IconButton>
+      <IconButton
+        onClick={toggleDrawer(true)}
+        sx={{
+          position: "fixed",
+          top: 25,
+          left: 25,
+          zIndex: 1300,
+          width: 60,
+          height: 60,
+          borderRadius: 5,
+          bgcolor: "primary.main",
+          "&:hover": {
+            bgcolor: "secondary.main",
+            fill: "white"
+          },
+        }}
+        aria-label="Ouvrir le menu"
+      >
+        <MenuIcon
+          sx={{
+            fontSize: 40,
+            fill: "secondary.main",
+            "&:hover": {
+              fill: theme.palette.primary.main
+            },
+          }} />
+      </IconButton>
 
 
-      <Drawer  anchor="left" open={open} onClose={toggleDrawer(false)}>
+      <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
         <Box
           sx={{ width: 250, p: 2 }}
           role="presentation"
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          <Box textAlign="center" mb={2} mt={10}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            width="100%"
+            aria-label="Navigation principale"
+          >
+            <Typography
+              variant="h1"
+              fontSize={"clamp(10px, 3vw, 46px)"}
+              sx={{ color: "text.primary" }}
+              aria-label="Titre du site"
+            >
+              Biblio'Go
+            </Typography>
             <Button
               component={Link}
-              to= "/"
-              sx={{border:"none", "&:hover":{backgroundColor:"transparent"}}}
-              onClick={() => setActive("/")}
+              to={"/"}
+              onClick={() => buttonActive("/")}
+              aria-label="Retour à l'accueil"
+              sx={{
+                mb: 5,
+                border: "none",
+                backgroundColor: "transparent",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                  transform: "none",
+                  boxShadow: "none",
+                },
+                "&:active": {
+                  backgroundColor: "transparent",
+                },
+                cursor: active === '/' ? "default" : "pointer"
+              }}
             >
               <img
                 src="/logo.png"
-                alt="Logo"
-                style={{ height: 80, width: 80 }}
+                alt="Logo de la bibliothèque"
+                title="Accueil"
+                style={{ height: 90, width: 90 }}
               />
             </Button>
-          </Box>
 
-          <List >
-            {/* Accueil */}
-            <ListItemButton
+            <Button
               component={Link}
-              to= "/"
-              onClick={() => setActive("/")}
+              to={"/"}
+              onClick={() => buttonActive("/")}
+              aria-label="Accéder à la page d'accueil"
               sx={buttonStyle(active === "/")}
             >
-              <ListItemIcon>
-                <HomeIcon sx={{ fill: active === "/" ? theme.palette.secondary.main : "black" }} />
-              </ListItemIcon>
-              <ListItemText primary="Accueil" />
-            </ListItemButton>
+              <HomeIcon sx={{ fill: active === '/' ? "white" : "black" }} aria-hidden="true" />
+              Accueil
+            </Button>
 
-            {/* User */}
-            {!admin ? (
-              <>
-                {isConnected && (
-                  <ListItemButton
-                    component={Link}
-                    to="/like"
-                    onClick={() => setActive("/like")}
-                    sx={buttonStyle(active === "/like")}
-                  >
-                    <ListItemIcon>
-                      <FavoriteIcon
-                        sx={{ color: active === "/like" ? theme.palette.secondary.main : "black" }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText primary="Mes Envies" />
-                  </ListItemButton>
-                )}
+            {isAdmin ? null : isUser && !isAdmin ? (
+              <Button
+                component={Link}
+                to="/like"
+                onClick={() => buttonActive("/like")}
+                aria-label="Accéder à mes livres favoris"
+                sx={buttonStyle(active === "/like")}
+              >
+                <FavoriteIcon sx={{ fill: active === '/like' ? "white" : "black" }} aria-hidden="true" />
+                Mes envies
+              </Button>
+            ) : null}
 
-                {isConnected && (
-                  <ListItemButton
-                    component={Link}
-                    to="/historical"
-                    onClick={() => setActive("/historical")}
-                    sx={buttonStyle(active === "/historical")}
-                  >
-                    <ListItemIcon>
-                      <HistoryIcon
-                        sx={{
-                          color: active === "/historical" ? theme.palette.secondary.main : "black",
-                        }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText primary="Historique" />
-                  </ListItemButton>
-                )}
+            {isAdmin ? null : isUser && !isAdmin ? (
+              <Button
+                component={Link}
+                to="/historical"
+                onClick={() => buttonActive("/historical")}
+                aria-label="Voir mon historique d'emprunts"
+                sx={buttonStyle(active === "/historical")}
+              >
+                <HistoryIcon sx={{ fill: active === '/historical' ? "white" : "black" }} aria-hidden="true" />
+                Mon historique
+              </Button>
+            ) : null}
 
-                <ListItemButton
-                  component={Link}
-                  to="/info"
-                  onClick={() => setActive("/info")}
-                  sx={buttonStyle(active === "/info")}
-                >
-                  <ListItemIcon>
-                    <InfoIcon sx={{ color: active === "/info" ? theme.palette.secondary.main : "black" }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Découvrez-nous" />
-                </ListItemButton>
+            {isAdmin ? null : (
+              <Button
+                component={Link}
+                to="/info"
+                onClick={() => buttonActive("/info")}
+                aria-label="Découvrir la bibliothèque et son histoire"
+                sx={buttonStyle(active === "/info")}
+              >
+                <InfoIcon sx={{ fill: active === '/info' ? "white" : "black" }} aria-hidden="true" />
+                Découvrez-nous
+              </Button>
+            )}
 
-                <ListItemButton
-                  component={Link}
-                  to="/subscription"
-                  onClick={() => setActive("/subscription")}
-                  sx={buttonStyle(active === "/subscription")}
-                >
-                  <ListItemIcon>
-                    <SubscriptionsIcon
-                      sx={{
-                        color: active === "/subscription" ? theme.palette.secondary.main : "black",
-                      }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary="Nos Offres" />
-                </ListItemButton>
+            {isAdmin ? null : (
+              <Button
+                component={Link}
+                to="/subscription"
+                onClick={() => buttonActive("/subscription")}
+                aria-label="Découvrir nos offres d'abonnement"
+                sx={buttonStyle(active === "/subscription")}
+              >
+                <SubscriptionsIcon sx={{ fill: active === '/subscription' ? "white" : "black" }} aria-hidden="true" />
+                Nos offres
+              </Button>
+            )}
 
-                <ListItemButton
-                  component={Link}
-                  to="/contact"
-                  onClick={() => setActive("/contact")}
-                  sx={buttonStyle(active === "/contact")}
-                >
-                  <ListItemIcon>
-                    <ContactMailIcon
-                      sx={{ color: active === "/contact" ? theme.palette.secondary.main : "black" }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary="Nous Contacter" />
-                </ListItemButton>
+            {isAdmin ? null : (
+              <Button
+                component={Link}
+                to="/contact"
+                onClick={() => buttonActive("/contact")}
+                aria-label="Contacter la bibliothèque"
+                sx={buttonStyle(active === "/contact")}
+              >
+                <ContactMailIcon sx={{ fill: active === '/contact' ? "white" : "black" }} aria-hidden="true" />
+                Nous contacter
+              </Button>
+            )}
 
-                <Divider sx={{ my: 1 }} />
-
-                <ListItemButton
-                  component={Link}
-                  to="/footer"
-                  onClick={() => setActive("/footer")}
-                  sx={buttonStyle(active === "/footer")}
-                >
-                  <ListItemIcon>
-                    <GavelIcon sx={{ fill: active === "/footer" ? theme.palette.secondary.main : theme.palette.text.primary }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Ressources légales" />
-                </ListItemButton>
-              </>
-            ) : (
-              <>
-        
-                <ListItemButton
+            {isAdmin && (
+              <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                width="100%"
+                aria-label="Navigation isAdministrateur"
+              >
+                <Button
                   component={Link}
                   to="/admin/userbook/take"
-                  onClick={() => setActive("/admin/userbook/take")}
+                  onClick={() => buttonActive("/admin/userbook/take")}
+                  aria-label="Gérer les départs de livres"
                   sx={buttonStyle(active === "/admin/userbook/take")}
                 >
-                  <ListItemIcon>
-                    <ContactMailIcon sx={{ color: active === "/admin/userbook/take" ? theme.palette.secondary.main : theme.palette.text.primary }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Départs" />
-                </ListItemButton>
+                  <MenuBookIcon sx={{ fill: active === '/admin/userbook/take' ? "white" : "black" }} aria-hidden="true" />
+                  Départs
+                </Button>
 
-                                <ListItemButton
+                <Button
                   component={Link}
                   to="/admin/userbook/deposit"
-                  onClick={() => setActive("/admin/userbook/deposit")}
+                  onClick={() => buttonActive("/admin/userbook/deposit")}
+                  aria-label="Gérer les retours de livres"
                   sx={buttonStyle(active === "/admin/userbook/deposit")}
                 >
-                  <ListItemIcon>
-                    <ContactMailIcon sx={{ fill: active === "/admin/userbook/deposit" ? theme.palette.secondary.main : theme.palette.text.primary }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Retours" />
-                </ListItemButton>
+                  <MenuBookIcon sx={{ fill: active === '/admin/userbook/deposit' ? "white" : "black" }} aria-hidden="true" />
+                  Retours
+                </Button>
 
-                <ListItemButton
+                <Button
+                  component={Link}
+                  to="/admin/author"
+                  onClick={() => buttonActive("/admin/author")}
+                  aria-label="Gérer les auteurs"
+                  sx={buttonStyle(active === "/admin/author")}
+                >
+                  <PersonIcon sx={{ fill: active === '/admin/author' ? "white" : "black" }} aria-hidden="true" />
+                  Auteurs
+                </Button>
+
+                <Button
                   component={Link}
                   to="/admin/book"
-                  onClick={() => setActive("/admin/book")}
+                  onClick={() => buttonActive("/admin/book")}
+                  aria-label="Gérer les livres du catalogue"
                   sx={buttonStyle(active === "/admin/book")}
                 >
-                  <ListItemIcon>
-                    <ContactMailIcon sx={{ fill: active === "/admin/book" ? theme.palette.secondary.main : theme.palette.text.primary }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Book" />
-                </ListItemButton>
+                  <MenuBookIcon sx={{ fill: active === '/admin/book' ? "white" : "black" }} aria-hidden="true" />
+                  Livres
+                </Button>
 
-                <ListItemButton
+                <Button
                   component={Link}
                   to="/admin/user"
-                  onClick={() => setActive("/admin/user")}
+                  onClick={() => buttonActive("/admin/user")}
+                  aria-label="Gérer les utilisateurs"
                   sx={buttonStyle(active === "/admin/user")}
                 >
-                  <ListItemIcon>
-                    <ContactMailIcon sx={{ fill: active === "/admin/user" ? theme.palette.secondary.main : theme.palette.text.primary }} />
-                  </ListItemIcon>
-                  <ListItemText primary="User" />
-                </ListItemButton>
+                  <GroupIcon sx={{ fill: active === '/admin/user' ? "white" : "black" }} aria-hidden="true" />
+                  Utilisateurs
+                </Button>
 
-                <ListItemButton
+                <Button
                   component={Link}
                   to="/admin/stripe"
-                  onClick={() => setActive("/admin/stripe")}
+                  onClick={() => buttonActive("/admin/stripe")}
+                  aria-label="Gérer les paiements et abonnements"
                   sx={buttonStyle(active === "/admin/stripe")}
                 >
-                  <ListItemIcon>
-                    <ContactMailIcon
-                      sx={{ fill: active === "/admin/stripe" ? theme.palette.secondary.main : theme.palette.text.primary }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary="Stripe" />
-                </ListItemButton>
-              </>
+                  <MonetizationOnIcon sx={{ fill: active === '/admin/stripe' ? "white" : "black" }} aria-hidden="true" />
+                  Paiements
+                </Button>
+              </Box>
             )}
-          </List>
+
+            <Button
+              component={Link}
+              to="/footer"
+              onClick={() => buttonActive("/footer")}
+              aria-label="Accéder aux ressources et mentions légales"
+              fullWidth
+              sx={buttonStyle(active === "/footer")}
+
+            >
+              <GavelIcon sx={{ fill: active === '/footer' ? "white" : "black" }} aria-hidden="true" /> Ressources légales
+            </Button>
+            
+          </Box>
         </Box>
       </Drawer>
     </>

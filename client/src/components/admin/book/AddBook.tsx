@@ -110,9 +110,10 @@ function AddBook({ open, close }: AddBookProps) {
                 setStock("");
                 setNote(null);
                 setPreview("");
+                setResultOcr("")
                 setTimeout(() => {
                   setMessage("");
-                  close(false);
+                  //close(false);
                 }, 3000);
               }
             });
@@ -343,7 +344,7 @@ function AddBook({ open, close }: AddBookProps) {
           {message && (
             <Alert
               severity={message.includes("enregistrer") ? "success" : "error"}
-              sx={{ minWidth: "100%", bgcolor: "primary.main", justifyContent: "center" }}
+              sx={{ minWidth: "100%", bgcolor: "primary.main", justifyContent: "center", zIndex:20 }}
             >
               {message}
             </Alert>
@@ -352,7 +353,7 @@ function AddBook({ open, close }: AddBookProps) {
           <Button
             variant={file ? "outlined" : "contained"}
             component="label"
-            sx={{ maxWidth: { xs: "100%", md: "25%" } }}
+            sx={{ maxWidth: { xs: "100%", md: "25%" },"&::hover":{backgroundColor:theme.palette.background.default} }}
           >
             <input
               hidden
@@ -366,7 +367,7 @@ function AddBook({ open, close }: AddBookProps) {
                 <p style={{ color: theme.palette.text.primary, marginLeft: "10px" }}>
                   {"Ajouter "}
                 </p>
-                <DoneIcon sx={{ fill: "white" }} />
+                <DoneIcon sx={{ fill: theme.palette.primary.main }} />
               </>
               :
               "Image Livre "}
@@ -379,13 +380,14 @@ function AddBook({ open, close }: AddBookProps) {
               variant={resultOcr ? "outlined" : "contained"}
               component="span"
               aria-label="Bouton pour choisir une image pour l ocr"
+             
             >
               {resultOcr ?
                 <>
                   <p style={{ color: theme.palette.text.primary, marginLeft: "10px" }}>
                     {"Ajouter"}
                   </p>
-                  <DoneIcon sx={{ fill: "white" }} />
+                  <DoneIcon sx={{ fill: theme.palette.primary.main }} />
                 </>
                 :
                 "Description"
@@ -404,9 +406,8 @@ function AddBook({ open, close }: AddBookProps) {
 
           {message.includes("enregistrer") ? (
             <Button
-              sx={{ maxWidth: { xs: "100%", md: "40%" } }}
-              variant="contained"
-              color="success"
+              sx={{ maxWidth: { xs: "100%", md: "40%" }, "&::hover":{backgroundColor:theme.palette.background.default} }}
+              variant="outlined"
             >
               Enregistrer <DoneIcon sx={{ ml: 1 }} />
             </Button>

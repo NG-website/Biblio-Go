@@ -41,12 +41,17 @@ function AddBorrow({ open, close }: AddBorrowProps) {
 
 
   useEffect(() => {
-    fetch(`${API_URL}api/book/all`)
+    fetch(`${API_URL}api/book/all`,{
+      credentials:"include",
+    })
       .then((res) => res.ok && res.json())
       .then((data) => setBookList(data))
       .catch(console.error);
 
-    fetch(`${API_URL}api/user/all`)
+    fetch(`${API_URL}api/user/all`,{
+      credentials:"include",
+      headers:{"Authorization": `Bearer ${user?.token}`}
+    })
       .then((res) => res.ok && res.json())
       .then((data) => {
         console.log(data)
@@ -226,7 +231,7 @@ function AddBorrow({ open, close }: AddBorrowProps) {
               }
             }}
           >
-            {bookList.map((book, i) => (
+            {bookList && bookList.map((book, i) => (
               <MenuItem key={i}
                 value={i + 1}>
                 {book.name}
@@ -255,7 +260,7 @@ function AddBorrow({ open, close }: AddBorrowProps) {
               }
             }}
           >
-            {userList.map((user, i) => (
+            {userList && userList.map((user, i) => (
               <MenuItem
                 key={i}
                 value={i + 1}

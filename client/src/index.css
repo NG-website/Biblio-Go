@@ -99,27 +99,10 @@ button {
 
 @media (max-width: 600px) {
 
-  .titleSectionBook{
-    max-width: 100% ;
-    min-width: 100%;
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 20px;
-    align-items: center;
-    align-content: center;
-    background-color: #1f5dba;
-  }
-
-  .subtitleSectionBook{
-    display: none;
-  }
-
   section{
     flex-direction: column;
     min-height: 300px !important;
-  }
+  } 
 
   .shelfBottom{
     left: 0 !important;

@@ -19,14 +19,14 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { DeleteForever } from "@mui/icons-material";
 import DoNotDisturbAltIcon from "@mui/icons-material/DoNotDisturbAlt";
-import AddAuthor from "./AddAuthor"; 
+import AddAuthor from "./AddAuthor";
 import theme from "../../../theme";
 import PopUPDelete from "../PopUpDelete";
 import { useAuthContext } from "../../Context/AuthContext";
 import { API_URL } from "../../../config";
 
 export default function ListAuthor() {
-  const {user} = useAuthContext()
+  const { user } = useAuthContext()
   const [authors, setAuthors] = React.useState([]);
   const [editId, setEditId] = React.useState(null);
   const [lastname, setLastname] = React.useState("");
@@ -63,10 +63,10 @@ export default function ListAuthor() {
     fetch(`${API_URL}api/author/update`, {
       method: "PUT",
       credentials: "include",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
-         "Authorization": `Bearer ${user?.token}`
-       },
+        "Authorization": `Bearer ${user?.token}`
+      },
       body: JSON.stringify({ data, id }),
     })
       .then((res) => (res.ok ? res.json() : null))
@@ -90,11 +90,11 @@ export default function ListAuthor() {
   const deleteForever = () => {
     fetch(`${API_URL}api/author/delete`, {
       method: "DELETE",
-      credentials:"include",
-      headers: { 
+      credentials: "include",
+      headers: {
         "Content-Type": "application/json",
-         "Authorization": `Bearer ${user?.token}`
-       },
+        "Authorization": `Bearer ${user?.token}`
+      },
       body: JSON.stringify({ id: confirmDelete!.id }),
     })
       .then((res) => {
@@ -163,7 +163,9 @@ export default function ListAuthor() {
             width: "50%",
             alignItems: "center",
             justifyContent: "center",
-            bgcolor: theme.palette.primary.main
+            bgcolor: theme.palette.primary.main,
+            zIndex: 20,
+            border: theme.palette.background.default
           }}
         >
           {alerte}
@@ -172,7 +174,7 @@ export default function ListAuthor() {
 
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
-          <TableHead sx={{ position: "sticky", top: 0, zIndex: 2, bgcolor:"background.default"}}>
+          <TableHead sx={{ position: "sticky", top: 0, zIndex: 2, bgcolor: "background.default" }}>
             <TableRow >
               <TableCell>Nom</TableCell>
               <TableCell align="center">Prénom</TableCell>
@@ -233,22 +235,22 @@ export default function ListAuthor() {
                       <Box display={"flex"} gap={"20px"}>
                         <CheckCircleIcon
                           onClick={() => saveEdit(auth.id)}
-                          sx={{ cursor: "pointer",fill: theme.palette.success.main }}
+                          sx={{ cursor: "pointer", fill: theme.palette.success.main }}
                         />
                         <CancelIcon
                           onClick={cancelEdit}
                           sx={{ cursor: "pointer", fill: theme.palette.error.main }}
                         />
-                       </Box>
+                      </Box>
                     ) : (
                       <Box display={"flex"} gap={"20px"}>
                         <ModeEditIcon
                           onClick={() => startEdit(auth)}
-                          sx={{ cursor: "pointer",  fill: theme.palette.primary.main }}
+                          sx={{ cursor: "pointer", fill: theme.palette.primary.main }}
                         />
                         <DeleteForever
                           onClick={() => setConfirmDelete(auth)}
-                          sx={{ cursor: "pointer",fill: theme.palette.error.main  }}
+                          sx={{ cursor: "pointer", fill: theme.palette.error.main }}
                         />
                       </Box>
                     )}

@@ -25,7 +25,7 @@ const emailValid = (email: string) => {
 };
 
 export default function Login() {
-  const {setUser} = useAuthContext()
+  const { setUser } = useAuthContext()
   const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -75,23 +75,23 @@ export default function Login() {
         .then((res) => { return res.json() })
         .then((data) => {
           console.log(data)
-          setUser(data)
-//           if (data.error) {
-//             setMessage(data.error)
-//           }
-//           if (data?.token) {
-      
-// console.log("partie dans cookies")
-//             fetch(`${API_URL}cookies`, {
-//               credentials: "include"
-//             })
-//             .then((res)=>{return res.json()})
-//             .then((data)=>{
-//               setUser(data)
-             navigate('/')
-//             })
 
-        //  }
+          if (data.error) {
+            setMessage(data.error)
+          }
+          if (data?.token) {
+            setUser(data)
+            // console.log("partie dans cookies")
+            //             fetch(`${API_URL}cookies`, {
+            //               credentials: "include"
+            //             })
+            //             .then((res)=>{return res.json()})
+            //             .then((data)=>{
+            //               setUser(data)
+            navigate('/')
+            //             })
+
+          }
 
         })
         .catch(() => {

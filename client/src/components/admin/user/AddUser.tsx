@@ -44,34 +44,34 @@ export default function AddUserDialog({ open, close }: AddUserDialogProps) {
     setError("")
     setSuccess("")
 
-    const inputValid = [
-      ["nom", !characterRegex.test(name)],
-      ["email", emailRegex.test(email)],
-      ["address", !characterRegex.test(address)],
-      ["code postal", postalCodeRegex.test(postalCode)],
-      ["ville", !characterRegex.test(country)],
-      ["mot de passe", !characterRegex.test(password)],
-    ]
+    // const inputValid = [
+    //   ["nom", !characterRegex.test(name)],
+    //   ["email", emailRegex.test(email)],
+    //   ["address", !characterRegex.test(address)],
+    //   ["code postal", postalCodeRegex.test(postalCode)],
+    //   ["ville", !characterRegex.test(country)],
+    //   ["mot de passe", !characterRegex.test(password)],
+    // ]
 
-    const FormValid = inputValid.every((x) => x[1])
+    // const FormValid = inputValid.every((x) => x[1])
 
-    if (!FormValid) {
-      inputValid.forEach(element => {
-        if (element[1] === false) {
-          setError("Votre " + `${element[0]}` + " contient des caractères interdits")
-        }
-        if (element[0] === "email" && element[1] === false) {
-          setError("Votre email n’est pas valide")
-        }
-      })
-    }
+    // if (!FormValid) {
+    //   inputValid.forEach(element => {
+    //     if (element[1] === false) {
+    //       setError("Votre " + `${element[0]}` + " contient des caractères interdits")
+    //     }
+    //     if (element[0] === "email" && element[1] === false) {
+    //       setError("Votre email n’est pas valide")
+    //     }
+    //   })
+    // }
 
-    if (!name || !email || !address || !postalCode || !country || !password || role === null) {
-      setError("Veuillez remplir tous les champs")
-      return
-    }
+    // if (!name || !email || !address || !postalCode || !country || !password || role === null) {
+    //   setError("Veuillez remplir tous les champs")
+    //   return
+    // }
 
-    if (FormValid) {
+   // if (FormValid) {
       try {
         const res = await fetch(`${API_URL}api/admin/user/create`, {
           method: "POST",
@@ -104,7 +104,7 @@ export default function AddUserDialog({ open, close }: AddUserDialogProps) {
         setError("Une erreur est survenue. Réessayez plus tard.")
       }
     }
-  }
+ // }
 
   return (
     <Dialog

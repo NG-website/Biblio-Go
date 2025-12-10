@@ -56,7 +56,7 @@ function Subscription({
     } catch (error) {
       console.error("Erreur useEffect search-product :", error)
     }
-  }, [])
+  }, [abonner])
 
   const subscription = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 
@@ -99,14 +99,14 @@ function Subscription({
                     method: "POST",
                     credentials:"include",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ customerId: data.data[0].id, priceId: idProduct, userId: userId, abonementType: subtitle })
+                    body: JSON.stringify({ customerId: data.data[0].id, priceId: idProduct, userId: userId, abonnementType: subtitle })
                   })
                     .then((res) => {
                       if (res.ok) return res.json()
                     })
                     .then((data) => {
                      // console.log(data)
-                     window.location.href = data
+                    //window.location.href = data
                     })
                     .catch((error) => { console.error("Erreur fetch create-checkout-session :", error) })
                 }
@@ -122,13 +122,13 @@ function Subscription({
                       if (res.ok) return res.json()
                     })
                     .then((data) => {
-                      console.log(data)
+                     // console.log(data)
                       if (data.id.length != 0) {
                         fetch(`${API_URL}api/subscription/create-checkout-session`, {
                           method: "POST",
                           credentials:"include",
                           headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({ customerId: data.id, priceId: idProduct, userId: userId, abonementType: subtitle })
+                          body: JSON.stringify({ customerId: data.id, priceId: idProduct, userId: userId, abonnementType: subtitle })
                         })
                           .then((res) => {
                             if (res.ok) {
@@ -136,7 +136,7 @@ function Subscription({
                             }
                           })
                           .then((data) => {
-                            console.log(data)
+                          //  console.log(data)
                             window.location.href = data
                            //navigate(data)
 

@@ -41,7 +41,7 @@ export default function SearchBar() {
     setLoading(true);
     fetch(`${API_URL}api/book/autocompleted`, {
       method: "POST",
-      credentials:"include",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: value }),
     })
@@ -88,16 +88,8 @@ export default function SearchBar() {
     setChoiceUser(true);
     setChoiceValueInput(name);
 
-    const url = `${category}/${id}`;
-   // document.body.style.background = "linear-gradient(rgb(0, 0, 0),#06060697)";
-   // document.body.style.opacity = "0";
-
-   // setTimeout(() => {
-   console.log("url", url)
-   
-      navigate(url)
-     // window.location.href = `${FRONT_URL}${url}`;
-    //}, 800);
+    const url = `/${category}/${id}`;
+    navigate(url)
   };
 
   const clearChoice = () => {

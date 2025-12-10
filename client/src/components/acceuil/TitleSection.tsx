@@ -16,20 +16,24 @@ function TitleSection({ title, subtitle, url }: TitleSectionProps) {
         <Box
             sx={{
                 display: "flex",
-                flexDirection: "column",
+                flexDirection: {xs:"row", sm:"column"},
+
                 gap: 1,
-                mb: 3,
-                height: "150px",
-                width: "250px",
+                mb: {xs:0, sm:3},
+                height: {xs:"60px", sm:"150px"},
+                width: {xs:"100%", sm:"250px"},
             
-                justifyContent: "center",
+                justifyContent: {xs:"space-around", sm:"center"},
+                alignItems:{xs:"center", sm:"center"}
             }}
         >
-            <Typography color="text.primary" variant="h2">
+            <Typography color="text.primary" variant="h2"   sx={{
+                    fontSize: { xs: "20px", sm: "30px" }
+                }}>
                 {title}
             </Typography>
 
-            <Typography sx={{ fontStyle: "italic" }} variant="body1" color="text.secondary">
+            <Typography  sx={{ fontStyle: "italic", display: { xs: "none", sm: "block" },  }} variant="body1" color="text.secondary">
                 {subtitle}
             </Typography>
 
