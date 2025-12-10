@@ -44,8 +44,8 @@ const paymentControler = {
             const customerId = req.body.customerId;
             const priceId = req.body.priceId;
             const userId = req.body.userId
-            const abonementType = req.body.abonementType
-            const create = await paymentModel.createSession(customerId, priceId, userId, abonementType);
+            const abonnementType = req.body.abonnementType
+            const create = await paymentModel.createSession(customerId, priceId, userId, abonnementType);
             console.log(create)
             res.json(create.url);
         } catch (error) {
@@ -65,9 +65,10 @@ const paymentControler = {
                 const updateUser = await userModel.update(
                     {
                         abonnement: oneYearLater.setDate(today.getDate() + 365),
-                        abonnementType: event.data.object.metadata.abonementType
+                        abonnementType: event.data.object.metadata.abonnementType
                     },
                     { where: { id: event.data.object.metadata.userId } },
+                  
                 );
             }
             res.json({ received: false });

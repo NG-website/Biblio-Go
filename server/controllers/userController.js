@@ -79,8 +79,8 @@ const userController = {
                 postalCode: user.postalCode,
                 country: user.country,
                 phone: user.phone,
-                //abonement: user.abonement,
-                // abonementType: user.abonementType
+                abonnement: user.abonnement,
+                abonnementType: user.abonnementType
             }
             res.status(200).json(userInfo)
         } catch (error) {
@@ -90,47 +90,47 @@ const userController = {
     async Create(req, res) {
         try {
 
-            const schema = {
-                name: {
-                    type: "string",
-                    minLength: 2,
-                    maxLength: 40,
-                    regex: /^[a-zA-ZÀ-ÿ '-]+$/
-                },
-                email: {
-                    type: "string",
-                    minLength: 2,
-                    maxLength: 70,
-                    regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-                },
-                password: {
-                    type: "string",
-                    minLength: 8,
-                    maxLength: 30,
-                    regex: /^[A-Za-z0-9]+$/
-                },
+            // const schema = {
+            //     name: {
+            //         type: "string",
+            //         minLength: 2,
+            //         maxLength: 40,
+            //         regex: /^[a-zA-ZÀ-ÿ '-]+$/
+            //     },
+            //     email: {
+            //         type: "string",
+            //         minLength: 2,
+            //         maxLength: 70,
+            //         regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            //     },
+            //     password: {
+            //         type: "string",
+            //         minLength: 8,
+            //         maxLength: 30,
+            //         regex: /^[A-Za-z0-9]+$/
+            //     },
 
-                address: {
-                    type: "string",
-                    minLength: 2,
-                    maxLength: 150,
-                    regex: /^[a-zA-ZÀ-ÿ0-9 '-]+$/
-                },
-                postalCode: {
-                    type: "string",
-                    minLength: 5,
-                    maxLength: 5,
-                    regex: /^[1-9][0-9]*$/
-                },
-                country: {
-                    type: "string",
-                    minLength: 2,
-                    maxLength: 70,
-                    regex: /^[a-zA-ZÀ-ÿ '-]+$/
-                },
-            };
+            //     address: {
+            //         type: "string",
+            //         minLength: 2,
+            //         maxLength: 150,
+            //         regex: /^[a-zA-ZÀ-ÿ0-9 '-]+$/
+            //     },
+            //     postalCode: {
+            //         type: "string",
+            //         minLength: 5,
+            //         maxLength: 5,
+            //         regex: /^[1-9][0-9]*$/
+            //     },
+            //     country: {
+            //         type: "string",
+            //         minLength: 2,
+            //         maxLength: 70,
+            //         regex: /^[a-zA-ZÀ-ÿ '-]+$/
+            //     },
+            // };
 
-            const reqValide = reqMiddleware(req.body, schema)
+            // const reqValide = reqMiddleware(req.body, schema)
 
             // if (!req.body.name || !req.body.email || !req.body.password || !req.body.address || !req.body.postalCode || !req.body.country || !reqValide) {
             //     return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
@@ -178,23 +178,23 @@ const userController = {
             const id = query.slice(16)
             const data = { id: id, token: token }
 
-            const schema = {
-                id: {
-                    type: "string",
-                    regex: /^[1-9][0-9]*$/
-                },
-                token: {
-                    type: "string",
-                    minLength: 16,
-                    maxLength: 16
-                }
-            }
+            // const schema = {
+            //     id: {
+            //         type: "string",
+            //         regex: /^[1-9][0-9]*$/
+            //     },
+            //     token: {
+            //         type: "string",
+            //         minLength: 16,
+            //         maxLength: 16
+            //     }
+            // }
 
-            const reqValide = reqMiddleware(data, schema)
+            // const reqValide = reqMiddleware(data, schema)
 
-            if (!id || !reqValide) {
-                return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
-            }
+            // if (!id || !reqValide) {
+            //     return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
+            // }
 
             const user = await userModel.findOne({ where: { id: id } })
 
@@ -229,56 +229,56 @@ const userController = {
         const data = req.body.data
         const id = req.body.id
 
-        const schema = {
-            name: {
-                type: "string",
-                minLength: 2,
-                maxLength: 40,
-                regex: /^[a-zA-ZÀ-ÿ '-]+$/
-            },
-            email: {
-                type: "string",
-                minLength: 2,
-                maxLength: 70,
-                regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-            },
-            address: {
-                type: "string",
-                minLength: 2,
-                maxLength: 150,
-                regex: /^[a-zA-ZÀ-ÿ0-9 '-]+$/
-            },
-            postalCode: {
-                type: "string",
-                minLength: 5,
-                maxLength: 5,
-                regex: /^[1-9][0-9]*$/
-            },
-            country: {
-                type: "string",
-                minLength: 2,
-                maxLength: 70,
-                regex: /^[a-zA-ZÀ-ÿ '-]+$/
-            },
-            id: {
-                type: "string",
-                minLength: 1,
-                maxLength: 5,
-                regex: /^[1-9][0-9]*$/
-            },
-            phone: {
-                type: "string",
-                minLength: 10,
-                maxLength: 10,
-            }
+        // const schema = {
+        //     name: {
+        //         type: "string",
+        //         minLength: 2,
+        //         maxLength: 40,
+        //         regex: /^[a-zA-ZÀ-ÿ '-]+$/
+        //     },
+        //     email: {
+        //         type: "string",
+        //         minLength: 2,
+        //         maxLength: 70,
+        //         regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        //     },
+        //     address: {
+        //         type: "string",
+        //         minLength: 2,
+        //         maxLength: 150,
+        //         regex: /^[a-zA-ZÀ-ÿ0-9 '-]+$/
+        //     },
+        //     postalCode: {
+        //         type: "string",
+        //         minLength: 5,
+        //         maxLength: 5,
+        //         regex: /^[1-9][0-9]*$/
+        //     },
+        //     country: {
+        //         type: "string",
+        //         minLength: 2,
+        //         maxLength: 70,
+        //         regex: /^[a-zA-ZÀ-ÿ '-]+$/
+        //     },
+        //     id: {
+        //         type: "string",
+        //         minLength: 1,
+        //         maxLength: 5,
+        //         regex: /^[1-9][0-9]*$/
+        //     },
+        //     phone: {
+        //         type: "string",
+        //         minLength: 10,
+        //         maxLength: 10,
+        //     }
 
-        };
+        // };
 
-        const reqValide = reqMiddleware({ ...req.body.data, id: req.body.id.toString() }, schema)
+        // const reqValide = reqMiddleware({ ...req.body.data, id: req.body.id.toString() }, schema)
 
-        if (!req.body.data.name || !req.body.data.email || !req.body.data.address || !req.body.data.postalCode || !req.body.data.country || !reqValide) {
-            return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
-        }
+        // if (!req.body.data.name || !req.body.data.email || !req.body.data.address || !req.body.data.postalCode || !req.body.data.country || !reqValide) {
+        //     return res.status(400).json("Veuillez vérifier le formulaire, certains champs sont incorrects.");
+        // }
 
         try {
             const update = await userModel.update(
@@ -295,31 +295,31 @@ const userController = {
             const id = req?.session?.user?.userId
             console.log(id)
 
-            const schema = {
-                currentPassword:{
-                    type: "string",
-                    minLength: 8,
-                    maxLength: 30,
-                    regex: /^[A-Za-z0-9]+$/
-                },
-                confirmPassword:{
-                    type: "string",
-                    minLength: 7,
-                    maxLength: 30,
-                    regex: /^[A-Za-z0-9]+$/
-                },
-                newPassword: {
-                    type: "string",
-                    minLength: 7,
-                    maxLength: 30,
-                    regex: /^[A-Za-z0-9]+$/
-                }
-            };
+            // const schema = {
+            //     currentPassword:{
+            //         type: "string",
+            //         minLength: 8,
+            //         maxLength: 30,
+            //         regex: /^[A-Za-z0-9]+$/
+            //     },
+            //     confirmPassword:{
+            //         type: "string",
+            //         minLength: 7,
+            //         maxLength: 30,
+            //         regex: /^[A-Za-z0-9]+$/
+            //     },
+            //     newPassword: {
+            //         type: "string",
+            //         minLength: 7,
+            //         maxLength: 30,
+            //         regex: /^[A-Za-z0-9]+$/
+            //     }
+            // };
 
 
-            const reqValide = reqMiddleware(req.body.data, schema)
+            // const reqValide = reqMiddleware(req.body.data, schema)
  
-            console.log("reqValide?", reqValide)
+            // console.log("reqValide?", reqValide)
 
             // if (!data.newPassword || !data.currentPassword || !data.confirmPassword || !reqValide) {
             //     return res.status(400).json({ error: "Veuillez vérifier le formulaire, certains champs sont incorrects." });

@@ -73,7 +73,7 @@ const upload = multer({ storage })
 app.get("/", (req, res) => {res.send("Hello world")});
 
 
-app.post("/login", queryLimiter, trylogin, authMiddleware, (req, res) => {
+app.post("/login", queryLimiter, authMiddleware, (req, res) => {
   console.log("...............login sortie middle")
   req.session.user = req.user;
   req.session.save(() => {
@@ -94,6 +94,7 @@ app.post("/logout", (req, res) => {
 app.get("/cookies", (req, res) => {
   res.json({ user: req.session.user || null });
 });
+
 
 
 app.post('/api/ocr', async (req, res) => {

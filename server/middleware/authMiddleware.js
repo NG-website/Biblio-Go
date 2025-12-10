@@ -7,13 +7,13 @@ import { ip, resetAttempt } from "./tryLogin.js";
 dotenv.config();
 
 const authMiddleware = async (req, res, next) => {
-
-    //verif si ip appel meme email
-    const verifLogin = ip.filter((d) => {
-        return d.email === req.body.email
-    })
-    //trop de tentative
-    const timeout = verifLogin[0].attemptCount * 1000
+    console.log("auth middle",req.ip)
+    // //verif si ip appel meme email
+    // const verifLogin = ip.filter((d) => {
+    //     return d.email === req.body.email
+    // })
+    // //trop de tentative
+    // const timeout = verifLogin[0].attemptCount * 1000
 
 
     const { email, password, remember } = req.body;
@@ -50,20 +50,20 @@ console.log(req.body)
 
         if (userValid) {
            
-            // if (user.role == true) {
-            //     console.log("user.role === admin ...............")
-            //     const tokenAdmin = jwt.sign(
-            //         { date: new Date().toJSON(), ip: ip, userId: user.id },
-            //         process.env.SECRET_KEY_JWT,
-            //         { expiresIn: "12h" }
-            //     )
-            //     console.log("token admin ",tokenAdmin)
-            //     const addAdminToken = await userModel.update(
-            //         { tokenAdmin: tokenAdmin },
-            //         { where: { id: user.id } }
-            //     );
-            //     console.log("update admin ",addAdminToken)
-            // }
+             if (user.role == true) {
+                 console.log("user.role === admin ...............")
+                 const tokenAdmin = jwt.sign(
+                    { ip: req.ip, userId: user.id },
+                    process.env.SECRET_KEY_JWT,
+                    { expiresIn: 15 * 60 }
+                )
+                console.log("token admin ",tokenAdmin)
+                const addAdminToken = await userModel.update(
+                    { tokenAdmin: tokenAdmin },
+                    { where: { id: user.id } }
+                );
+                console.log("update admin ",addAdminToken)
+            }
 
 
             let token;
@@ -71,14 +71,14 @@ console.log(req.body)
                 token = jwt.sign(
                     { id: user.id, user: user.email },
                     process.env.SECRET_KEY_JWT,
-                    { expiresIn: '30d' }
+                    { expiresIn: 30 * 24 * 60 * 60 }
                 );
                 resetAttempt(verifLogin.attemptCount = 0)
             } else if (remember === false) {
                 token = jwt.sign(
                     { id: user.id, user: user.email },
                     process.env.SECRET_KEY_JWT,
-                    { expiresIn: '24h' }
+                    { expiresIn: 12 * 60 * 60 }
                 );
                // resetAttempt(verifLogin.attemptCount = 0)
             } else {

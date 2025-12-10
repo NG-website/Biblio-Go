@@ -29,7 +29,7 @@ webhook en local
 lancer le server
 lancer un powershell
      .\stripe.exe login 
-     .\stripe.exe  listen --forward-to localhost:3000/subscription/webhook
+     .\stripe.exe  listen --forward-to localhost:3000/api/subscription/webhook
 lancer un bash
     ./stripe.exe trigger checkout.session.completed
 

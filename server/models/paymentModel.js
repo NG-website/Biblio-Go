@@ -37,7 +37,7 @@ const paymentModel = {
         }
     },
 
-    async createSession(customerId, priceId, userId, abonementType) {
+    async createSession(customerId, priceId, userId, abonnementType) {
         try {
             const session = await stripe.checkout.sessions.create({
                 customer: customerId,
@@ -50,11 +50,11 @@ const paymentModel = {
                 mode: 'subscription',
                 allow_promotion_codes: true,
                 automatic_tax: { enabled: false },
-                success_url: `${FRONT_URL}/api/subscription/success`,
-                cancel_url: `${FRONT_URL}/api/subscription/cancel`,
+                success_url: `${process.env.FRONT_URL}subscription/success`,
+                cancel_url: `${process.env.FRONT_URL}subscription/cancel`,
                 metadata: {
                     userId: userId,
-                    abonementType: abonementType
+                    abonnementType: abonnementType
 
                 }
             });

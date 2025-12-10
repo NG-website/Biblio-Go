@@ -4,51 +4,53 @@ import userModel from '../models/userModel.js';
 import e from 'cors';
 dotenv.config()
 
-const adminMiddleware = async(req, res, next) => {
-
+const adminMiddleware = async (req, res, next) => {
+    console.log("admin middle",req.ip)
     const token = req.headers["authorization"]?.split(" ")[1];
     console.log(token)
 
-//     const decode = jwt.decode(token)
-//    // console.log( decode)
-//     //console.log(new Date(decode.exp).toLocaleDateString(), new Date(decode.exp).toLocaleTimeString())
-//     const expired = new Date(decode.exp)*1000 < new Date()
-//     console.log(new Date())
-// console.log(expired)
-// console.log(new Date(decode.exp*1000))
-//     if(!expired){
-//         res.status(404).json("token expiree")
-//     }
-//     if(decode){
-//         const admin = await userModel.findOne({where:{id: decode.id, email: decode.user}})
-//         //console.log(admin)
+    const decode =  jwt.decode(token)
 
-//         if(admin){
-//            // console.log(admin.tokenAdmin)
-//             const decodeBack = jwt.decode(admin.tokenAdmin)
-//             //console.log(decodeBack)
-//             console.log(new Date(decodeBack.exp*1000))
-//             const expiredBack = new Date(decodeBack.exp)*1000 < new Date()
-//             console.log(expiredBack)
-//             if(!expiredBack){
-//                 res.status(404).json("token expiree")
-//             }
-//             const dataTokenValid = decodeBack.userId === decode.id && decodeBack.ip === req.ip
-//             //console.log(bcrypt.compare(admin.token ))
-//         }
-//     }
-    //  console.log(authHeader)
-    //   console.log(authHeader? authHeader: "pas de token fronnt recu")
-    //  console.log("adminMiddlewares")
+    const expired = new Date(decode?.exp * 1000)
+    console.log(expired)
+    const isValide = expired > new Date()
+    if (!isValide) {
+        res.status(404).json("token expiree")
+    }
 
-    // console.log("credentiel peut etre pas inclus")
-    
-     
-    // if token if admin => generate custom token : token{user_id, datetime, ip}
-    // const token = req.body
+    if (isValide) {
+        const admin = await userModel.findOne({ where: { id: decode.id, email: decode.user } })
+        
+        const decodeBack = await jwt.decode(admin.tokenAdmin)
+        
+        const expiredBack = new Date(decodeBack.exp * 1000)
+   console.log(expiredBack)
 
-    // const decoded = jwt.verify(req.body.token, process.env.SECRET_KEY_JWT)
-    // console.log(decoded)
-     next()
+        const isValideBack = expiredBack > new Date()
+        if (!isValideBack) {
+            res.status(404).json("token non valide")
+        }
+
+        const sameIp = decodeBack.ip === req.ip
+        console.log("decode",decodeBack)
+        console.log("decode.ip",decodeBack.ip)
+          console.log(req.ip)
+        if (!sameIp) {
+            res.status(403).json("ip unautorized")
+        }
+      
+
+        const tokenAdmin = jwt.sign(
+            { ip: req.ip, userId: decode.id },
+            process.env.SECRET_KEY_JWT,
+            { expiresIn: 15 * 60 }
+        )
+        console.log("new token")
+        const addAdminToken = await userModel.update(
+            { tokenAdmin: tokenAdmin },
+            { where: { id: decode.id } }
+        );
+    }
+    next()
 }
 export default adminMiddleware
