@@ -49,7 +49,7 @@ function Like() {
 
 
   const soonAvailable = (bookId) => {
-    if (bookId) {
+    if (!back) {
       fetch(`${API_URL}api/bookuser/dispo`, {
         method: "POST",
         credentials:"include",
