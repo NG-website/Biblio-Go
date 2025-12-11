@@ -107,7 +107,7 @@ function Historical() {
     console.log(historical[livreSelected!].deposit_at)
     console.log(e.currentTarget.parentElement.querySelector("input[type=date]")?.value <= historical[livreSelected!].deposit_at)
     fetch(`${API_URL}api/bookuser/update`,{
-      method:"POST",
+      method:"PUT",
       credentials:"include",
       headers:{"Content_Type":"application/json"},
       body:JSON.stringify("")

@@ -19,12 +19,12 @@ function TitleSection({ title, subtitle, url }: TitleSectionProps) {
                 flexDirection: {xs:"row", sm:"column"},
 
                 gap: 1,
-                mb: {xs:0, sm:3},
+                mt: {xs:0, sm:3},
                 height: {xs:"60px", sm:"150px"},
                 width: {xs:"100%", sm:"250px"},
             
-                justifyContent: {xs:"space-around", sm:"center"},
-                alignItems:{xs:"center", sm:"center"}
+                justifyContent: {xs:"space-around", sm:"left"},
+                alignItems:{xs:"center", sm :"self-start"}
             }}
         >
             <Typography color="text.primary" variant="h2"   sx={{

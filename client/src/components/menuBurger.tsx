@@ -106,7 +106,7 @@ function BurgerMenu() {
           >
             <Typography
               variant="h1"
-              fontSize={"clamp(10px, 3vw, 46px)"}
+              marginTop={"70px"}
               sx={{ color: "text.primary" }}
               aria-label="Titre du site"
             >

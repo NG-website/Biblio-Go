@@ -27,15 +27,15 @@ dotenv.config();
 //syncDB()
 const app = express();
 
- app.use(cors({
-   origin: "http://localhost:5173",
-   credentials: true
- }));
-
 //  app.use(cors({
-//    origin: "https://biblio-go.vercel.app",
+//    origin: "http://localhost:5173",
 //    credentials: true
 //  }));
+
+  app.use(cors({
+    origin: "https://biblio-go.vercel.app",
+    credentials: true
+  }));
 
 app.use("/api/subscription/webhook", express.raw({ type: "application/json" }));
 const stripe_ = new stripe(process.env.SECRET_KEY_STRIPE);
