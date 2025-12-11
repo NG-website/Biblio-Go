@@ -9,12 +9,12 @@ const sequelize = new Sequelize(
     host: process.env.HOST_DB,
     port: process.env.PORT_DB,     
     dialect: "mysql",
-    //dialectOptions: {
-      // ssl: {
-      //   require: true,
-      //   rejectUnauthorized: false
-      // }
-    //}
+      dialectOptions: {
+      ssl: {
+      require: true,
+      rejectUnauthorized: false
+      }
+      }
   }
 )
 export default sequelize
