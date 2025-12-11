@@ -131,9 +131,9 @@ app.use("/api/image", upload.single("image"), (req, res) => {
 
 app.use("/api/uploads", express.static("uploads"));
 
-// app.listen(process.env.PORT_DB, () => {
-//   console.log(`http://localhost:${process.env.PORT}/`);
-// });
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT_DB, () => {
   console.log(`http://localhost:${process.env.PORT}/`);
 });
+// app.listen(process.env.PORT, () => {
+//   console.log(`http://localhost:${process.env.PORT}/`);
+// });
