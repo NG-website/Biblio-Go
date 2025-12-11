@@ -63,7 +63,7 @@ function Like() {
           const resultBack = incrementeDate.setDate(incrementeDate.getDate() + 1)
           setBack(resultBack)
         })
-      return new Date(back!).toLocaleDateString("fr")
+      if(!back) return new Date(back!).toLocaleDateString("fr")
     }
 
   }
@@ -163,7 +163,7 @@ function Like() {
                           }
 
                         >
-                          {d.Book.stock === 0 ? `Retour le ${soonAvailable(d.Book.id)}` : `Stock disponible : ${d.Book.stock}`}
+                          {d?.Book?.stock === 0 ? `Retour le ${soonAvailable(d.Book.id)}` : `Stock disponible : ${d.Book.stock}`}
                         </Typography>
 
                       </Box>
