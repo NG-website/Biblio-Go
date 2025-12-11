@@ -233,7 +233,7 @@ function AddBorrow({ open, close }: AddBorrowProps) {
           >
             {bookList && bookList.map((book, i) => (
               <MenuItem key={i}
-                value={i + 1}>
+                value={book.id}>
                 {book.name}
               </MenuItem>
             ))}
@@ -263,7 +263,7 @@ function AddBorrow({ open, close }: AddBorrowProps) {
             {userList && userList.map((user, i) => (
               <MenuItem
                 key={i}
-                value={i + 1}
+                value={user.id}
               >
                 {user.name}
               </MenuItem>

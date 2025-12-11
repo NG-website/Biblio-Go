@@ -50,7 +50,7 @@ export default function ListBook() {
             .then((res) => { return res.json() })
             .then((data) => { setBooks(data) })
             .catch((err) => console.error(err));
-    }, [reload]);
+    }, [reload, openAddBook]);
 
     const startEdit = (book) => {
         fetch(`${API_URL}api/book/categories`)
@@ -94,12 +94,19 @@ export default function ListBook() {
         if (file && name) {
             fetch(`${API_URL}api/image/book`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${user?.token}`
-                },
+                // headers: {
+                //     "Content-Type": "application/json",
+                //     "Authorization": `Bearer ${user?.token}`
+                // },
+                credentials:"include",
                 body: formData,
-            });
+            })
+            .then((res)=>{
+                console.log(res)
+                if(res.ok){
+                    setReload(true)
+                }
+            })
         }
         fetch(`${API_URL}api/book/update`, {
             method: "PUT",
@@ -114,7 +121,7 @@ export default function ListBook() {
             .then((data) => {
                 if (data && data[0] === 1) {
                     setReload(true);
-                    setAlerte("modification enregistrée avec sucsée");
+                    setAlerte("modification enregistrée avec succée");
                 } else {
                     setAlerte("attention, une erreur et survenue, merci de recommencer ");
                 }
@@ -314,7 +321,7 @@ export default function ListBook() {
                                                 {categoriesList.map((cat, i) => (
                                                     <MenuItem
                                                         key={i}
-                                                        value={i + 1}
+                                                        value={cat.id}
                                                     >
                                                         {cat.name}
                                                     </MenuItem>
@@ -350,7 +357,7 @@ export default function ListBook() {
                                                 {authorsList.map((auth, i) => (
                                                     <MenuItem
                                                         key={i}
-                                                        value={i + 1}
+                                                        value={auth.id}
                                                     >
                                                         {auth.firstname + " " + auth.lastname}
                                                     </MenuItem>

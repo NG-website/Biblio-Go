@@ -50,18 +50,18 @@ export default function SearchBar() {
         return r.json();
       })
       .then((db) => {
-        console.log(db)
+        //console.log(db)
 
-        if (!db) {
-          setData([{ id: 0, name: "Aucun résultat" }]);
-          setAuthor([{ id: 0, name: "Aucun résultat" }]);
-        } else {
-          setData(db[0]);
-          setAuthor(db[1]);
-        }
+        // if (db[0].length === 0 && db[1].length === 0) {
+        //   setData([{ id: 0, name: "Aucun résultat" }]);
+        //   setAuthor([{ id: 0, firstname: "Aucun résultat", lastname:"résultat" }]);
+        // } else {
+        //   setData(db[0]);
+        //   setAuthor(db[1]);
+        // }
 
-        if (db[0].length != 0 && db[1].length === 0) {
-          setAuthor([{ id: 0, name: "Aucun résultat" }])
+        if (db[0].length !== 0 && db[1].length === 0) {
+          setAuthor([{ id: 0, firstname: "Aucun ", lastname:"résultats" }])
           setData(db[0]);
 
         }
@@ -73,7 +73,7 @@ export default function SearchBar() {
 
         if (db[0].length === 0 && db[1].length === 0) {
           setData([{ id: 0, name: "Aucun résultat" }]);
-          setAuthor([{ id: 0, name: "Aucun résultat" }])
+          setAuthor([{ id: 0, firstname: "Aucun résultat" }])
         }
       })
       .catch((err) => console.error(err))
@@ -187,7 +187,7 @@ export default function SearchBar() {
                   }
                 }}
               >
-                <ListItemText primary={a.firstname + " " + a.lastname} />
+                <ListItemText primary={a.id === 0? "Aucun résultat" :a.firstname + " " + a.lastname} />
                 <Chip label="Author" size="small" sx={{ bgcolor: theme.palette.primary.main }} />
               </ListItemButton>
             ))}

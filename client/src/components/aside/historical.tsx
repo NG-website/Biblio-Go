@@ -15,11 +15,12 @@ import { API_URL } from "../../config";
 
 function Historical() {
   const { user } = useAuthContext()
-  const userId = user ? user?.userId : null;
+  const userId = user ?user?.userId : null;
+  const token = user?.user?.token
   const [historical, setHistorical] = useState([]);
   const [livreSelected, setLivreSelected] = useState<number | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const abonement = user ? user.abonementType : null
+  const abonnement = user ? user.abonnementType : null
   const [isBack, setIsBack] = useState([]);
   const [reload, setReload] = useState(false);
   useEffect(() => {
@@ -77,14 +78,16 @@ function Historical() {
     }
 
 
-    const bookId = { bookId: e.currentTarget.dataset.id };
+    const id = { bookId: e.currentTarget.dataset.id };
     const data = { deposit_at: newDepositAt, updateDeposit: true };
 
     fetch(`${API_URL}api/bookuser/update`, {
       method: "PUT",
       credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: data, id: bookId }),
+      headers: { "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+       },
+      body: JSON.stringify({  data, id }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -100,19 +103,20 @@ function Historical() {
     setMessage("");
   };
 
-  const soonBorrow = (e) => {
-    console.log("soonBorrow")
-    console.log(e.currentTarget.parentElement.querySelector("input[type=date]")?.value)
-    console.log(livreSelected)
-    console.log(historical[livreSelected!].deposit_at)
-    console.log(e.currentTarget.parentElement.querySelector("input[type=date]")?.value <= historical[livreSelected!].deposit_at)
-    fetch(`${API_URL}api/bookuser/update`,{
-      method:"PUT",
-      credentials:"include",
-      headers:{"Content_Type":"application/json"},
-      body:JSON.stringify("")
-    })
-  }
+  // const soonBorrow = (e) => {
+  //   console.log(e.target.dataset.id)
+  //   console.log("soonBorrow")
+  //   console.log(e.currentTarget.parentElement.querySelector("input[type=date]")?.value)
+  //   console.log(livreSelected)
+  //   console.log(historical[livreSelected!].deposit_at)
+  //   console.log(e.currentTarget.parentElement.querySelector("input[type=date]")?.value <= historical[livreSelected!].deposit_at)
+  //   fetch(`${API_URL}api/bookuser/update`,{
+  //     method:"PUT",
+  //     credentials:"include",
+  //     headers:{"Content_Type":"application/json"},
+  //     body:JSON.stringify({data :{deposit_at: "2025-12-27T17:00:00.000Z"},id:{bookId : e.target.dataset.id }})
+  //   })
+  // }
   return (
     <Box
       sx={{
@@ -272,7 +276,7 @@ function Historical() {
                       )}
                     </>
                   )}
-                  {abonement === "Passion" ? (
+                  {abonnement === "Passion" ? (
                     isBack[i].isLate ? (
                       null
                     ) :
@@ -301,7 +305,7 @@ function Historical() {
                         </Button>
                       )
                   ) : null}
-                  <Button
+                  {/* <Button
                     aria-label="rendre plus tot"
                     variant={livreSelected === i ? "contained" : "outlined"}
                     color="primary"
@@ -310,12 +314,10 @@ function Historical() {
                     onClick={livreSelected === i ? soonBorrow : changeDateDeposit}
                     sx={{ mt: 1 }}
                   >
-
                     {livreSelected === i
                       ? "Valider"
                       : "rendre plus tot"}
-
-                  </Button>
+                  </Button> */}
                 </Stack>
               </Stack>
             </CardContent>

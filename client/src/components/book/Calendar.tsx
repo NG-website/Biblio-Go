@@ -25,7 +25,7 @@ export default function Calendar({ onChange, value }) {
           '& .MuiPickersDay-root': {
             fontSize: '0.75rem',
             height: '22px',
-            width: '22px',
+            //width: '22px',
           },
           '& .MuiDayCalendar-weekContainer': {
             minHeight: '20px',
@@ -44,18 +44,18 @@ export default function Calendar({ onChange, value }) {
 
 
           '& .MuiPickersDay-root.Mui-selected': {
-            backgroundColor: '#eb7600ff !important',
+            backgroundColor: 'primary.main',
           },
 
           '& .MuiPickersDay-root.Mui-selected:hover': {
-            backgroundColor: "#eb7600ff !important",
+            backgroundColor: "primary.main",
           },
 
           '& .MuiPickersDay-root:hover': {
-            backgroundColor: '#eb7600ff !important',
+            backgroundColor: 'primary.main',
           },
           '& .MuiPickersDay-today': {
-            border: '1px solid #eb7600ff !important',
+            border: '1px solid primary.main',
           },
         }}
       />

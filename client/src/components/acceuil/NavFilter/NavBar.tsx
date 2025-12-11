@@ -30,14 +30,17 @@ function NavBar() {
       credentials:"include",
     })
       .then((res) => res.json())
-      .then((data) => setCategories(data));
+      .then((data) => {
+        setCategories(data)
+        console.log(data)
+      });
 
     setDisplay(url.pathname === "/");
   }, [display]);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const id = parseInt(e.currentTarget.id);
-    setFilterSelected(id === -3 ? -3 : id - 1);
+    setFilterSelected(id === -3 ? -3 : id );
     setFilter(id === -3 ? "" : id);
   };
 

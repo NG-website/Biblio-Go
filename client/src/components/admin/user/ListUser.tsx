@@ -65,7 +65,7 @@ export default function ListUser() {
       .catch((err) => {
         console.error(err)
       });
-  }, [reload]);
+  }, [reload, openUserAdd]);
 
   const startEdit = (user) => {
     setEditId(user.id);

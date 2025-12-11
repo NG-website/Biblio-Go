@@ -143,7 +143,6 @@ const userController = {
 
             const token = generateTokenRandom(16)
             const hashPassword = await bcrypt.hash(req.body.password, 10)
-            const hashToken = await bcrypt.hash(token, 10)
 
             const data = {
                 name: req.body.name,
@@ -154,7 +153,7 @@ const userController = {
                 country: req.body.country,
                 abonnementType: "",
                 actif: false,
-                actifToken: hashToken,
+                actifToken: token,
                 expToken: IncrementeDate(new Date()),
                 role: false
             }
@@ -162,7 +161,9 @@ const userController = {
             const create = await userModel.create(data)
 
             if (create.id) {
-                const link = `${FRONT_URL}?token=${encodeURIComponent(token)}${create.id}`
+                //const link = "erere"
+                const link = `http://localhost:3000/api/user/comfirm-account/?token=${encodeURIComponent(token)}${create.id}`
+                console.log(link)
                 await sendMail(data.email, "inscription", [data.name, link])
                 res.status(201).json("ok")
             }
@@ -202,7 +203,8 @@ const userController = {
                 res.json("user inexistant")
             }
 
-            const tokenValid = await bcrypt.compare(token, user.actifToken)
+           // const tokenValid = await bcrypt.compare(token, user.actifToken)
+            const tokenValid = await token == user.actifToken
             const tokenExp = user.expToken > new Date()
 
             if (tokenValid && tokenExp) {
@@ -216,7 +218,7 @@ const userController = {
                     res.json('ereur base de données update user')
                 }
             } else {
-                res.json("token faux ou expirée")
+                res.json("token faux ou expiré")
             }
 
         } catch (error) {
@@ -293,6 +295,7 @@ const userController = {
     async UpdatePassword(req, res) {
         try {
             const id = req?.session?.user?.userId
+            const data = req.body.data
             console.log(id)
 
             // const schema = {

@@ -118,6 +118,7 @@ const bookUserController = {
     async Update(req, res) {
         try {
             const data = req.body.data
+            console.log(data)
             const admin = req?.session?.user?.role === true
             if (admin) {
                 const borrowId = req.body.id
@@ -128,7 +129,9 @@ const bookUserController = {
                 res.status(200).json(update)
             } else {
                 const id = req.body.id
+                console.log(id)
                 const userId = req?.session?.user?.userId
+                console.log(userId)
                 const update = await bookUserModel.update(
                     { ...data },
                     { where: { ...id, userId } }

@@ -367,7 +367,7 @@ function BookDetails() {
           >
             Réserver votre livre en ligne
           </Button>
-        ) : userId && abonnement === null ? (
+        ) : userId && !abonnement ? (
           <Button
             onClick={() => navigate("/subscription")}
             variant="contained"

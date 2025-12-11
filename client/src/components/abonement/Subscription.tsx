@@ -32,7 +32,7 @@ function Subscription({
   const [alerte, setAlerte] = useState(false)
 
   useEffect(() => {
-
+    
     try {
       fetch(`${API_URL}api/subscription/search-product`, {
         method: "POST",

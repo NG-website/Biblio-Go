@@ -44,7 +44,7 @@ export default function ListAuthor() {
       .then((res) => (res.ok ? res.json() : []))
       .then((data) => setAuthors(data))
       .catch((err) => console.error(err));
-  }, [reload]);
+  }, [reload, openAddAuthor]);
 
   const startEdit = (author) => {
     setEditId(author.id);
