@@ -49,7 +49,7 @@ function Like() {
 
 
   const soonAvailable = (bookId) => {
-    if (!back) {
+    if (bookId) {
       fetch(`${API_URL}api/bookuser/dispo`, {
         method: "POST",
         credentials:"include",
@@ -63,7 +63,7 @@ function Like() {
           const resultBack = incrementeDate.setDate(incrementeDate.getDate() + 1)
           setBack(resultBack)
         })
-      if(!back) return new Date(back!).toLocaleDateString("fr")
+      return new Date(back!).toLocaleDateString("fr")
     }
 
   }
@@ -163,7 +163,7 @@ function Like() {
                           }
 
                         >
-                          {d?.Book?.stock === 0 ? `Retour le ${soonAvailable(d.Book.id)}` : `Stock disponible : ${d.Book.stock}`}
+                          {d.Book.stock === 0 ? `Retour le ${soonAvailable(d.Book.id)}` : `Stock disponible : ${d.Book.stock}`}
                         </Typography>
 
                       </Box>
