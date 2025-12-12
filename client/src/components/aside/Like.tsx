@@ -39,12 +39,15 @@ function Like() {
 
   useEffect(() => {
 //revoir pour like/iduser
+if(userId){
     fetch(`${API_URL}api/like/all`, {
       credentials:"include"
     })
       .then((res) => { return res.json() })
       .then((data) => {setLikeBooks(data)})
       .catch((err) => console.error("Erreur récupération historique :", err));
+}
+  
   }, []);
 
 
