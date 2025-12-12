@@ -44,7 +44,7 @@ function Historical() {
         })
         .catch((err) => console.error("Erreur récupération historique :", err));
     }
-  }, [user, reload]);
+  }, [userId, reload]);
 
   const alreadyExtendBorrow = []
   historical.forEach(element => {
