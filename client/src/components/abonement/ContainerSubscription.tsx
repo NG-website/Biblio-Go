@@ -1,20 +1,14 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Subscription from "./Subscription"
 import { Box, Typography } from "@mui/material"
 import { useAuthContext } from "../Context/AuthContext"
 import theme from "../../theme"
 
-
 function ContainerSubscription() {
-    const { user } = useAuthContext()
-  console.log(user)
-  const abonnementType = user ? user?.abonnementType : null
+  const { user } = useAuthContext()
+  const abonnementType = user?user?.abonnementType : null
   const [animation, setAnimation] = useState(false)
-  useEffect(()=>{
-
-  },[abonnementType])
-
-
+  
   const changeState = () => {
     setAnimation(!animation)
   }
@@ -50,9 +44,9 @@ function ContainerSubscription() {
           color="text.primary"
           gutterBottom
           aria-label="Description du service : réservation en ligne et retrait en drive"
-          
+
         >
-          Vous propose un tout nouveau service de <strong style={{color:theme.palette.text.primary}}>réservation en ligne</strong> et de <strong style={{color:theme.palette.text.primary}}>retrait en drive</strong>.
+          Vous propose un tout nouveau service de <strong style={{ color: theme.palette.text.primary }}>réservation en ligne</strong> et de <strong style={{ color: theme.palette.text.primary }}>retrait en drive</strong>.
         </Typography>
 
         <Typography
@@ -61,7 +55,7 @@ function ContainerSubscription() {
           sx={{ mt: 2 }}
           aria-label="Information : réservez votre livre en quelques clics, disponible dans les 2 heures pour le retrait"
         >
-          Réservez votre livre en quelques clics : il sera disponible <strong style={{color:theme.palette.text.primary}}>dans les 2 heures</strong> pour le retrait.
+          Réservez votre livre en quelques clics : il sera disponible <strong style={{ color: theme.palette.text.primary }}>dans les 2 heures</strong> pour le retrait.
         </Typography>
 
         <Typography
@@ -70,7 +64,7 @@ function ContainerSubscription() {
           sx={{ mt: 1 }}
           aria-label="Information : retrait et dépôt 24h/24 et 7j/7"
         >
-          Vous pouvez retirer et déposer vos livres <strong style={{color:theme.palette.text.primary}}>24h/24 et 7j/7</strong>.
+          Vous pouvez retirer et déposer vos livres <strong style={{ color: theme.palette.text.primary }}>24h/24 et 7j/7</strong>.
         </Typography>
       </Box>
 
@@ -110,5 +104,4 @@ function ContainerSubscription() {
     </div>
   )
 }
-
 export default ContainerSubscription

@@ -26,8 +26,8 @@ function Subscription({
 }: SubscriptionProps) {
   const navigate = useNavigate()
   const { user } = useAuthContext()
-  const abonner = user ? user?.abonnement : null
-  const userId = user ? user?.userId : null
+  const abonner = user?user?.abonnement : null
+  const userId = user?user?.userId : null
   const [idProduct, setIdProduct] = useState();
   const [alerte, setAlerte] = useState(false)
 
@@ -46,7 +46,6 @@ function Subscription({
           }
         })
         .then((data) => {
-          // console.log(data)
           setIdProduct(data.default_price)
         })
         .catch((error) => {
@@ -93,7 +92,6 @@ function Subscription({
                 if (res.ok) return res.json()
               })
               .then((data) => {
-                // console.log(data)
                 if (data.data[0]) {
                   fetch(`${API_URL}api/subscription/create-checkout-session`, {
                     method: "POST",
@@ -122,7 +120,6 @@ function Subscription({
                       if (res.ok) return res.json()
                     })
                     .then((data) => {
-                     // console.log(data)
                       if (data.id.length != 0) {
                         fetch(`${API_URL}api/subscription/create-checkout-session`, {
                           method: "POST",

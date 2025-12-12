@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 const PaymentCancel = () => {
   const navigate = useNavigate();
-
   return (
     <Container sx={{width:"80%", margin:"auto"}}>
       <Box
@@ -28,5 +27,4 @@ const PaymentCancel = () => {
     </Container>
   );
 };
-
 export default PaymentCancel;

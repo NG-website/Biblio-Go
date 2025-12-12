@@ -162,7 +162,7 @@ const userController = {
 
             if (create.id) {
                 //const link = "erere"
-                const link = `${process.env.FRONT_URL}api/user/comfirm-account/?token=${encodeURIComponent(token)}${create.id}`
+                const link = `${process.env.API_URL}api/user/comfirm-account/?token=${encodeURIComponent(token)}${create.id}`
                 console.log(link)
                 await sendMail(data.email, "inscription", [data.name, link])
                 res.status(201).json("ok")

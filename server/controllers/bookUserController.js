@@ -36,7 +36,7 @@ const bookUserController = {
                  res.status(200).json(books);
             } else {
                 const data = req.body.data;
-                const userId = req?.session?.user.userId
+                const userId = req?.session?.user?.userId
                 const books = await bookUserModel.findAll({
                     where: { ...data, userId },
                     include: [{ model: bookModel, include: [authorModel] }]

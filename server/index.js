@@ -27,15 +27,15 @@ dotenv.config();
 //syncDB()
 const app = express();
 
-//  app.use(cors({
-//    origin: "http://localhost:5173",
-//    credentials: true
-//  }));
-
  app.use(cors({
-   origin: "https://biblio-go.vercel.app",
+   origin: "http://localhost:5173",
    credentials: true
  }));
+
+//  app.use(cors({
+//    origin: "https://biblio-go.vercel.app",
+//    credentials: true
+//  }));
 
 app.use("/api/subscription/webhook", express.raw({ type: "application/json" }));
 const stripe_ = new stripe(process.env.SECRET_KEY_STRIPE);
@@ -131,9 +131,9 @@ app.use("/api/image", upload.single("image"), (req, res) => {
 
 app.use("/api/uploads", express.static("uploads"));
 
-app.listen(process.env.PORT_DB, () => {
-  console.log(`http://localhost:${process.env.PORT}/`);
-});
-// app.listen(process.env.PORT, () => {
+// app.listen(process.env.PORT_DB, () => {
 //   console.log(`http://localhost:${process.env.PORT}/`);
 // });
+app.listen(process.env.PORT, () => {
+  console.log(`http://localhost:${process.env.PORT}/`);
+});
