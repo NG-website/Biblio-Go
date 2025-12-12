@@ -32,7 +32,7 @@ const likeController = {
         try {
             const bookId = req.body.bookId
             const userId = req?.session?.user?.userId
-            const book = await LikeModel.findOne({ where: { userId: userId, bookId: bookId } })
+            const book = await LikeModel.findOne({ where: { ...userId, bookId: bookId } })
             res.status(200).json(book)
         } catch (error) {
             return res.status(500).json(error)
