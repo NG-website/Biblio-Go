@@ -41,7 +41,10 @@ function Like() {
 //revoir pour like/iduser
 if(userId){
     fetch(`${API_URL}api/like/all`, {
-      credentials:"include"
+      method:"POST",
+      credentials:"include",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({id:userId})
     })
       .then((res) => { return res.json() })
       .then((data) => {setLikeBooks(data)})

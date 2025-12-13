@@ -11,7 +11,7 @@ const likeController = {
 
     async All(req, res) {
         try {
-            const userId = req?.session?.user?.userId
+            const userId = req.body.id
             console.log("userId",userId)
             console.log("session",req.session)
              console.log("user?",req?.session?.user)
