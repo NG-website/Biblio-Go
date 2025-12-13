@@ -28,7 +28,7 @@ function Home() {
                         method: "POST",
                         credentials: "include",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ data: { deposit: false } }),
+                        body: JSON.stringify({ data: { deposit: false }, id:userId }),
                     })
                         .then((res) => { return res.json() })
                         .then((bookUser) => {
