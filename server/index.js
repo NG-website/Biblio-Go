@@ -24,16 +24,10 @@ import Tesseract from 'tesseract.js'
 import fs from 'fs'
 import adminMiddleware from "./middleware/adminMiddleware.js";
 dotenv.config();
-//syncDB()
 const app = express();
 
-//  app.use(cors({
-//    origin: "http://localhost:5173",
-//    credentials: true
-//  }));
-
  app.use(cors({
-   origin: "https://biblio-go.vercel.app",
+   origin: ["https://biblio-go.vercel.app", "https://mediflow.soutadejulien.com/"],
    credentials: true
  }));
 
@@ -46,10 +40,8 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-     secure: false,
-    // secure:true,
+     secure:true,
      sameSite: "none",
-      //sameSite: "lax", 
      maxAge: 1000 * 60 * 60 * 24 * 7
   }
 }));
@@ -134,6 +126,3 @@ app.use("/api/uploads", express.static("uploads"));
 app.listen(process.env.PORT_DB, () => {
   console.log(`http://localhost:${process.env.PORT}/`);
 });
-// app.listen(process.env.PORT, () => {
-//   console.log(`http://localhost:${process.env.PORT}/`);
-// });

@@ -12,9 +12,6 @@ const likeController = {
     async All(req, res) {
         try {
             const userId = req.body.id
-            console.log("userId",userId)
-            console.log("session",req.session)
-             console.log("user?",req?.session?.user)
             const bookLike = await LikeModel.findAll({
                 where: {  userId:userId },
                 include: [{
@@ -31,7 +28,7 @@ const likeController = {
     async Id(req, res) {
         try {
             const bookId = req.body.bookId
-            const userId = req?.session?.user?.userId
+            const userId = req.body.id
             const book = await LikeModel.findOne({ where: { ...userId, bookId: bookId } })
             res.status(200).json(book)
         } catch (error) {
@@ -42,7 +39,7 @@ const likeController = {
     async Create(req, res) {
         try {
             const  bookId  = req.body.bookId
-            const userId = req?.session?.user?.userId
+            const userId = req.body.id
             const create = await LikeModel.create({ userId: userId, bookId:bookId})
             res.status(201).json(true)
         } catch (error) {
@@ -66,7 +63,7 @@ const likeController = {
     async Delete(req, res) {
         try {
             const bookId  = req.body.bookId
-            const userId = req?.session?.user?.userId
+            const userId = req.body.id
             const destroy = await LikeModel.destroy({ where: { userId: userId, bookId: bookId } })
             res.json(true)
         } catch (error) {
