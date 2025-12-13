@@ -75,7 +75,7 @@ function BookDetails() {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bookId: bookId }),
+        body: JSON.stringify({id:userId, bookId: bookId }),
       })
         .then((res) => res.json())
         .then((data) => {
@@ -247,7 +247,7 @@ function BookDetails() {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ bookId: bookId }),
+      body: JSON.stringify({id:userId, bookId: bookId }),
     })
       .then((res) => { return res.json() })
       .then((data) => {
@@ -263,7 +263,7 @@ function BookDetails() {
       method: "DELETE",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ bookId: bookId }),
+      body: JSON.stringify({id:userId, bookId: bookId }),
     })
       .then((res) => { return res.json() })
       .then((data) => {
