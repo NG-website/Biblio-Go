@@ -23,7 +23,7 @@ interface AddAuthorProps {
 
 function AddAuthor({ open, close }: AddAuthorProps) {
   const {user} =useAuthContext()
-  
+  console.log(user?.token)
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [description, setDescription] = useState("");
