@@ -61,6 +61,7 @@ function BookDetails() {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
+        body:JSON.stringify({id:userId})
       })
         .then((res) => { return res.json() })
         .then((data) => {

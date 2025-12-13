@@ -20,7 +20,7 @@ function Historical() {
   const [historical, setHistorical] = useState([]);
   const [livreSelected, setLivreSelected] = useState<number | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const abonnement = user ? user.abonnementType : null
+  const abonnement = user ? user?.abonnementType : null
   const [isBack, setIsBack] = useState([]);
   const [reload, setReload] = useState(false);
   useEffect(() => {
@@ -29,7 +29,7 @@ function Historical() {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        
+        body:JSON.stringify({id:userId})
       })
         .then((res) => res.json())
         .then((data) => {

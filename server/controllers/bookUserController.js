@@ -26,7 +26,7 @@ const bookUserController = {
     async Id(req, res) {
         try {
             const admin = req?.session?.user?.role === true
-            const userId = req.session?.user?.userId
+            const userId = req.body.id
             if (admin) {
                 
                 const books = await bookUserModel.findAll({
@@ -36,7 +36,7 @@ const bookUserController = {
                  res.status(200).json(books);
             } else {
                 const data = req.body.data;
-                const userId = req?.session?.user?.userId
+                const userId = req.body.id
                 const books = await bookUserModel.findAll({
                     where: { ...data, userId },
                     include: [{ model: bookModel, include: [authorModel] }]
