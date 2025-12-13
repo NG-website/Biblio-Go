@@ -28,7 +28,8 @@ const app = express();
 
  app.use(cors({
    origin: ["https://biblio-go.vercel.app", "https://mediflow.soutadejulien.com", "http://localhost:5173/"],
-   credentials: true
+   credentials: true,
+   allowedHeaders: ["Content-Type", "Authorization"],
  }));
 
 app.use("/api/subscription/webhook", express.raw({ type: "application/json" }));
