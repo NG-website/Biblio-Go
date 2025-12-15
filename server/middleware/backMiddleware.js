@@ -3,13 +3,14 @@ import bcrypt from 'bcrypt'
 const backMiddleware = async (req, res, next) => {
     
     const token = req.headers.authorization
+    console.log(req.headers.origin)
     const decode = jwt.decode(token)
     const expired = decode.token < new Date()
     if(!expired){
         res.status(403).json("token expiré")
     }
    
-    if (req.headers.origin === "https://biblio-go.vercel.app/") {
+    if (req.headers.origin === "https://biblio-go.vercel.app") {
         next()
     } else {
         if (token && decode) {
