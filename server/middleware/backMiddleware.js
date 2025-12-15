@@ -14,7 +14,7 @@ const backMiddleware = async (req, res, next) => {
         console.log(decode)
         const expired = decode.exp * 1000 < new Date()
         if (!expired) {
-            res.status(403).json("token expiré")
+            return res.status(403).json("token expiré")
         }
         if (token && decode) {
             console.log("devrait pas etre la")
@@ -30,7 +30,7 @@ const backMiddleware = async (req, res, next) => {
                         if (isValide) {
                             next()
                         } else {
-                            res.status(403).json("token non valid")
+                            return res.status(403).json("token non valid")
                         }
                     }
                 })
