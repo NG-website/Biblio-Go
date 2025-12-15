@@ -1,6 +1,6 @@
-import { verify } from "jsonwebtoken"
+
 import apiModel from "../models/apiModel.js"
-import { where } from "sequelize"
+
 
 const apiController = {
     async verifUser(req, res) {
