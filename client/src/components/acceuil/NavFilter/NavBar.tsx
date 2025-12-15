@@ -31,7 +31,7 @@ function NavBar() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setCategories(data.splice(0,6))
+        setCategories(data.splice(0,7))
         console.log(data)
       });
 
