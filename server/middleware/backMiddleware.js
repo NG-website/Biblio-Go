@@ -10,7 +10,8 @@ const backMiddleware = async (req, res, next) => {
     } else {
         const token = req.headers.authorization?.split(' ')[1]
         console.log(req.headers.origin)
-        const decode = jwt.decode(token)
+        const decode = await jwt.decode(token)
+        console.log(decode)
         const expired = decode.exp * 1000 < new Date()
         if (!expired) {
             res.status(403).json("token expiré")

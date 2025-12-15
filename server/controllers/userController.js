@@ -165,8 +165,8 @@ const userController = {
                 const link = `${process.env.API_URL}api/user/comfirm-account/?token=${encodeURIComponent(token)}${create.id}`
                 console.log(link)
                 await sendMail(data.email, "inscription", [data.name, link])
-                res.status(201).json("ok")
             }
+            res.status(201).json("ok")
         } catch (error) {
             return res.status(500).json(error)
         }
