@@ -26,8 +26,9 @@ const backMiddleware = async (req, res, next) => {
                 .then((res) => { return res.json() })
                 .then((data) => {
                     if (data) {
-                        const isValide = bcrypt.compare("", data.token)
+                        const isValide =  bcrypt.compare("", data.token)
                         if (isValide) {
+                            console.log("passe")
                             next()
                         } else {
                             return res.status(403).json("token non valid")
