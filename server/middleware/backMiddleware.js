@@ -9,11 +9,11 @@ const backMiddleware = async (req, res, next) => {
         res.status(403).json("token expiré")
     }
    
-    if (req.headers.origin === "http://localhost:5173") {
+    if (req.headers.origin === "https://biblio-go.vercel.app/") {
         next()
     } else {
         if (token && decode) {
-            
+
             fetch(`${process.env.API_URL}api/auth/user`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
