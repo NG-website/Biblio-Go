@@ -13,6 +13,7 @@ const backMiddleware = async (req, res, next) => {
         const decode = await jwt.decode(token)
         console.log(decode)
         const expired = decode.exp * 1000 < new Date()
+        console.log(new Date(decode.exp * 1000))
         console.log(expired)
         if (!expired) {
             return res.status(403).json("token expiré")
@@ -28,6 +29,7 @@ const backMiddleware = async (req, res, next) => {
                 .then((data) => {
                     if (data) {
                         const isValide =  bcrypt.compare("", data.token)
+                        console.log(isValide)
                         if (isValide) {
                             console.log("passe")
                             next()
