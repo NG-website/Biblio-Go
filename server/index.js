@@ -126,7 +126,7 @@ app.use("/api/image", upload.single("image"), (req, res) => {
 
 app.use("/api/uploads", express.static("uploads"));
 
-app.get(/^(?!/api)(?!/uploads).*/, (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, '../', 'client/dist/index.html'));
 });
 
