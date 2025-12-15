@@ -12,7 +12,7 @@ const backMiddleware = async (req, res, next) => {
         console.log(token)
         const decode = await jwt.decode(token)
         console.log(decode)
-        const expired = decode.exp * 1000 < new Date()
+        const expired = decode.exp * 1000 > new Date()
         console.log(new Date(decode.exp * 1000))
         console.log(expired)
         if (!expired) {
