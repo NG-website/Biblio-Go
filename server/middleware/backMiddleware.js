@@ -25,7 +25,7 @@ const backMiddleware = async (req, res, next) => {
                 .then((res) => { return res.json() })
                 .then((data) => {
                     if (data) {
-                        const isValide = await bcrypt.compare("", data.token)
+                        const isValide = bcrypt.compare("", data.token)
                         if (isValide) {
                             next()
                         } else {
