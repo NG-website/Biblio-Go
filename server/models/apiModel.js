@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import userModel from './userModel';
+import userModel from './userModel.js';
 
 
 const apiModel = sequelize.define(
