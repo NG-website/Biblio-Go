@@ -32,7 +32,7 @@ function NavBar() {
       .then((res) => res.json())
       .then((data) => {
         setCategories(data)
-        console.log(data)
+        console.log(data.remove[7])
       });
 
     setDisplay(url.pathname === "/");
