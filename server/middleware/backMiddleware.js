@@ -32,7 +32,7 @@ const backMiddleware = async (req, res, next) => {
                         console.log(isValide)
                         if (isValide) {
                             console.log("passe")
-                            next()
+                           return next()
                         } else {
                             return res.status(403).json("token non valid")
                         }

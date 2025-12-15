@@ -7,7 +7,7 @@ const apiController = {
         try {
             const userId = req.body.id
             const result = await apiModel.findOne({
-                where: { id: userId }
+                where: { userId: userId }
             });
             if(result){
                 res.status(200).json(result.token)
