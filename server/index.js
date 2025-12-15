@@ -22,9 +22,11 @@ import sendMail from "./utils/nodemailer.js";
 import sequelize from "./config/db_config.js"
 import Tesseract from 'tesseract.js'
 import fs from 'fs'
+import path from 'path'
 import adminMiddleware from "./middleware/adminMiddleware.js";
 import backMiddleware from "./middleware/backMiddleware.js";
 import apiRouter from "./routes/apiRouter.js";
+import { dirname } from "path";
 dotenv.config();
 const app = express();
 
