@@ -68,16 +68,12 @@ const paymentControler = {
                         abonnementType: event.data.object.metadata.abonnementType
                     },
                     { where: { id: event.data.object.metadata.userId } },
-                  
                 );
             }
             res.json({ received: false });
         } catch (err) {
-            console.error("❌ Erreur webhook :", err.message);
             res.status(400).send(`Webhook Error: ${err.message}`);
         }
     }
-
 };
-
 export default paymentControler;
