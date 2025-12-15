@@ -86,7 +86,7 @@ const bookUserController = {
                 }
             }
             if (admin != true) {
-                const userId = req.body.userId
+                const userId = req.body.id
                 //sortir le useremail
                 // const userName = req?.session?.user?.userName
                 const userEmail = req?.session?.user?.userEmail
