@@ -13,10 +13,11 @@ const backMiddleware = async (req, res, next) => {
         const decode = await jwt.decode(token)
         console.log(decode)
         const expired = decode.exp * 1000 < new Date()
+        console.log(expired)
         if (!expired) {
             return res.status(403).json("token expiré")
         }
-        if (token && decode) {
+        if (token) {
             console.log("devrait pas etre la")
             fetch(`https://biblio-go.onrender.com/api/auth/user`, {
                 method: "POST",
