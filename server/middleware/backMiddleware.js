@@ -9,7 +9,7 @@ const backMiddleware = async (req, res, next) => {
         next()
     } else {
         const token = req.headers.authorization
-        console.log(req.headers.origin)
+        console.log(token)
         const decode = await jwt.decode(token)
         console.log(decode)
         const expired = decode.exp * 1000 < new Date()
