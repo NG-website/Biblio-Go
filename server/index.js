@@ -23,6 +23,8 @@ import sequelize from "./config/db_config.js"
 import Tesseract from 'tesseract.js'
 import fs from 'fs'
 import adminMiddleware from "./middleware/adminMiddleware.js";
+import backMiddleware from "./middleware/backMiddleware.js";
+import apiRouter from "./routes/apiRouter.js";
 dotenv.config();
 const app = express();
 
@@ -102,12 +104,13 @@ app.post('/api/ocr', async (req, res) => {
 });
 
 app.use("/api/user", userRouter);
-app.use("/api/book", bookRouter);
+app.use("/api/book",backMiddleware, bookRouter);
 app.use("/api/bookuser", bookUserRouter);
 app.use("/api/author", authorRouter);
 app.use("/api/like", likeRouter);
 app.use("/api/subscription", paymentRouter);
 app.use("/api/admin", adminMiddleware, adminRouter);
+app.use("/api/auth", apiRouter);
 
 
 app.use("/api/image", upload.single("image"), (req, res) => {

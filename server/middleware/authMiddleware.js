@@ -14,7 +14,7 @@ const authMiddleware = async (req, res, next) => {
     // })
     // //trop de tentative
     // const timeout = verifLogin[0].attemptCount * 1000
-
+        console.log(req.url)
 
     const { email, password, remember } = req.body;
 console.log(req.body)
