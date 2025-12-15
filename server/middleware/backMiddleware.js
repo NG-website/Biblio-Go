@@ -28,7 +28,8 @@ const backMiddleware = async (req, res, next) => {
                 .then((res) => { return res.json() })
                 .then((data) => {
                     if (data) {
-                        const isValide =  bcrypt.compare(token, data.token)
+                        console.log(data)
+                        const isValide =  jwt.verify(token, process.env.SECRET_KEY_JWT)
                         console.log(isValide)
                         if (isValide) {
                             console.log("passe")
