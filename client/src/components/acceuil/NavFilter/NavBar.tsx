@@ -31,8 +31,8 @@ function NavBar() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setCategories(data)
-        console.log(data.splice(0,6))
+        setCategories(data.splice(0,6))
+        console.log(data)
       });
 
     setDisplay(url.pathname === "/");
