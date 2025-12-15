@@ -18,7 +18,7 @@ const backMiddleware = async (req, res, next) => {
         }
         if (token && decode) {
             console.log("devrait pas etre la")
-            fetch(`${process.env.API_URL}api/auth/user`, {
+            fetch(`https://biblio-go.onrender.com/api/auth/user`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: decode.userId })
